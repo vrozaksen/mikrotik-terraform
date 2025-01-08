@@ -1,0 +1,12 @@
+{
+    "recommendations": [
+        "aaron-bond.better-comments",
+        "albert.TabOut",
+        "mhutchie.git-graph",
+        "redhat.vscode-yaml",
+        "pkief.material-icon-theme",
+        "hashicorp.terraform",
+        "foxundermoon.shell-format",
+        "DavidAnson.vscode-markdownlint"
+    ]
+}
