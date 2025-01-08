@@ -1,0 +1,21 @@
+---
+# yaml-language-server: $schema=https://json.schemastore.org/github-workflow.json
+name: Lint Job
+
+on:
+  workflow_dispatch: {}
+  pull_request: {}
+
+jobs:
+  # TODO: terraform lint here
+  actionlint:
+    uses: mirceanton/reusable-workflows/.github/workflows/reusable-actionlint.yaml@v3.4.1
+    secrets: inherit
+
+  markdownlint:
+    uses: mirceanton/reusable-workflows/.github/workflows/reusable-markdownlint.yaml@v3.4.1
+    secrets: inherit
+
+  commitlint:
+    uses: mirceanton/reusable-workflows/.github/workflows/reusable-commitlint.yaml@v3.4.1
+    secrets: inherit
