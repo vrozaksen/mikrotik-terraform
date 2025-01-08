@@ -1,7 +1,6 @@
 {
     "$schema": "https://docs.renovatebot.com/renovate-schema.json",
     "dependencyDashboardTitle": "Renovate Dashboard 🤖",
-    "onboarding": true,
     "extends": [
         ":dependencyDashboard",
         "config:best-practices",
