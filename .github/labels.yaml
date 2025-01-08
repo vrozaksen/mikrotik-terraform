@@ -18,7 +18,6 @@
 - name: area/github
   color: "000000" # github black
   description: Changes made in the github directory
-
 - name: area/terraform
   color: "844FBA" # terraform purple
   description: Changes made in the infrastructure directory
@@ -28,7 +27,10 @@
 # =================================================================================================
 - name: renovate/github-action
   color: "000000"
-#TODO add more renovate types (devcontainer, terraform etc.)
+- name: renovate/container
+  color: "3970E4"
+- name: renovate/terraform-provider
+  color: "844FBA"
 
 # =================================================================================================
 # Semantic Types
