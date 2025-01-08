@@ -1,0 +1,69 @@
+---
+# =================================================================================================
+# Device Labels
+# =================================================================================================
+- name: device/RB5009
+  color: "112233"
+  description: Changes made to the config of my RB5009 router.
+- name: device/CRS326
+  color: "223344"
+  description: Changes made to the config of my CRS326 switch.
+- name: device/CRS317
+  color: "334455"
+  description: Changes made to the config of my CRS317 switch.
+
+# =================================================================================================
+# Area labels
+# =================================================================================================
+- name: area/github
+  color: "000000" # github black
+  description: Changes made in the github directory
+
+- name: area/terraform
+  color: "844FBA" # terraform purple
+  description: Changes made in the infrastructure directory
+
+# =================================================================================================
+# Renovate Types
+# =================================================================================================
+- name: renovate/github-action
+  color: "000000"
+#TODO add more renovate types (devcontainer, terraform etc.)
+
+# =================================================================================================
+# Semantic Types
+# =================================================================================================
+- name: type/digest
+  color: "ffeC19"
+- name: type/patch
+  color: "ffeC19"
+- name: type/minor
+  color: "ff9800"
+- name: type/major
+  color: "f6412d"
+
+# =================================================================================================
+# Size Types
+# =================================================================================================
+- name: size/XS
+  color: "0000ff"
+- name: size/S
+  color: "000ff0"
+- name: size/M
+  color: "00ff00"
+- name: size/L
+  color: "0ff000"
+- name: size/XL
+  color: "ff0000"
+- name: size/XXL
+  color: "ff00ff"
+
+# =================================================================================================
+# Issue Types
+# =================================================================================================
+- name: issue/bug
+  color: "ff0000"
+- name: issue/feature
+  color: "00ff00"
+- name: issue/chore
+  color: "0000ff"
