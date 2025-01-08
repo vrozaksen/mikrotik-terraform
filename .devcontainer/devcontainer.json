@@ -6,7 +6,9 @@
 		"ghcr.io/devcontainers-extra/features/act:1": {},
 		"ghcr.io/devcontainers-extra/features/actionlint:1": {},
 		"ghcr.io/devcontainers-extra/features/age:1": {},
-		"ghcr.io/devcontainers-extra/features/sops:1": {}
+		"ghcr.io/devcontainers-extra/features/sops:1": {},
+		"ghcr.io/lee-orr/rusty-dev-containers/zellij:0": {},
+		"ghcr.io/devcontainers-extra/features/starship:1": {}
 	},
 	"remoteUser": "vscode",
 	"containerUser": "vscode",
