@@ -26,3 +26,7 @@ device/CRS326:
 device/CRS317:
   - changed-files:
       - any-glob-to-any-file: "modules/crs317/**/*"
+
+device/HEX:
+  - changed-files:
+      - any-glob-to-any-file: "modules/hex/**/*"

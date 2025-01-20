@@ -11,6 +11,9 @@
 - name: device/CRS317
   color: "334455"
   description: Changes made to the config of my CRS317 switch.
+- name: device/HEX
+  color: "445566"
+  description: Changes made to the config of my HEX switch.
 
 # =================================================================================================
 # Area labels
