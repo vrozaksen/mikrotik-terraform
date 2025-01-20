@@ -14,3 +14,22 @@ tasks:
     cmds:
       - sops --decrypt terraform.tfstate.sops > terraform.tfstate
       - sops --decrypt credentials.auto.tfvars.sops > credentials.auto.tfvars
+
+  init: terraform init -upgrade
+
+  plan:
+    cmds:
+      - task decrypt
+      - terraform plan
+      - task encrypt
+
+  apply:
+    cmds:
+      - task decrypt
+      - terraform apply
+      - task encrypt
+
+  lint:
+    cmds:
+      - terraform fmt -recursive
+      - terraform validate
