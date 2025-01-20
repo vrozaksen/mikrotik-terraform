@@ -27,6 +27,7 @@
 	"workbench.iconTheme": "material-icon-theme",
 	"material-icon-theme.files.associations": {
 		// Reference: https://raw.githubusercontent.com/PKief/vscode-material-icon-theme/main/images/fileIcons.png
+		"*.sops": "Lock"
 	},
 	"material-icon-theme.folders.associations": {
 		// Reference: https://raw.githubusercontent.com/PKief/vscode-material-icon-theme/main/images/folderIcons.png
