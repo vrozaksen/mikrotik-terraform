@@ -1,0 +1,12 @@
+[tools]
+"aqua:hashicorp/terraform" = "1.10.4"
+"aqua:terraform-linters/tflint" = "0.55.0"
+
+# Secret Encryption Stuff
+"aqua:getsops/sops" = "3.9.3"
+"aqua:FiloSottile/age" = "1.2.1"
+
+# Misc Tools
+"aqua:google/yamlfmt" = "0.15.0"
+"aqua:rhysd/actionlint" = "1.7.7"
+"aqua:nektos/act" = "0.2.71"
