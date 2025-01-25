@@ -77,6 +77,13 @@ resource "routeros_interface_bridge_port" "nas-data-1" {
   pvid      = routeros_interface_vlan.trusted.vlan_id
 }
 
+resource "routeros_interface_bridge_port" "home-assistant" {
+  bridge    = routeros_interface_bridge.bridge.name
+  interface = routeros_interface_ethernet.home-assistant.name
+  comment   = routeros_interface_ethernet.home-assistant.comment
+  pvid      = routeros_interface_vlan.untrusted.vlan_id
+}
+
 resource "routeros_interface_bridge_port" "uplink" {
   bridge    = routeros_interface_bridge.bridge.name
   interface = routeros_interface_ethernet.uplink.name
@@ -100,7 +107,7 @@ resource "routeros_interface_bridge_port" "crs317" {
 }
 
 resource "routeros_interface_bridge_port" "unassigned" {
-  for_each = toset(["ether11", "ether12", "ether13", "ether14", "ether15", "ether16", "ether17", "ether18", "ether19",
+  for_each = toset(["ether12", "ether13", "ether14", "ether15", "ether16", "ether17", "ether18", "ether19",
   "ether20", "ether21", "ether22"])
 
   bridge    = routeros_interface_bridge.bridge.name

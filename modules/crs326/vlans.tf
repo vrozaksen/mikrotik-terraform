@@ -140,7 +140,9 @@ resource "routeros_interface_bridge_vlan" "bridge_vlan_untrusted" {
     routeros_interface_bonding.crs317.name,
   ]
 
-  untagged = []
+  untagged = [
+    routeros_interface_ethernet.home-assistant.name,
+  ]
 }
 
 # =================================================================================================

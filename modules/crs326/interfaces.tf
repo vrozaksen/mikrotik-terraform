@@ -73,10 +73,10 @@ resource "routeros_interface_ethernet" "virt-2" {
   l2mtu        = 1514
 }
 
-resource "routeros_interface_ethernet" "ether11" {
+resource "routeros_interface_ethernet" "home-assistant" {
   factory_name = "ether11"
   name         = "ether11"
-  comment      = ""
+  comment      = "HomeAssistant"
   l2mtu        = 1514
 }
 
