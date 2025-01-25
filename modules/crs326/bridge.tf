@@ -74,7 +74,7 @@ resource "routeros_interface_bridge_port" "nas-data-1" {
   bridge    = routeros_interface_bridge.bridge.name
   interface = routeros_interface_ethernet.nas-data-1.name
   comment   = routeros_interface_ethernet.nas-data-1.comment
-  pvid      = routeros_interface_vlan.trusted.vlan_id
+  pvid      = "1"
 }
 
 resource "routeros_interface_bridge_port" "home-assistant" {

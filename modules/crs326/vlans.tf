@@ -136,6 +136,7 @@ resource "routeros_interface_bridge_vlan" "bridge_vlan_untrusted" {
   tagged = [
     routeros_interface_bridge.bridge.name,
     routeros_interface_ethernet.uplink.name,
+    routeros_interface_ethernet.nas-data-1.name,
     routeros_interface_bonding.virt.name,
     routeros_interface_bonding.crs317.name,
   ]
@@ -165,6 +166,7 @@ resource "routeros_interface_bridge_vlan" "bridge_vlan_trusted" {
   tagged = [
     routeros_interface_bridge.bridge.name,
     routeros_interface_ethernet.uplink.name,
+    routeros_interface_ethernet.nas-data-1.name,
     routeros_interface_bonding.virt.name,
     routeros_interface_bonding.crs317.name,
   ]
