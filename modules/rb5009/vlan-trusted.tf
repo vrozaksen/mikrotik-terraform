@@ -26,11 +26,8 @@ resource "routeros_ip_address" "trusted" {
 # https://registry.terraform.io/providers/terraform-routeros/routeros/latest/docs/resources/interface_bridge_vlan
 # =================================================================================================
 resource "routeros_interface_bridge_vlan" "trusted" {
-  bridge = routeros_interface_bridge.bridge.name
-
-  vlan_ids = [
-    routeros_interface_vlan.trusted.vlan_id
-  ]
+  bridge   = routeros_interface_bridge.bridge.name
+  vlan_ids = [routeros_interface_vlan.trusted.vlan_id]
 
   tagged = [
     routeros_interface_bridge.bridge.name,

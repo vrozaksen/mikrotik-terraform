@@ -25,11 +25,8 @@ resource "routeros_ip_address" "iot" {
 # https://registry.terraform.io/providers/terraform-routeros/routeros/latest/docs/resources/interface_bridge_vlan
 # =================================================================================================
 resource "routeros_interface_bridge_vlan" "iot" {
-  bridge = routeros_interface_bridge.bridge.name
-
-  vlan_ids = [
-    routeros_interface_vlan.iot.vlan_id
-  ]
+  bridge   = routeros_interface_bridge.bridge.name
+  vlan_ids = [routeros_interface_vlan.iot.vlan_id]
 
   tagged = [
     routeros_interface_bridge.bridge.name,

@@ -8,12 +8,9 @@ resource "routeros_interface_vlan" "servers" {
 }
 
 resource "routeros_interface_bridge_vlan" "bridge_vlan_servers" {
-  bridge  = routeros_interface_bridge.bridge.name
-  comment = routeros_interface_vlan.servers.name
-
-  vlan_ids = [
-    routeros_interface_vlan.servers.vlan_id,
-  ]
+  bridge   = routeros_interface_bridge.bridge.name
+  comment  = routeros_interface_vlan.servers.name
+  vlan_ids = [routeros_interface_vlan.servers.vlan_id]
 
   tagged = [
     routeros_interface_bridge.bridge.name,
@@ -39,12 +36,9 @@ resource "routeros_interface_vlan" "kubernetes" {
 }
 
 resource "routeros_interface_bridge_vlan" "bridge_vlan_kubernetes" {
-  bridge  = routeros_interface_bridge.bridge.name
-  comment = routeros_interface_vlan.kubernetes.name
-
-  vlan_ids = [
-    routeros_interface_vlan.kubernetes.vlan_id,
-  ]
+  bridge   = routeros_interface_bridge.bridge.name
+  comment  = routeros_interface_vlan.kubernetes.name
+  vlan_ids = [routeros_interface_vlan.kubernetes.vlan_id]
 
   tagged = [
     routeros_interface_bridge.bridge.name,
@@ -72,12 +66,9 @@ resource "routeros_interface_vlan" "guest" {
 }
 
 resource "routeros_interface_bridge_vlan" "bridge_vlan_guest" {
-  bridge  = routeros_interface_bridge.bridge.name
-  comment = routeros_interface_vlan.guest.name
-
-  vlan_ids = [
-    routeros_interface_vlan.guest.vlan_id,
-  ]
+  bridge   = routeros_interface_bridge.bridge.name
+  comment  = routeros_interface_vlan.guest.name
+  vlan_ids = [routeros_interface_vlan.guest.vlan_id]
 
   tagged = [
     routeros_interface_bridge.bridge.name,
@@ -99,12 +90,9 @@ resource "routeros_interface_vlan" "iot" {
 }
 
 resource "routeros_interface_bridge_vlan" "bridge_vlan_iot" {
-  bridge  = routeros_interface_bridge.bridge.name
-  comment = routeros_interface_vlan.iot.name
-
-  vlan_ids = [
-    routeros_interface_vlan.iot.vlan_id,
-  ]
+  bridge   = routeros_interface_bridge.bridge.name
+  comment  = routeros_interface_vlan.iot.name
+  vlan_ids = [routeros_interface_vlan.iot.vlan_id]
 
   tagged = [
     routeros_interface_bridge.bridge.name,
@@ -126,12 +114,9 @@ resource "routeros_interface_vlan" "untrusted" {
 }
 
 resource "routeros_interface_bridge_vlan" "bridge_vlan_untrusted" {
-  bridge  = routeros_interface_bridge.bridge.name
-  comment = routeros_interface_vlan.untrusted.name
-
-  vlan_ids = [
-    routeros_interface_vlan.untrusted.vlan_id,
-  ]
+  bridge   = routeros_interface_bridge.bridge.name
+  comment  = routeros_interface_vlan.untrusted.name
+  vlan_ids = [routeros_interface_vlan.untrusted.vlan_id]
 
   tagged = [
     routeros_interface_bridge.bridge.name,
@@ -156,12 +141,9 @@ resource "routeros_interface_vlan" "trusted" {
 }
 
 resource "routeros_interface_bridge_vlan" "bridge_vlan_trusted" {
-  bridge  = routeros_interface_bridge.bridge.name
-  comment = routeros_interface_vlan.trusted.name
-
-  vlan_ids = [
-    routeros_interface_vlan.trusted.vlan_id,
-  ]
+  bridge   = routeros_interface_bridge.bridge.name
+  comment  = routeros_interface_vlan.trusted.name
+  vlan_ids = [routeros_interface_vlan.trusted.vlan_id]
 
   tagged = [
     routeros_interface_bridge.bridge.name,
