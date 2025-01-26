@@ -45,7 +45,7 @@ resource "routeros_interface_bridge_vlan" "bridge_vlan_kubernetes" {
     routeros_interface_ethernet.uplink.name,
     routeros_interface_bonding.virt.name,
     routeros_interface_bonding.crs317.name,
-
+    routeros_interface_ethernet.nas-data-1.name,
   ]
 
   untagged = [
