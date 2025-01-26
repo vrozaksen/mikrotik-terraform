@@ -33,10 +33,15 @@ resource "routeros_ip_dns_adlist" "dns_blocker" {
 # =================================================================================================
 resource "routeros_ip_dns_record" "static" {
   for_each = {
-    "truenas.home.mirceanton.com" = { address = "10.0.0.245", type = "A" },
-    "hass.home.mirceanton.com"    = { address = "192.168.42.253", type = "A" },
+    "nas.trst.h.mirceanton.com"  = { address = "192.168.69.245", type = "A", comment = "TrueNAS Trusted" },
+    "nas.utrst.h.mirceanton.com" = { address = "192.168.42.245", type = "A", comment = "TrueNAS Untrusted" },
+    "nas.k8s.h.mirceanton.com"   = { address = "10.0.10.245", type = "A", comment = "TrueNAS K8S" },
+    "nas.srv.h.mirceanton.com"   = { address = "10.0.0.245", type = "A", comment = "TrueNAS Servers" },
+
+    "hass.home.mirceanton.com" = { address = "192.168.42.253", type = "A", comment = "HomeAssistant Odroid" },
   }
   name    = each.key
   address = each.value.address
+  comment = each.value.comment
   type    = each.value.type
 }
