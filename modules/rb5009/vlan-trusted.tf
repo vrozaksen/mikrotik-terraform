@@ -53,7 +53,7 @@ resource "routeros_ip_pool" "trusted_dhcp" {
 }
 resource "routeros_ip_dhcp_server_network" "trusted" {
   comment    = "Trusted DHCP Network"
-  domain     = "trusted.home.mirceanton.com"
+  domain     = "trst.h.mirceanton.com"
   address    = "192.168.69.0/24"
   gateway    = "192.168.69.1"
   dns_server = ["192.168.69.1"]

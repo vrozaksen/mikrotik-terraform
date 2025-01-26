@@ -51,7 +51,7 @@ resource "routeros_ip_pool" "untrusted_dhcp" {
 }
 resource "routeros_ip_dhcp_server_network" "untrusted" {
   comment    = "Untrusted DHCP Network"
-  domain     = "untrusted.home.mirceanton.com"
+  domain     = "utrst.h.mirceanton.com"
   address    = "192.168.42.0/24"
   gateway    = "192.168.42.1"
   dns_server = ["192.168.42.1"]

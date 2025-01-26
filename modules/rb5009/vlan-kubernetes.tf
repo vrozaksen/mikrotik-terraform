@@ -51,7 +51,7 @@ resource "routeros_ip_pool" "kubernetes_dhcp" {
 }
 resource "routeros_ip_dhcp_server_network" "kubernetes" {
   comment    = "kubernetes DHCP Network"
-  domain     = "k8s.home.mirceanton.com"
+  domain     = "k8s.h.mirceanton.com"
   address    = "10.0.10.0/24"
   gateway    = "10.0.10.1"
   dns_server = ["10.0.10.1"]

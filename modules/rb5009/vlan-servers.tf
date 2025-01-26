@@ -53,7 +53,7 @@ resource "routeros_ip_pool" "servers_dhcp" {
 }
 resource "routeros_ip_dhcp_server_network" "servers" {
   comment    = "Servers DHCP Network"
-  domain     = "servers.home.mirceanton.com"
+  domain     = "srv.h.mirceanton.com"
   address    = "10.0.0.0/24"
   gateway    = "10.0.0.1"
   dns_server = ["10.0.0.1"]

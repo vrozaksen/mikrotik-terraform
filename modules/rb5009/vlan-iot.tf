@@ -51,7 +51,7 @@ resource "routeros_ip_pool" "iot_dhcp" {
 }
 resource "routeros_ip_dhcp_server_network" "iot" {
   comment    = "IoT DHCP Network"
-  domain     = "iot.home.mirceanton.com"
+  domain     = "iot.h.mirceanton.com"
   address    = "172.16.69.0/24"
   gateway    = "172.16.69.1"
   dns_server = ["172.16.69.1"]

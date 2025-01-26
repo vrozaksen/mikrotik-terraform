@@ -51,7 +51,7 @@ resource "routeros_ip_pool" "guest_dhcp" {
 }
 resource "routeros_ip_dhcp_server_network" "guest" {
   comment    = "Guest DHCP Network"
-  domain     = "guest.home.mirceanton.com"
+  domain     = "guest.h.mirceanton.com"
   address    = "172.16.42.0/24"
   gateway    = "172.16.42.1"
   dns_server = ["1.1.1.1", "1.0.0.1", "8.8.8.8"] #!no local dns
