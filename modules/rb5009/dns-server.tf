@@ -25,3 +25,18 @@ resource "routeros_ip_dns_adlist" "dns_blocker" {
   url        = "https://raw.githubusercontent.com/StevenBlack/hosts/master/hosts"
   ssl_verify = false
 }
+
+
+# =================================================================================================
+# Static DNS Records
+# https://registry.terraform.io/providers/terraform-routeros/routeros/latest/docs/resources/ip_dns_record
+# =================================================================================================
+resource "routeros_ip_dns_record" "static" {
+  for_each = {
+    "truenas.home.mirceanton.com" = { address = "10.0.0.245", type = "A" },
+    "hass.home.mirceanton.com"    = { address = "192.168.42.253", type = "A" },
+  }
+  name    = each.key
+  address = each.value.address
+  type    = each.value.type
+}
