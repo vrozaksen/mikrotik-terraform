@@ -39,6 +39,7 @@ resource "routeros_ip_dns_record" "static" {
     "nas.srv.h.mirceanton.com"   = { address = "10.0.0.245", type = "A", comment = "TrueNAS Servers" },
 
     "hass.home.mirceanton.com" = { address = "192.168.42.253", type = "A", comment = "HomeAssistant Odroid" },
+    "truenas.home.mirceanton.com" = { address = "10.0.0.245", type = "A", comment = "TrueNAS Management Interface" },
   }
   name    = each.key
   address = each.value.address
