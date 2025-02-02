@@ -8,6 +8,15 @@ resource "routeros_interface_vlan" "iot" {
   vlan_id   = 1769
 }
 
+# =================================================================================================
+# Interface List Member
+# https://registry.terraform.io/providers/terraform-routeros/routeros/latest/docs/resources/interface_list_member
+# =================================================================================================
+resource "routeros_interface_list_member" "iot_lan" {
+  interface = routeros_interface_vlan.iot.name
+  list      = routeros_interface_list.lan.name
+}
+
 
 # =================================================================================================
 # IP Address
@@ -47,7 +56,12 @@ resource "routeros_interface_bridge_vlan" "iot" {
 resource "routeros_ip_pool" "iot_dhcp" {
   name    = "iot-dhcp-pool"
   comment = "IoT DHCP Pool"
-  ranges  = ["172.16.69.10-172.16.69.250"]
+  ranges  = ["172.16.69.10-172.16.69.200"]
+}
+resource "routeros_ip_firewall_addr_list" "iot_internet" {
+  list    = "iot_internet"
+  comment = "IoT IPs allowed to the internet."
+  address = "172.16.69.201-172.16.69.250"
 }
 resource "routeros_ip_dhcp_server_network" "iot" {
   comment    = "IoT DHCP Network"

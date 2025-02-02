@@ -8,6 +8,15 @@ resource "routeros_interface_vlan" "kubernetes" {
   vlan_id   = 1010
 }
 
+# =================================================================================================
+# Interface List Member
+# https://registry.terraform.io/providers/terraform-routeros/routeros/latest/docs/resources/interface_list_member
+# =================================================================================================
+resource "routeros_interface_list_member" "kubernetes_lan" {
+  interface = routeros_interface_vlan.kubernetes.name
+  list      = routeros_interface_list.lan.name
+}
+
 
 # =================================================================================================
 # IP Address
@@ -48,6 +57,11 @@ resource "routeros_ip_pool" "kubernetes_dhcp" {
   name    = "kubernetes-dhcp-pool"
   comment = "kubernetes DHCP Pool"
   ranges  = ["10.0.10.195-10.0.10.199"]
+}
+resource "routeros_ip_firewall_addr_list" "k8s_services" {
+  list    = "k8s_services"
+  comment = "IPs allocated to K8S Services."
+  address = "10.0.10.90-10.0.10.99"
 }
 resource "routeros_ip_dhcp_server_network" "kubernetes" {
   comment    = "kubernetes DHCP Network"
