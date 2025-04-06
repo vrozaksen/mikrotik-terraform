@@ -46,3 +46,6 @@ age.key
 !*.sops
 
 .task/checksum
+
+# Configs that i don't need rn
+*.tf-ar

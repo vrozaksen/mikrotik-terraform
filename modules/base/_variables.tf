@@ -8,7 +8,7 @@ variable "hostname" {
 
 variable "timezone" {
   type        = string
-  default     = "Europe/Bucharest"
+  default     = "Europe/Warsaw"
   description = "The timezone to set on the device."
 }
 
@@ -43,19 +43,19 @@ variable "certificate_common_name" {
 
 variable "certificate_country" {
   type        = string
-  default     = "RO"
+  default     = "PL"
   description = "Country code for the device certificate."
 }
 
 variable "certificate_locality" {
   type        = string
-  default     = "BUC"
+  default     = "STC"
   description = "Locality for the device certificate."
 }
 
 variable "certificate_organization" {
   type        = string
-  default     = "MIRCEANTON"
+  default     = "VZKN"
   description = "Organization for the device certificate."
 }
 

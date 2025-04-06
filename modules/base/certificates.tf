@@ -1,5 +1,3 @@
-
-
 ## ================================================================================================
 ## System Certificate
 ## https://registry.terraform.io/providers/terraform-routeros/routeros/latest/docs/resources/system_certificate

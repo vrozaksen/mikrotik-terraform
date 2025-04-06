@@ -10,20 +10,148 @@ resource "routeros_ip_firewall_nat" "wan" {
   out_interface_list = routeros_interface_list.wan.name
 }
 
-
 resource "routeros_ip_firewall_addr_list" "k8s_services" {
   provider = routeros.rb5009
   list     = "k8s_services"
   comment  = "IPs allocated to K8S Services."
-  address  = "10.0.10.90-10.0.10.99"
+  address  = "10.10.0.20-10.10.0.29"
 }
 resource "routeros_ip_firewall_addr_list" "iot_internet" {
   provider = routeros.rb5009
   list     = "iot_internet"
   comment  = "IoT IPs allowed to the internet."
-  address  = "172.16.69.201-172.16.69.250"
+  address  = "10.20.0.201-10.20.0.250"
 }
 
+# =================================================================================================
+# Port Forwarding Rules
+# =================================================================================================
+# qBit
+resource "routeros_ip_firewall_nat" "port_forward_udp_54535" {
+  provider     = routeros.rb5009
+  comment      = "Port forwarding to 10.10.0.31 UDP 54535"
+  chain        = "dstnat"
+  action       = "dst-nat"
+  protocol     = "udp"
+  dst_port     = "54535"
+  to_addresses = "10.10.0.31"
+  to_ports     = "54535"
+}
+
+# Minecraft
+resource "routeros_ip_firewall_nat" "port_forward_minecraft" {
+  provider     = routeros.rb5009
+  comment      = "Port forwarding to Minecraft server 10.10.0.90 UDP 25565"
+  chain        = "dstnat"
+  action       = "dst-nat"
+  protocol     = "udp"
+  dst_port     = "25565"
+  to_addresses = "10.10.0.90"
+  to_ports     = "25565"
+}
+
+# Mumble HTTP (TCP 80)
+resource "routeros_ip_firewall_nat" "port_forward_mumble_http" {
+  provider     = routeros.rb5009
+  comment      = "Port forwarding to Mumble HTTP 10.10.0.99 TCP 80"
+  chain        = "dstnat"
+  action       = "dst-nat"
+  protocol     = "tcp"
+  dst_port     = "80"
+  to_addresses = "10.10.0.99"
+  to_ports     = "80"
+}
+
+# Mumble (TCP/UDP 64738)
+resource "routeros_ip_firewall_nat" "port_forward_mumble_tcp" {
+  provider     = routeros.rb5009
+  comment      = "Port forwarding to Mumble 10.10.0.99 TCP 64738"
+  chain        = "dstnat"
+  action       = "dst-nat"
+  protocol     = "tcp"
+  dst_port     = "64738"
+  to_addresses = "10.10.0.99"
+  to_ports     = "64738"
+}
+
+resource "routeros_ip_firewall_nat" "port_forward_mumble_udp" {
+  provider     = routeros.rb5009
+  comment      = "Port forwarding to Mumble 10.10.0.99 UDP 64738"
+  chain        = "dstnat"
+  action       = "dst-nat"
+  protocol     = "udp"
+  dst_port     = "64738"
+  to_addresses = "10.10.0.99"
+  to_ports     = "64738"
+}
+
+# Neko (TCP 8080)
+resource "routeros_ip_firewall_nat" "port_forward_neko_http" {
+  provider     = routeros.rb5009
+  comment      = "Port forwarding to Neko 10.10.0.98 TCP 8080"
+  chain        = "dstnat"
+  action       = "dst-nat"
+  protocol     = "tcp"
+  dst_port     = "8080"
+  to_addresses = "10.10.0.98"
+  to_ports     = "8080"
+}
+
+# Neko WebRTC (TCP/UDP 5100)
+resource "routeros_ip_firewall_nat" "port_forward_neko_webrtc_tcp" {
+  provider     = routeros.rb5009
+  comment      = "Port forwarding to Neko WebRTC 10.10.0.98 TCP 5100"
+  chain        = "dstnat"
+  action       = "dst-nat"
+  protocol     = "tcp"
+  dst_port     = "5100"
+  to_addresses = "10.10.0.98"
+  to_ports     = "5100"
+}
+
+resource "routeros_ip_firewall_nat" "port_forward_neko_webrtc_udp" {
+  provider     = routeros.rb5009
+  comment      = "Port forwarding to Neko WebRTC 10.10.0.98 UDP 5100"
+  chain        = "dstnat"
+  action       = "dst-nat"
+  protocol     = "udp"
+  dst_port     = "5100"
+  to_addresses = "10.10.0.98"
+  to_ports     = "5100"
+}
+
+# =================================================================================================
+# IoT > Servers
+# =================================================================================================
+# Emby
+resource "routeros_ip_firewall_filter" "allow_iot_to_emby" {
+  provider         = routeros.rb5009
+  comment          = "Allow IoT to access Emby 10.10.0.32 TCP 8096"
+  action           = "accept"
+  chain            = "forward"
+  protocol         = "tcp"
+  dst_port         = "8096"
+  dst_address      = "10.10.0.32"
+  src_address_list = "iot_internet"
+  in_interface     = local.vlans.IoT.name
+  out_interface    = local.vlans.Servers.name
+  place_before     = routeros_ip_firewall_filter.drop_iot_forward.id
+}
+
+# Home Assistant
+resource "routeros_ip_firewall_filter" "allow_iot_to_home_assistant" {
+  provider         = routeros.rb5009
+  comment          = "Allow IoT to access Home Assistant 10.10.0.60 TCP 8123"
+  action           = "accept"
+  chain            = "forward"
+  protocol         = "tcp"
+  dst_port         = "8123"
+  dst_address      = "10.10.0.60"
+  src_address_list = "iot_internet"
+  in_interface     = local.vlans.IoT.name
+  out_interface    = local.vlans.Servers.name
+  place_before     = routeros_ip_firewall_filter.drop_iot_forward.id
+}
 
 # =================================================================================================
 # Firewall Rules
@@ -45,16 +173,6 @@ resource "routeros_ip_firewall_filter" "accept_established_related_untracked_for
   action           = "accept"
   chain            = "forward"
   connection_state = "established,related,untracked"
-  place_before     = routeros_ip_firewall_filter.truenas_asymmetric_routing_fix.id
-}
-resource "routeros_ip_firewall_filter" "truenas_asymmetric_routing_fix" {
-  provider         = routeros.rb5009
-  comment          = "TrueNAS Asymmetric Routing Fix"
-  action           = "accept"
-  chain            = "forward"
-  connection_state = "invalid"
-  in_interface     = "Trusted"
-  out_interface    = "Servers"
   place_before     = routeros_ip_firewall_filter.drop_invalid_forward.id
 }
 resource "routeros_ip_firewall_filter" "drop_invalid_forward" {
@@ -186,77 +304,9 @@ resource "routeros_ip_firewall_filter" "drop_iot_input" {
   action       = "drop"
   chain        = "input"
   in_interface = local.vlans.IoT.name
-  place_before = routeros_ip_firewall_filter.allow_untrusted_to_internet.id
-  # log          = true
-  # log_prefix   = "DROPPED IoT INPUT:"
-}
-
-# UNTRUSTED
-resource "routeros_ip_firewall_filter" "allow_untrusted_to_internet" {
-  provider           = routeros.rb5009
-  comment            = "Allow Untrusted to Internet"
-  action             = "accept"
-  chain              = "forward"
-  in_interface       = local.vlans.Untrusted.name
-  out_interface_list = routeros_interface_list.wan.name
-  place_before       = routeros_ip_firewall_filter.allow_untrusted_to_iot.id
-}
-resource "routeros_ip_firewall_filter" "allow_untrusted_to_iot" {
-  provider      = routeros.rb5009
-  comment       = "Allow Untrusted to IoT"
-  action        = "accept"
-  chain         = "forward"
-  in_interface  = local.vlans.Untrusted.name
-  out_interface = local.vlans.IoT.name
-  place_before  = routeros_ip_firewall_filter.allow_untrusted_to_k8s.id
-}
-resource "routeros_ip_firewall_filter" "allow_untrusted_to_k8s" {
-  provider         = routeros.rb5009
-  comment          = "Allow Untrusted to K8S Services"
-  action           = "accept"
-  chain            = "forward"
-  in_interface     = local.vlans.Untrusted.name
-  out_interface    = local.vlans.Kubernetes.name
-  dst_address_list = routeros_ip_firewall_addr_list.k8s_services.list
-  place_before     = routeros_ip_firewall_filter.drop_untrusted_forward.id
-}
-resource "routeros_ip_firewall_filter" "drop_untrusted_forward" {
-  provider     = routeros.rb5009
-  comment      = "Drop all Untrusted forward"
-  action       = "drop"
-  chain        = "forward"
-  in_interface = local.vlans.Untrusted.name
-  place_before = routeros_ip_firewall_filter.allow_untrusted_dns_tcp.id
-  # log          = true
-  # log_prefix   = "DROPPED Untrusted FORWARD:"
-}
-resource "routeros_ip_firewall_filter" "allow_untrusted_dns_tcp" {
-  provider     = routeros.rb5009
-  comment      = "Allow local DNS (TCP) for Untrusted"
-  action       = "accept"
-  chain        = "input"
-  protocol     = "tcp"
-  in_interface = local.vlans.Untrusted.name
-  place_before = routeros_ip_firewall_filter.allow_untrusted_dns_udp.id
-}
-resource "routeros_ip_firewall_filter" "allow_untrusted_dns_udp" {
-  provider     = routeros.rb5009
-  comment      = "Allow local DNS (UDP) for Untrusted"
-  action       = "accept"
-  chain        = "input"
-  protocol     = "udp"
-  in_interface = local.vlans.Untrusted.name
-  place_before = routeros_ip_firewall_filter.drop_untrusted_input.id
-}
-resource "routeros_ip_firewall_filter" "drop_untrusted_input" {
-  provider     = routeros.rb5009
-  comment      = "Drop all Untrusted input"
-  action       = "drop"
-  chain        = "input"
-  in_interface = local.vlans.Untrusted.name
   place_before = routeros_ip_firewall_filter.allow_servers_to_internet.id
   # log          = true
-  # log_prefix   = "DROPPED Untrusted INPUT:"
+  # log_prefix   = "DROPPED IoT INPUT:"
 }
 
 # SERVERS
@@ -303,58 +353,9 @@ resource "routeros_ip_firewall_filter" "drop_servers_input" {
   action       = "drop"
   chain        = "input"
   in_interface = local.vlans.Servers.name
-  place_before = routeros_ip_firewall_filter.allow_kubernetes_to_internet.id
-  # log          = true
-  # log_prefix   = "DROPPED Servers INPUT:"
-}
-
-# KUBERNETES
-resource "routeros_ip_firewall_filter" "allow_kubernetes_to_internet" {
-  provider           = routeros.rb5009
-  comment            = "Allow Kubernetes to Internet"
-  action             = "accept"
-  chain              = "forward"
-  in_interface       = local.vlans.Kubernetes.name
-  out_interface_list = routeros_interface_list.wan.name
-  place_before       = routeros_ip_firewall_filter.drop_kubernetes_forward.id
-}
-resource "routeros_ip_firewall_filter" "drop_kubernetes_forward" {
-  provider     = routeros.rb5009
-  comment      = "Drop all Kubernetes forward"
-  action       = "drop"
-  chain        = "forward"
-  in_interface = local.vlans.Kubernetes.name
-  place_before = routeros_ip_firewall_filter.allow_kubernetes_dns_tcp.id
-  # log          = true
-  # log_prefix   = "DROPPED Kubernetes FORWARD:"
-}
-resource "routeros_ip_firewall_filter" "allow_kubernetes_dns_tcp" {
-  provider     = routeros.rb5009
-  comment      = "Allow local DNS (TCP) for Kubernetes"
-  action       = "accept"
-  chain        = "input"
-  protocol     = "tcp"
-  in_interface = local.vlans.Kubernetes.name
-  place_before = routeros_ip_firewall_filter.allow_kubernetes_dns_udp.id
-}
-resource "routeros_ip_firewall_filter" "allow_kubernetes_dns_udp" {
-  provider     = routeros.rb5009
-  comment      = "Allow local DNS (UDP) for Kubernetes"
-  action       = "accept"
-  chain        = "input"
-  protocol     = "udp"
-  in_interface = local.vlans.Kubernetes.name
-  place_before = routeros_ip_firewall_filter.drop_kubernetes_input.id
-}
-resource "routeros_ip_firewall_filter" "drop_kubernetes_input" {
-  provider     = routeros.rb5009
-  comment      = "Drop all Kubernetes input"
-  action       = "drop"
-  chain        = "input"
-  in_interface = local.vlans.Kubernetes.name
   place_before = routeros_ip_firewall_filter.drop_all_forward.id
   # log          = true
-  # log_prefix   = "DROPPED Kubernetes INPUT:"
+  # log_prefix   = "DROPPED Servers INPUT:"
 }
 
 # DEFAULT DENY

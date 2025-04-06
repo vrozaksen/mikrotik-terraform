@@ -8,7 +8,7 @@ resource "routeros_ip_dns" "dns-server" {
   servers               = local.upstream_dns
   cache_size            = 8192
   cache_max_ttl         = "1d"
-  mdns_repeat_ifaces    = [local.vlans.IoT.name, local.vlans.Untrusted.name]
+  mdns_repeat_ifaces    = [local.vlans.IoT.name, local.vlans.Trusted.name]
 }
 
 # =================================================================================================
@@ -16,8 +16,9 @@ resource "routeros_ip_dns" "dns-server" {
 # https://registry.terraform.io/providers/terraform-routeros/routeros/latest/docs/resources/ip_dns_adlist
 # =================================================================================================
 resource "routeros_ip_dns_adlist" "dns_blocker" {
+  for_each = local.adlists
   provider = routeros.rb5009
-  url      = local.adlist
+  url      = each.value.url
 }
 
 # =================================================================================================

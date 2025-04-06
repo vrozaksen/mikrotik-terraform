@@ -9,7 +9,6 @@ resource "routeros_interface_bridge" "bridge" {
   vlan_filtering = true
 }
 
-
 # =================================================================================================
 # Bridge Ports
 # https://registry.terraform.io/providers/terraform-routeros/routeros/latest/docs/resources/interface_bridge_port
