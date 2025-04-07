@@ -154,7 +154,7 @@ resource "routeros_ip_firewall_filter" "allow_iot_to_home_assistant" {
   place_before     = routeros_ip_firewall_filter.drop_all_forward.id
 }
 
-### Default Deny Rules (najniższy priorytet)
+### Default Deny Rules
 resource "routeros_ip_firewall_filter" "drop_all_forward" {
   provider     = routeros.rb5009
   comment      = "Auto-Generated: Default drop all forward"
