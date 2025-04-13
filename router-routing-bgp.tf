@@ -4,26 +4,90 @@ locals {
     "k8s-node-2" = { ip = "10.10.0.22/32" },
     "k8s-node-3" = { ip = "10.10.0.23/32" }
   }
+  asn_rb5009 = 64513
+  asn_crs326 = 64514
+  asn_k8s    = 64515
 }
 
 # =================================================================================================
 # BGP Connection
 # https://registry.terraform.io/providers/terraform-routeros/routeros/latest/docs/resources/routing_bgp_connection
 # =================================================================================================
+resource "routeros_routing_bgp_connection" "rb5009_to_crs326" {
+  provider  = routeros.rb5009
+  name      = "CRS326_UPLINK"
+  as        = local.asn_rb5009
+  router_id = "10.10.0.1"
+  local {
+    role    = "ebgp"
+    address = "10.10.0.1"
+    ttl     = 2
+  }
+  remote {
+    address = "10.10.0.2"
+    as      = local.asn_crs326
+  }
+  address_families = "ip"
+  multihop         = true
+}
+resource "routeros_routing_bgp_connection" "crs326_to_rb5009" {
+  provider  = routeros.crs326
+  name      = "RB5009_UPLINK"
+  as        = local.asn_crs326
+  router_id = "10.10.0.2"
+  local {
+    role    = "ebgp"
+    address = "10.10.0.2"
+    ttl     = 2
+  }
+  remote {
+    address = "10.10.0.1"
+    as      = local.asn_rb5009
+  }
+}
 
-resource "routeros_routing_bgp_connection" "k8s_peers" {
+
+resource "routeros_routing_bgp_connection" "k8s_peers_rb5009" {
   provider = routeros.rb5009
   for_each = local.k8s_peers
 
   name             = upper(replace(each.key, "-", "_"))
-  as               = "64513"
+  as               = local.asn_rb5009
+  router_id        = "10.10.0.1"
   address_families = "ip"
   nexthop_choice   = "force-self"
 
   hold_time      = "1m30s"
   keepalive_time = "60s"
+  multihop       = true
+  local {
+    role    = "ebgp"
+    address = "10.10.0.1"
+    ttl     = 2
+  }
+  remote { address = each.value.ip }
+  output { default_originate = "always" }
+}
 
-  local { role = "ebgp" }
+# Peerzy CRS326 ↔ k8s-node
+resource "routeros_routing_bgp_connection" "k8s_peers_crs326" {
+  provider = routeros.crs326
+  for_each = local.k8s_peers
+
+  name             = upper(replace(each.key, "-", "_"))
+  as               = local.asn_crs326
+  router_id        = "10.10.0.2"
+  address_families = "ip"
+  nexthop_choice   = "force-self"
+
+  hold_time      = "1m30s"
+  keepalive_time = "60s"
+  multihop       = true
+  local {
+    role    = "ebgp"
+    address = "10.10.0.2"
+    ttl     = 2
+  }
   remote { address = each.value.ip }
   output { default_originate = "always" }
 }

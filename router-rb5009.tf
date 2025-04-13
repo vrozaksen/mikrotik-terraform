@@ -26,9 +26,9 @@ module "rb5009" {
     "ether1" = { comment = "Vectra Uplink", bridge_port = false }
     "ether2" = { comment = "SLZB", untagged = local.vlans.Servers.name }
     "ether3" = { comment = "Aincrad", untagged = local.vlans.Servers.name }
-    "ether4" = { comment = "k8s_1", untagged = local.vlans.Servers.name }
-    "ether5" = { comment = "k8s_2", untagged = local.vlans.Servers.name }
-    "ether6" = { comment = "k8s_3", untagged = local.vlans.Servers.name }
+    "ether4" = { comment = "k8s_1", untagged = local.vlans.Servers.name, tagged = [local.vlans.IoT.name] } # TODO
+    "ether5" = { comment = "k8s_2", untagged = local.vlans.Servers.name, tagged = [local.vlans.IoT.name] } # TODO
+    "ether6" = { comment = "k8s_3", untagged = local.vlans.Servers.name, tagged = [local.vlans.IoT.name] } # TODO
     "ether7" = {
       comment  = "EMG",
       untagged = local.vlans.Trusted.name
@@ -39,10 +39,30 @@ module "rb5009" {
       untagged = local.vlans.Servers.name
       tagged   = [local.vlans.Trusted.name, local.vlans.Guest.name, local.vlans.IoT.name]
     }
-    "sfp-sfpplus1" = { comment = "Switch Downlink", tagged = local.all_vlans  } # mtu = 1514 mtu = 9216
+    "sfp-sfpplus1" = { comment = "Switch Downlink", tagged = local.all_vlans, mtu = 9216 } # mtu = 1514 
   }
 }
 
+# =================================================================================================
+# DHCP Client
+# https://registry.terraform.io/providers/terraform-routeros/routeros/latest/docs/resources/ip_dhcp_client
+# =================================================================================================
+resource "routeros_ip_dhcp_client" "vectra" {
+  provider               = routeros.rb5009
+  interface              = "ether1"
+  add_default_route      = "yes"
+  comment                = "Vectra DHCP Client"
+  default_route_distance = 1
+  disabled               = false
+  dhcp_options           = "hostname,clientid"
+  use_peer_dns           = false
+  use_peer_ntp           = false
+}
+
+# =================================================================================================
+# SNMP 
+# https://registry.terraform.io/providers/terraform-routeros/routeros/latest/docs/resources/snmp
+# =================================================================================================
 resource "routeros_snmp" "snmp" {
   provider = routeros.rb5009
   contact  = var.snmp_contact

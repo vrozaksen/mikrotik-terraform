@@ -115,6 +115,7 @@ variable "ethernet_interfaces" {
     disabled                 = optional(bool)
     sfp_shutdown_temperature = optional(number)
     bridge_port              = optional(bool, true)
+    bond                     = optional(bool, false)
     # VLAN configurations
     tagged   = optional(list(string)) # list of VLAN names
     untagged = optional(string)       # VLAN name for untagged traffic

@@ -1,5 +1,8 @@
 resource "routeros_interface_ethernet" "ethernet" {
-  for_each = var.ethernet_interfaces
+  for_each = {
+    for k, v in var.ethernet_interfaces : k => v
+    if v.bond != true
+  }
 
   factory_name = each.key
   name         = each.key
