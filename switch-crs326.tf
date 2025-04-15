@@ -26,7 +26,7 @@ module "crs326" {
     # "ether1" = { comment = "MGMT", untagged = local.vlans.Servers.name }
     "sfp-sfpplus1"  = { comment = "Uplink", tagged = local.all_vlans, mtu = 9216 }
     "sfp-sfpplus2"  = { comment = "Uplink", tagged = local.all_vlans, mtu = 9216 }
-    "sfp-sfpplus3"  = { comment = "K8S_1", mtu = 9216, bridge_port = false } # , untagged = local.vlans.Servers.name, tagged = [local.vlans.IoT.name]
+    "sfp-sfpplus3"  = { comment = "K8S_1", mtu = 9216, bridge_port = false }
     "sfp-sfpplus4"  = { comment = "K8S_1", mtu = 9216, bridge_port = false }
     "sfp-sfpplus5"  = { comment = "K8S_2", mtu = 9216, bridge_port = false }
     "sfp-sfpplus6"  = { comment = "K8S_2", mtu = 9216, bridge_port = false }

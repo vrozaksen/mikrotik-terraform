@@ -18,7 +18,7 @@ resource "routeros_ip_firewall_addr_list" "trusted_devices" {
   provider = routeros.rb5009
   list     = "st_trusted_devices"
   comment  = "Static: Devices with full trusted access"
-  address  = "10.100.0.100-10.100.0.102"
+  address  = "10.100.0.100-10.100.0.104"
 }
 
 # Dynamic lists (auto-generated)

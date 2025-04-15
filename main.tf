@@ -71,9 +71,9 @@ locals {
         "10.10.0.8"  = { name = "HORRACO", mac = "1C:2A:A3:1E:5B:5A" }
         "10.10.0.9"  = { name = "EAP620", mac = "10:27:F5:33:9A:B2" }
         "10.10.0.11" = { name = "aincrad", mac = "E0:D5:5E:E2:3D:82" }
-        "10.10.0.21" = { name = "alfheim", mac = "00:E0:4C:68:07:2C" } # TODO
-        "10.10.0.22" = { name = "alne", mac = "00:E0:4C:68:07:B6" } # TODO
-        # "10.10.0.23" = { name = "ainias", mac = "00:E0:4C:68:0B:53" } # TODO
+        "10.10.0.21" = { name = "alfheim", mac = "F8:F2:1E:CD:7A:30" }
+        "10.10.0.22" = { name = "alne", mac = "3C:FD:FE:02:06:80" }
+        "10.10.0.23" = { name = "ainias", mac = "F8:F2:1E:75:35:20" }
         "10.10.0.65" = { name = "slzb", mac = "F4:65:0B:44:F3:EB" }
       }
     },
@@ -125,7 +125,9 @@ locals {
       static_leases = {
         "10.100.0.100" = { name = "vx-prime-cable", mac = "10:FF:E0:35:10:A4" }
         "10.100.0.101" = { name = "vx-prime-wlan", mac = "BA:AB:C8:6B:62:19" }
-        "10.100.0.102" = { name = "vx-t480-wlan", mac = "8E:80:A3:1F:3D:3B" }
+        "10.100.0.102" = { name = "vx-prime-10g-1", mac = "9C:DC:71:46:0F:20" }
+        "10.100.0.103" = { name = "vx-prime-10g-2", mac = "9C:DC:71:46:0F:21" }
+        "10.100.0.104" = { name = "vx-t480-wlan", mac = "8E:80:A3:1F:3D:3B" }
       }
     }
   }
