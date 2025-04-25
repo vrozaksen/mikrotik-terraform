@@ -80,7 +80,18 @@ resource "routeros_ip_firewall_filter" "allow_trusted_forward" {
   action       = "accept"
   chain        = "forward"
   in_interface = local.vlans.Trusted.name
-  place_before = routeros_ip_firewall_filter.allow_dns_udp.id
+  place_before = routeros_ip_firewall_filter.accept_k8s_services_input.id
+}
+
+### Servers Special Rules
+resource "routeros_ip_firewall_filter" "accept_k8s_services_input" {
+  provider         = routeros.rb5009
+  comment          = "Auto-Generated: Full access for Trusted_Devices (input) - API"
+  action           = "accept"
+  chain            = "input"
+  in_interface     = local.vlans.Servers.name
+  src_address_list = "st_k8s_services"
+  place_before     = routeros_ip_firewall_filter.allow_dns_udp.id
 }
 
 ### Service Rules

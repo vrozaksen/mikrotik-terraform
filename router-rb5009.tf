@@ -39,7 +39,7 @@ module "rb5009" {
       untagged = local.vlans.Servers.name
       tagged   = [local.vlans.Trusted.name, local.vlans.Guest.name, local.vlans.IoT.name]
     }
-    "sfp-sfpplus1" = { comment = "Switch Downlink", tagged = local.all_vlans, mtu = 9216 } # mtu = 1514 
+    "sfp-sfpplus1" = { comment = "Switch Downlink", tagged = local.all_vlans, mtu = 9000 } # mtu = 1514 
   }
 }
 

@@ -24,16 +24,16 @@ module "crs326" {
   vlans = local.vlans
   ethernet_interfaces = {
     # "ether1" = { comment = "MGMT", untagged = local.vlans.Servers.name }
-    "sfp-sfpplus1"  = { comment = "Uplink", tagged = local.all_vlans, mtu = 9216 }
-    "sfp-sfpplus2"  = { comment = "Uplink", tagged = local.all_vlans, mtu = 9216 }
-    "sfp-sfpplus3"  = { comment = "K8S_1", mtu = 9216, bridge_port = false }
-    "sfp-sfpplus4"  = { comment = "K8S_1", mtu = 9216, bridge_port = false }
-    "sfp-sfpplus5"  = { comment = "K8S_2", mtu = 9216, bridge_port = false }
-    "sfp-sfpplus6"  = { comment = "K8S_2", mtu = 9216, bridge_port = false }
-    "sfp-sfpplus7"  = { comment = "K8S_3", mtu = 9216, bridge_port = false }
-    "sfp-sfpplus8"  = { comment = "K8S_3", mtu = 9216, bridge_port = false }
-    "sfp-sfpplus9"  = { comment = "SRV", untagged = local.vlans.Servers.name, tagged = [local.vlans.IoT.name], mtu = 9216 }
-    "sfp-sfpplus10" = { comment = "SRV", untagged = local.vlans.Servers.name, tagged = [local.vlans.IoT.name], mtu = 9216 }
+    "sfp-sfpplus1"  = { comment = "Uplink", tagged = local.all_vlans, mtu = 9000 }
+    "sfp-sfpplus2"  = { comment = "Uplink", tagged = local.all_vlans, mtu = 9000 }
+    "sfp-sfpplus3"  = { comment = "K8S_1", mtu = 9000, bridge_port = false }
+    "sfp-sfpplus4"  = { comment = "K8S_1", mtu = 9000, bridge_port = false }
+    "sfp-sfpplus5"  = { comment = "K8S_2", mtu = 9000, bridge_port = false }
+    "sfp-sfpplus6"  = { comment = "K8S_2", mtu = 9000, bridge_port = false }
+    "sfp-sfpplus7"  = { comment = "K8S_3", mtu = 9000, bridge_port = false }
+    "sfp-sfpplus8"  = { comment = "K8S_3", mtu = 9000, bridge_port = false }
+    "sfp-sfpplus9"  = { comment = "SRV", untagged = local.vlans.Servers.name, tagged = [local.vlans.IoT.name], mtu = 9000 }
+    "sfp-sfpplus10" = { comment = "SRV", untagged = local.vlans.Servers.name, tagged = [local.vlans.IoT.name], mtu = 9000 }
     "sfp-sfpplus11" = {}
     "sfp-sfpplus12" = {}
     "sfp-sfpplus13" = {}
@@ -50,6 +50,7 @@ module "crs326" {
       comment  = "Trusted",
       untagged = local.vlans.Trusted.name
       tagged   = [local.vlans.Servers.name, local.vlans.Guest.name, local.vlans.IoT.name]
+      mtu = 9000
     }
     "sfp-sfpplus24" = {
       comment  = "Trusted",
@@ -64,9 +65,9 @@ module "crs326" {
     "qsfpplus2-2" = {}
     "qsfpplus2-3" = {}
     "qsfpplus2-4" = {}
-    "K8S_1" = { comment = "K8S_1", untagged = local.vlans.Servers.name, tagged = [local.vlans.IoT.name], mtu = 9216, bond = true }
-    "K8S_2" = { comment = "K8S_2", untagged = local.vlans.Servers.name, tagged = [local.vlans.IoT.name], mtu = 9216, bond = true }
-    "K8S_3" = { comment = "K8S_3", untagged = local.vlans.Servers.name, tagged = [local.vlans.IoT.name], mtu = 9216, bond = true }
+    "K8S_1" = { comment = "K8S_1", untagged = local.vlans.Servers.name, tagged = [local.vlans.IoT.name], mtu = 9000, bond = true }
+    "K8S_2" = { comment = "K8S_2", untagged = local.vlans.Servers.name, tagged = [local.vlans.IoT.name], mtu = 9000, bond = true }
+    "K8S_3" = { comment = "K8S_3", untagged = local.vlans.Servers.name, tagged = [local.vlans.IoT.name], mtu = 9000, bond = true }
   }
 }
 
@@ -89,31 +90,34 @@ resource "routeros_interface_bonding" "K8S_1" {
   name                 = "K8S_1"
   slaves               = ["sfp-sfpplus3", "sfp-sfpplus4"]
   link_monitoring      = "mii"
-  mii_interval         = 1000
+  mii_interval         = "1s"
   min_links            = 1
   mode                 = "802.3ad"
   mtu                  = 9000
   transmit_hash_policy = "layer-3-and-4"
+  lacp_rate = "1sec"
 }
 resource "routeros_interface_bonding" "K8S_2" {
   provider             = routeros.crs326
   name                 = "K8S_2"
   slaves               = ["sfp-sfpplus5", "sfp-sfpplus6"]
   link_monitoring      = "mii"
-  mii_interval         = 1000
+  mii_interval         = "1s"
   min_links            = 1
   mode                 = "802.3ad"
   mtu                  = 9000
   transmit_hash_policy = "layer-3-and-4"
+  lacp_rate = "1sec"
 }
 resource "routeros_interface_bonding" "K8S_3" {
   provider             = routeros.crs326
   name                 = "K8S_3"
   slaves               = ["sfp-sfpplus7", "sfp-sfpplus8"]
   link_monitoring      = "mii"
-  mii_interval         = 1000
+  mii_interval         = "1s"
   min_links            = 1
   mode                 = "802.3ad"
   mtu                  = 9000
   transmit_hash_policy = "layer-3-and-4"
+  lacp_rate = "1sec"
 }
