@@ -45,14 +45,17 @@ locals {
     "Lightswitch05_AMP" = { url = "https://www.github.developerdan.com/hosts/lists/amp-hosts-extended.txt" }
   }
   static_dns = {
+    # Core
     "router.home.vzkn.eu"  = { address = "10.10.0.1", type = "A", comment = "RB5009" },
     "switch.home.vzkn.eu"  = { address = "10.10.0.2", type = "A", comment = "CRS326" },
+    # NAS
     "aincrad.home.vzkn.eu" = { address = "10.10.0.11", type = "A", comment = "Aincrad-NAS" },
     "caddy.home.vzkn.eu"   = { address = "10.10.0.11", type = "A", comment = "Aincrad-Caddy" },
     "s3.vzkn.eu"           = { address = "10.10.0.11", type = "A", comment = "Aincrad-Minio" },
-    "s3c.vzkn.eu"          = { address = "10.10.0.11", type = "A", comment = "Aincrad-MinioA" },
-    "slzb.home.vzkn.eu"    = { address = "10.10.0.65", type = "A", comment = "SLZB" },
+    "s3c.vzkn.eu"          = { address = "10.10.0.11", type = "A", comment = "Aincrad-Minio-Console" },
     "stash.vzkn.eu"        = { address = "10.10.0.11", type = "A", comment = "Aincrad-Stash" },
+    # HASS ZigBee
+    "slzb.home.vzkn.eu"    = { address = "10.10.0.65", type = "A", comment = "SLZB" },
   }
 
   all_vlans = [for vlan in local.vlans : vlan.name]
@@ -67,13 +70,16 @@ locals {
       dns_servers = ["10.10.0.1"]
       domain      = "srv.h.vzkn.eu"
       static_leases = {
+        # Routing Switching WiFing
         "10.10.0.2"  = { name = "CRS326", mac = "F4:1E:57:9E:6D:A1" }
         "10.10.0.8"  = { name = "HORRACO", mac = "1C:2A:A3:1E:5B:5A" }
-        "10.10.0.9"  = { name = "EAP620", mac = "10:27:F5:33:9A:B2" }
+        "10.10.0.9"  = { name = "wAP-AX", mac = "F4:1E:57:80:43:C3" }
+        # NAS & Kubernetes
         "10.10.0.11" = { name = "aincrad", mac = "E0:D5:5E:E2:3D:82" }
         # "10.10.0.21" = { name = "alfheim", mac = "F8:F2:1E:CD:7A:30" }
         # "10.10.0.22" = { name = "alne", mac = "3C:FD:FE:02:06:80" }
         # "10.10.0.23" = { name = "ainias", mac = "F8:F2:1E:75:35:20" }
+        # HASS ZigBee Coordinator
         "10.10.0.65" = { name = "slzb", mac = "F4:65:0B:44:F3:EB" }
       }
     },
@@ -87,6 +93,7 @@ locals {
       dns_servers = ["10.20.0.1"]
       domain      = "iot.h.vzkn.eu"
       static_leases = {
+        # Smart TV
         "10.20.0.240" = { name = "Chromecast-Living-Room", mac = "DC:E5:5B:8B:E4:EB" }
         "10.20.0.241" = { name = "Chromecast-Bedroom", mac = "BC:C7:DA:9E:0E:EC" }
       }
@@ -123,11 +130,15 @@ locals {
       dns_servers = ["10.100.0.1"]
       domain      = "trst.h.vzkn.eu"
       static_leases = {
+        # VX Main PC
         "10.100.0.100" = { name = "vx-prime-cable", mac = "10:FF:E0:35:10:A4" }
         "10.100.0.101" = { name = "vx-prime-wlan", mac = "1A:F0:F2:74:21:3B" }
         "10.100.0.102" = { name = "vx-prime-10g-1", mac = "9C:DC:71:46:0F:20" }
         "10.100.0.103" = { name = "vx-prime-10g-2", mac = "9C:DC:71:46:0F:21" }
+        # VX Notebook
         "10.100.0.104" = { name = "vx-t480-wlan", mac = "8E:80:A3:1F:3D:3B" }
+        # VX Mobile
+        "10.100.0.110" = { name = "vx-s22-u", mac = "9A:B4:2C:DB:F0:A1" }
       }
     }
   }
