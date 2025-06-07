@@ -28,9 +28,9 @@ data "cloudflare_zone" "main" {
     status = "active"
   }
 }
-data "cloudflare_zone" "secondary" {
-  filter = {
-    name   = "vzkn.eu"
-    status = "active"
-  }
-}
+# data "cloudflare_zone" "secondary" {
+#   filter = {
+#     name   = "vzkn.eu"
+#     status = "active"
+#   }
+# }
