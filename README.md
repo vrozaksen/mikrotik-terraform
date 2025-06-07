@@ -15,77 +15,39 @@ Fundamentally speaking, there is nothing that sets this approach apart from, say
 3. **Because I can**: Not everything in life has to have a good reason. Sometimes reinventing the wheel just to learn or doing things for the heck of it are valid reasons.
 
 ## Network Overview
-
-![Network Diagram](./docs/img/network-diagram.drawio.png)
+*Diagram coming soon!*
 
 This project provides automated deployment and management for the following devices in my infrastructure:
 
-- **RB5009 router** -> main router + firewall + CAPSMAN server
-- **cAP AX Access Point** -> provisioned via CAPSMAN
+- **RB5009 router** -> Main router + firewall + CAPSMAN server
 - **CRS326 switch** -> Main Rack Switch
-- **Hex switch** -> Living Room Switch (no AP functionality used here)
-
-I was initially planning to also add some more details about my network, like VLAN setup and wireless networks and whatnot, but then I realised I can't really be bothered to also update those whenever I change something, so if you're curious, feel free to look at the code!
+- **wAP AX Access Point** -> Provisioned via CAPSMAN
 
 ## Project Structure
 
 ```bash
-├── .github/   # GitHub workflow configurations and automation
+├── .github/                     # GitHub workflow configurations and automation
 ├── modules
-│   ├── base        # Base configuration for all devices
-│   └── dhcp-server # DHCP server configuration
-├── .sops.yaml      # SOPS configuration
+│   ├── base                     # Base configuration for all devices
+│   └── dhcp-server              # DHCP server configuration
+├── .mise.toml                   # tool configuration + dev tasks
+├── .sops.yaml                   # SOPS configuration
 ├── credentials.auto.tfvars.sops # SOPS encrypted tfvars file
-├── mise.toml       # tool configuration + dev tasks
-├── main.tf         # Provider configuration + Local variables
-├── router-*.tf               # RB5009 router configurations
-├── switch-*.tf               # Switch device configuration
-├── terraform.tfstate.sops    # SOPS-encrypted TF state file
-└── variables.tf              # Terraform input variables
+├── main.tf                      # Local variables
+├── providers.tf                 # Provider configuration 
+├── router-*.tf                  # RB5009 router configurations
+├── switch-*.tf                  # Switch device configuration
+├── terraform.tfstate.sops       # SOPS-encrypted TF state file
+└── variables.tf                 # Terraform input variables
 ```
-
-## Getting Started
-
-### Requirements
-
-- [Terraform](https://www.terraform.io/) (duh!)
-- [mise](https://mise.jdx.dev/) for managing dependencies and running tasks
-- [SOPS](https://github.com/getsops/sops) for secrets management
-- [age](https://github.com/FiloSottile/age) for encryption
-
-### Initial Device Setup
-
-Before applying Terraform configurations, new Mikrotik devices need minimal setup to enable Terraform management. I will not go into details here, but I did write a [blog post](https://mirceanton.com/posts/mikrotik-terraform-getting-started/) about it in which you can learn more.
-
-### Secrets Management
-
-This project uses SOPS with age for encryption of sensitive data:
-
-1. **Setup environment**:
-
-   ```bash
-   mise install
-   ```
-
-2. **Decrypt secrets** (requires access to the age key):
-
-   ```bash
-   mise run decrypt
-   ```
-
-3. **After making changes, encrypt secrets**:
-
-   ```bash
-   mise run encrypt
-   ```
 
 ### Applying Terraform Configuration
 
 1. **Initialize Terraform**: `terraform init`
-2. **Decrypt secrets**: `mise run decrypt`
-3. **Plan** (and review) **changes**: `mise run plan`
+2. **Decrypt secrets**: `task sops:decrypt`
+3. **Plan** (and review) **changes**: `task terraform:plan`
 4. **Apply changes**: `terraform apply`
-5. **Re-encrypt secrets** (state file, mainly): `mise run encrypt`
+5. **Re-encrypt secrets** (state file, mainly): `task sops:encrypt`
 
 ## Limitations
 
@@ -107,5 +69,11 @@ All that being said, I ultimately decided to open-source this code and publish i
 2. I truly believe this was an interesting project. I hope that seeing this will inspire others to attempt similar projects and in turn also share their experiences.
 
 ## License
+MIT License - Derived from [mirceanton/mikrotik-terraform](https://github.com/mirceanton/mikrotik-terraform).
 
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+See [LICENSE](LICENSE) for full terms.
+
+## Inspiration & Credits
+
+This project was originally inspired by [mirceanton/mikrotik-terraform](https://github.com/mirceanton/mikrotik-terraform).  
+While I've significantly adapted and extended the codebase for my specific needs, the core idea and initial structure owe credit to the original author.
