@@ -2,7 +2,7 @@
 # Provider Configuration
 # =================================================================================================
 provider "routeros" {
-  alias = "rb5009"
+  alias    = "rb5009"
   hosturl  = "https://10.10.0.1"
   username = var.mikrotik_username
   password = var.mikrotik_password
@@ -28,7 +28,7 @@ module "rb5009" {
     "ether3" = { comment = "Aincrad", untagged = local.vlans.Servers.name }
     "ether4" = { comment = "k8s_1", untagged = local.vlans.Servers.name, tagged = [local.vlans.IoT.name] } # TODO
     "ether5" = { comment = "k8s_2", untagged = local.vlans.Servers.name, tagged = [local.vlans.IoT.name] } # TODO
-    "ether6" = { comment = "k8s_3", untagged = local.vlans.Servers.name, tagged = [local.vlans.IoT.name] } # TODO
+    "ether6" = { comment = "pi-nut", untagged = local.vlans.Servers.name }
     "ether7" = {
       comment  = "EMG",
       untagged = local.vlans.Trusted.name
@@ -68,4 +68,28 @@ resource "routeros_snmp" "snmp" {
   contact  = var.snmp_contact
   enabled  = true
   location = "Homelab"
+}
+
+# =================================================================================================
+# Script 
+# https://registry.terraform.io/providers/terraform-routeros/routeros/latest/docs/resources/system_script
+# =================================================================================================
+resource "routeros_system_script" "healthcheck_script" {
+  provider                 = routeros.rb5009
+  name                     = "healthcheck_ping"
+  source                   = "/tool fetch duration=10 output=none http-method=post url=\"https://hc-ping.com/${var.hc_uuid}\";"
+  dont_require_permissions = false
+  policy                   = ["read", "write", "test"]
+}
+
+# =================================================================================================
+# Scheduler
+# https://registry.terraform.io/providers/terraform-routeros/routeros/latest/docs/resources/system_scheduler
+# =================================================================================================
+resource "routeros_system_scheduler" "healthcheck_scheduler" {
+  provider   = routeros.rb5009
+  name       = "healthcheck_scheduler"
+  interval   = "1m"
+  on_event   = routeros_system_script.healthcheck_script.name
+  policy = ["read", "write", "test"]
 }

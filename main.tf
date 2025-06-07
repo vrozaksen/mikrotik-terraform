@@ -46,8 +46,9 @@ locals {
   }
   static_dns = {
     # Core
-    "router.home.vzkn.eu"  = { address = "10.10.0.1", type = "A", comment = "RB5009" },
-    "switch.home.vzkn.eu"  = { address = "10.10.0.2", type = "A", comment = "CRS326" },
+    "router.home.vzkn.eu" = { address = "10.10.0.1", type = "A", comment = "RB5009" },
+    "switch.home.vzkn.eu" = { address = "10.10.0.2", type = "A", comment = "CRS326" },
+    "pi.home.vzkn.eu"     = { address = "10.10.0.10", type = "A", comment = "PI" },
     # NAS
     "aincrad.home.vzkn.eu" = { address = "10.10.0.11", type = "A", comment = "Aincrad-NAS" },
     "caddy.home.vzkn.eu"   = { address = "10.10.0.11", type = "A", comment = "Aincrad-Caddy" },
@@ -55,7 +56,7 @@ locals {
     "s3c.vzkn.eu"          = { address = "10.10.0.11", type = "A", comment = "Aincrad-Minio-Console" },
     "stash.vzkn.eu"        = { address = "10.10.0.11", type = "A", comment = "Aincrad-Stash" },
     # HASS ZigBee
-    "slzb.home.vzkn.eu"    = { address = "10.10.0.65", type = "A", comment = "SLZB" },
+    "slzb.home.vzkn.eu" = { address = "10.10.0.65", type = "A", comment = "SLZB" },
   }
 
   all_vlans = [for vlan in local.vlans : vlan.name]
@@ -70,16 +71,18 @@ locals {
       dns_servers = ["10.10.0.1"]
       domain      = "srv.h.vzkn.eu"
       static_leases = {
-        # Routing Switching WiFing
-        "10.10.0.2"  = { name = "CRS326", mac = "F4:1E:57:9E:6D:A1" }
-        "10.10.0.8"  = { name = "HORRACO", mac = "1C:2A:A3:1E:5B:5A" }
-        "10.10.0.9"  = { name = "wAP-AX", mac = "F4:1E:57:80:43:C3" }
-        # NAS & Kubernetes
+        # Rack - Routing Switching WiFing
+        "10.10.0.2" = { name = "CRS326", mac = "F4:1E:57:9E:6D:A1" }
+        "10.10.0.8" = { name = "HORRACO", mac = "1C:2A:A3:1E:5B:5A" }
+        "10.10.0.9" = { name = "wAP-AX", mac = "F4:1E:57:80:43:C3" }
+        # Rack - NAS & Kubernetes
+        "10.10.0.10" = { name = "pi", mac = "00:E0:4C:36:2A:CD" }
         "10.10.0.11" = { name = "aincrad", mac = "E0:D5:5E:E2:3D:82" }
-        # "10.10.0.21" = { name = "alfheim", mac = "F8:F2:1E:CD:7A:30" }
-        # "10.10.0.22" = { name = "alne", mac = "3C:FD:FE:02:06:80" }
-        # "10.10.0.23" = { name = "ainias", mac = "F8:F2:1E:75:35:20" }
-        # HASS ZigBee Coordinator
+        "10.10.0.21" = { name = "alfheim", mac = "F8:F2:1E:CD:7A:30" }
+        "10.10.0.22" = { name = "alne", mac = "3C:FD:FE:02:06:80" }
+        "10.10.0.23" = { name = "ainias", mac = "44:49:88:03:C7:CC" }
+        "10.10.0.31" = { name = "granzam", mac = "00:E0:4C:68:07:2C" }
+        # Rack - HASS ZigBee Coordinator
         "10.10.0.65" = { name = "slzb", mac = "F4:65:0B:44:F3:EB" }
       }
     },
@@ -93,6 +96,8 @@ locals {
       dns_servers = ["10.20.0.1"]
       domain      = "iot.h.vzkn.eu"
       static_leases = {
+        # Smart Plugs
+        "10.20.0.230" = { name = "Shelly-1", mac = "BC:FF:4D:44:06:CB" }
         # Smart TV
         "10.20.0.240" = { name = "Chromecast-Living-Room", mac = "DC:E5:5B:8B:E4:EB" }
         "10.20.0.241" = { name = "Chromecast-Bedroom", mac = "BC:C7:DA:9E:0E:EC" }

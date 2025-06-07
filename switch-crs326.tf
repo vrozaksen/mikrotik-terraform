@@ -90,34 +90,40 @@ resource "routeros_interface_bonding" "K8S_1" {
   name                 = "K8S_1"
   slaves               = ["sfp-sfpplus3", "sfp-sfpplus4"]
   link_monitoring      = "mii"
-  mii_interval         = "1s"
+  mii_interval         = "100ms"
   min_links            = 1
   mode                 = "802.3ad"
   mtu                  = 9000
   transmit_hash_policy = "layer-3-and-4"
   lacp_rate = "1sec"
+  up_delay = "200ms"
+  down_delay = "200ms"
 }
 resource "routeros_interface_bonding" "K8S_2" {
   provider             = routeros.crs326
   name                 = "K8S_2"
   slaves               = ["sfp-sfpplus5", "sfp-sfpplus6"]
   link_monitoring      = "mii"
-  mii_interval         = "1s"
+  mii_interval         = "100ms"
   min_links            = 1
   mode                 = "802.3ad"
   mtu                  = 9000
   transmit_hash_policy = "layer-3-and-4"
   lacp_rate = "1sec"
+  up_delay = "200ms"
+  down_delay = "200ms"
 }
 resource "routeros_interface_bonding" "K8S_3" {
   provider             = routeros.crs326
   name                 = "K8S_3"
   slaves               = ["sfp-sfpplus7", "sfp-sfpplus8"]
   link_monitoring      = "mii"
-  mii_interval         = "1s"
+  mii_interval         = "100ms"
   min_links            = 1
   mode                 = "802.3ad"
   mtu                  = 9000
   transmit_hash_policy = "layer-3-and-4"
   lacp_rate = "1sec"
+  up_delay = "200ms"
+  down_delay = "200ms"
 }

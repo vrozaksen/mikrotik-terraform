@@ -18,6 +18,12 @@ variable "snmp_contact" {
   sensitive   = true
 }
 
+variable "hc_uuid" {
+  type = string
+  description = "healthchecks.io UUID"
+  sensitive   = true
+}
+
 # ================================================================================================
 # WiFi Variables
 # ================================================================================================
