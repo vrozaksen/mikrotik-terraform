@@ -65,9 +65,24 @@ module "crs326" {
     "qsfpplus2-2" = {}
     "qsfpplus2-3" = {}
     "qsfpplus2-4" = {}
-    "K8S_1" = { comment = "K8S_1", untagged = local.vlans.Servers.name, tagged = [local.vlans.IoT.name], mtu = 9000, bond = true }
-    "K8S_2" = { comment = "K8S_2", untagged = local.vlans.Servers.name, tagged = [local.vlans.IoT.name], mtu = 9000, bond = true }
-    "K8S_3" = { comment = "K8S_3", untagged = local.vlans.Servers.name, tagged = [local.vlans.IoT.name], mtu = 9000, bond = true }
+  }
+  bond_interfaces = {
+    "K8S_1" = {
+      slaves  = ["sfp-sfpplus3", "sfp-sfpplus4"]
+      comment = "K8S_1"
+      tagged  = [for name, vlan in local.vlans : vlan.name if name != "Servers"]
+
+    }
+    "K8S_2" = {
+      slaves  = ["sfp-sfpplus5", "sfp-sfpplus6"]
+      comment = "K8S_2"
+      tagged  = [for name, vlan in local.vlans : vlan.name if name != "Servers"]
+    }
+    "K8S_3" = {
+      slaves  = ["sfp-sfpplus7", "sfp-sfpplus8"]
+      comment = "K8S_3"
+      tagged  = [for name, vlan in local.vlans : vlan.name if name != "Servers"]
+    }
   }
 }
 
@@ -79,51 +94,4 @@ resource "routeros_ip_dhcp_client" "crs326" {
   interface    = local.vlans.Servers.name
   use_peer_dns = true
   use_peer_ntp = true
-}
-
-# =================================================================================================
-# Bonding
-# https://registry.terraform.io/providers/terraform-routeros/routeros/latest/docs/resources/interface_bonding
-# =================================================================================================
-resource "routeros_interface_bonding" "K8S_1" {
-  provider             = routeros.crs326
-  name                 = "K8S_1"
-  slaves               = ["sfp-sfpplus3", "sfp-sfpplus4"]
-  link_monitoring      = "mii"
-  mii_interval         = "100ms"
-  min_links            = 1
-  mode                 = "802.3ad"
-  mtu                  = 9000
-  transmit_hash_policy = "layer-3-and-4"
-  lacp_rate = "1sec"
-  up_delay = "200ms"
-  down_delay = "200ms"
-}
-resource "routeros_interface_bonding" "K8S_2" {
-  provider             = routeros.crs326
-  name                 = "K8S_2"
-  slaves               = ["sfp-sfpplus5", "sfp-sfpplus6"]
-  link_monitoring      = "mii"
-  mii_interval         = "100ms"
-  min_links            = 1
-  mode                 = "802.3ad"
-  mtu                  = 9000
-  transmit_hash_policy = "layer-3-and-4"
-  lacp_rate = "1sec"
-  up_delay = "200ms"
-  down_delay = "200ms"
-}
-resource "routeros_interface_bonding" "K8S_3" {
-  provider             = routeros.crs326
-  name                 = "K8S_3"
-  slaves               = ["sfp-sfpplus7", "sfp-sfpplus8"]
-  link_monitoring      = "mii"
-  mii_interval         = "100ms"
-  min_links            = 1
-  mode                 = "802.3ad"
-  mtu                  = 9000
-  transmit_hash_policy = "layer-3-and-4"
-  lacp_rate = "1sec"
-  up_delay = "200ms"
-  down_delay = "200ms"
 }

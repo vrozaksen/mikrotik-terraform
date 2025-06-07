@@ -21,7 +21,6 @@ resource "routeros_ip_dhcp_server_network" "this" {
   dns_server = var.dns_servers
 }
 
-
 # ================================================================================================
 # DHCP Server Configuration
 # https://registry.terraform.io/providers/terraform-routeros/routeros/latest/docs/resources/ip_dhcp_server

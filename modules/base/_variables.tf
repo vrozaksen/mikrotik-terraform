@@ -65,7 +65,6 @@ variable "certificate_unit" {
   description = "Organizational unit for the device certificate."
 }
 
-
 # =================================================================================================
 # Bridge settings
 # =================================================================================================
@@ -80,7 +79,6 @@ variable "bridge_comment" {
   default     = ""
   description = "Comment for the bridge interface"
 }
-
 
 # =================================================================================================
 # VLAN Configuration
@@ -104,22 +102,33 @@ variable "vlans" {
   description = "Map of VLANs to configure"
 }
 
-
 # =================================================================================================
 # Interface Configuration
 # =================================================================================================
 variable "ethernet_interfaces" {
   type = map(object({
-    comment                  = optional(string)
-    mtu                      = optional(number)
-    disabled                 = optional(bool)
-    sfp_shutdown_temperature = optional(number)
-    bridge_port              = optional(bool, true)
-    bond                     = optional(bool, false)
+    comment     = optional(string, "")
+    bridge_port = optional(bool, true)
+
     # VLAN configurations
     tagged   = optional(list(string)) # list of VLAN names
     untagged = optional(string)       # VLAN name for untagged traffic
   }))
   default     = {}
   description = "Map of ethernet interfaces to configure"
+}
+
+variable "bond_interfaces" {
+  type = map(object({
+    comment              = optional(string, "")
+    slaves               = list(string)
+    mode                 = optional(string, "802.3ad")       # 802.3ad, balance-rr, balance-xor, broadcast, active-backup, balance-tlb, balance-alb
+    transmit_hash_policy = optional(string, "layer-2-and-3") # layer-2, layer-2-and-3, layer-3-and-4
+
+    # VLAN configurations
+    tagged   = optional(list(string))
+    untagged = optional(string)
+  }))
+  default     = {}
+  description = "Map of bond interfaces to configure"
 }
