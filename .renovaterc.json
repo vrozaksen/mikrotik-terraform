@@ -11,8 +11,8 @@
         {
             "customType": "regex",
             "description": "Process various dependencies in YAML files",
-            "fileMatch": [
-                "\\.ya?ml(\\.j2)?$"
+            "managerFilePatterns": [
+                "/\\.ya?ml(\\.j2)?$/"
             ],
             "matchStrings": [
                 "\\S+: \"?(?<currentValue>[^\"\\s]+)\"? # ?renovate: depName=(?<depName>\\S+)( datasource=(?<datasource>\\S+))?( versioning=(?<versioning>\\S+))?( extractVersion=(?<extractVersion>\\S+))?( packageName=(?<packageName>\\S+))?",
@@ -26,8 +26,8 @@
         {
             "customType": "regex",
             "description": "Process GitHub download dependencies in YAML files",
-            "fileMatch": [
-                "\\.ya?ml(\\.j2)?$"
+            "managerFilePatterns": [
+                "/\\.ya?ml(\\.j2)?$/"
             ],
             "matchStrings": [
                 "https:\\/\\/github.com\\/(?<depName>\\S+?\\/\\S+?)\\/releases\\/download\\/(?<currentValue>(v|\\d)\\S+?)\\/\\S+",
