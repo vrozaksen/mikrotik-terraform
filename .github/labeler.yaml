@@ -10,23 +10,26 @@ area/github:
 area/terraform:
   - changed-files:
       - any-glob-to-any-file: "*.tf"
-      - any-glob-to-any-file: "modules/**/*"
 
 # =================================================================================================
 # Device Labels
 # =================================================================================================
-device/RB5009:
+device/rb5009:
   - changed-files:
-      - any-glob-to-any-file: "modules/rb5009/**/*"
+      - any-glob-to-any-file: "router-*.tf"
 
-device/CRS326:
+device/cap-ax:
   - changed-files:
-      - any-glob-to-any-file: "modules/crs326/**/*"
+      - any-glob-to-any-file: "router-capsman.tf"
 
-device/CRS317:
+device/crs326:
   - changed-files:
-      - any-glob-to-any-file: "modules/crs317/**/*"
+      - any-glob-to-any-file: "switch-crs326.tf"
 
-device/HEX:
+device/crs-317:
   - changed-files:
-      - any-glob-to-any-file: "modules/hex/**/*"
+      - any-glob-to-any-file: "switch-crs317.tf"
+
+device/hex:
+  - changed-files:
+      - any-glob-to-any-file: "switch-hex.tf"

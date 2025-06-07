@@ -1,0 +1,52 @@
+---
+# yaml-language-server: $schema=https://json.schemastore.org/github-workflow.json
+name: Terraform
+permissions: { contents: read }
+
+on:
+  workflow_dispatch: {}
+  push:
+    paths:
+      - ".github/workflows/terraform.yaml"
+      - mise.toml
+      - "*.tf"
+
+jobs:
+  tflint:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+
+      - name: Setup mise
+        uses: jdx/mise-action@13abe502c30c1559a5c37dff303831bab82c9402 # v2.2.3
+      
+      - name: Run terraform fmt
+        run: mise exec -- tflint
+
+  fmt:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+
+      - name: Setup mise
+        uses: jdx/mise-action@13abe502c30c1559a5c37dff303831bab82c9402 # v2.2.3
+      
+      - name: Run terraform fmt
+        run: mise exec -- terraform fmt -recursive -check
+
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+
+      - name: Setup mise
+        uses: jdx/mise-action@13abe502c30c1559a5c37dff303831bab82c9402 # v2.2.3
+      
+      - name: Initialize workspace
+        run: mise exec -- terraform init
+        
+      - name: Validate configuration
+        run: mise exec -- terraform validate

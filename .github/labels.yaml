@@ -2,18 +2,21 @@
 # =================================================================================================
 # Device Labels
 # =================================================================================================
-- name: device/RB5009
-  color: "112233"
-  description: Changes made to the config of my RB5009 router.
-- name: device/CRS326
-  color: "223344"
-  description: Changes made to the config of my CRS326 switch.
-- name: device/CRS317
-  color: "334455"
-  description: Changes made to the config of my CRS317 switch.
-- name: device/HEX
-  color: "445566"
-  description: Changes made to the config of my HEX switch.
+- name: device/rb5009
+  color: "111111"
+  description: Changes to the config for the RB5009.
+- name: device/cap-ax
+  color: "333333"
+  description: Changes to the config for the cAP AX.
+- name: device/crs326
+  color: "555555"
+  description: Changes to the config for the CRS326.
+- name: device/crs317
+  color: "777777"
+  description: Changes to the config for the CRS317.
+- name: device/hex
+  color: "999999"
+  description: Changes to the config for the HEX.
 
 # =================================================================================================
 # Area labels
