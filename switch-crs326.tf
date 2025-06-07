@@ -70,17 +70,19 @@ module "crs326" {
     "K8S_1" = {
       slaves  = ["sfp-sfpplus3", "sfp-sfpplus4"]
       comment = "K8S_1"
+      untagged = local.vlans.Servers.name
       tagged  = [for name, vlan in local.vlans : vlan.name if name != "Servers"]
-
     }
     "K8S_2" = {
       slaves  = ["sfp-sfpplus5", "sfp-sfpplus6"]
       comment = "K8S_2"
+      untagged = local.vlans.Servers.name
       tagged  = [for name, vlan in local.vlans : vlan.name if name != "Servers"]
     }
     "K8S_3" = {
       slaves  = ["sfp-sfpplus7", "sfp-sfpplus8"]
       comment = "K8S_3"
+      untagged = local.vlans.Servers.name
       tagged  = [for name, vlan in local.vlans : vlan.name if name != "Servers"]
     }
   }
