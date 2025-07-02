@@ -26,8 +26,8 @@ module "rb5009" {
     "ether1" = { comment = "Vectra Uplink", bridge_port = false }
     "ether2" = { comment = "SLZB", untagged = local.vlans.Servers.name }
     "ether3" = { comment = "Aincrad", untagged = local.vlans.Servers.name }
-    "ether4" = { comment = "k8s_1", untagged = local.vlans.Servers.name, tagged = [local.vlans.IoT.name] } # TODO
-    "ether5" = { comment = "k8s_2", untagged = local.vlans.Servers.name, tagged = [local.vlans.IoT.name] } # TODO
+    "ether4" = {}
+    "ether5" = {}
     "ether6" = { comment = "pi-nut", untagged = local.vlans.Servers.name }
     "ether7" = {
       comment  = "EMG",

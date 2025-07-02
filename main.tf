@@ -65,7 +65,7 @@ locals {
         "10.10.0.9" = { name = "wAP-AX", mac = "F4:1E:57:80:43:C3" }
         # Rack - NAS & Kubernetes
         "10.10.0.10" = { name = "pi", mac = "00:E0:4C:36:2A:CD" }
-        "10.10.0.11" = { name = "aincrad", mac = "E0:D5:5E:E2:3D:82" }
+        "10.10.0.11" = { name = "aincrad", mac = "9C:6B:00:79:11:99" }
         "10.10.0.21" = { name = "alfheim", mac = "F8:F2:1E:CD:7A:30" }
         "10.10.0.22" = { name = "alne", mac = "3C:FD:FE:02:06:80" }
         "10.10.0.23" = { name = "ainias", mac = "44:49:88:03:C7:CC" }

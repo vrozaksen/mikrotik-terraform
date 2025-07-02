@@ -2,7 +2,7 @@
 # Shared Configuration
 # =================================================================================================
 locals {
-  # Allowed ports structure: ["80", "64738:64739"]
+  # Allowed ports structure: ["80", "64738-64739"]
   services = {
     qBittorrent = {
       ip  = "10.10.0.41",
@@ -26,6 +26,11 @@ locals {
       ip  = "10.10.0.51",
       tcp = ["5100"],
       udp = ["5100"]
+    },
+    Mirotalk = {
+      ip  = "10.10.0.52",
+      tcp = ["40000-40010"],
+      udp = ["40000-40010"]
     }
   }
 
@@ -35,7 +40,7 @@ locals {
       for service_name, config in local.services : [
         for proto in ["tcp", "udp"] : [
           for port_spec in try(config[proto], []) : {
-            "${service_name}-${proto}-${replace(port_spec, ":", "-")}" = {
+            "${service_name}-${proto}-${port_spec}" = {
               ip          = config.ip,
               protocol    = proto,
               port        = port_spec,
