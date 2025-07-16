@@ -13,13 +13,13 @@ variable "mikrotik_password" {
 }
 
 variable "snmp_contact" {
-  type = string
+  type        = string
   description = "SNMP contact person."
   sensitive   = true
 }
 
 variable "hc_uuid" {
-  type = string
+  type        = string
   description = "healthchecks.io UUID"
   sensitive   = true
 }
@@ -49,5 +49,19 @@ variable "iot_wifi_password" {
 variable "cloudflare_api_token" {
   type        = string
   description = "The API token for Cloudflare."
+  sensitive   = true
+}
+
+## ================================================================================================
+## Netbox Variables
+## ================================================================================================
+variable "netbox_server_url" {
+  type        = string
+  default     = "localhost"
+  description = "NetBox server URL."
+}
+variable "netbox_api_token" {
+  type        = string
+  description = "The API token for NetBox."
   sensitive   = true
 }

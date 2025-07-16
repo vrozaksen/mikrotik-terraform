@@ -136,3 +136,11 @@ locals {
     }
   }
 }
+
+resource "netbox_ipam_vlan" "mikrotik_vlans" {
+  for_each = local.vlans
+
+  vlan_id     = each.value.vlan_id
+  name        = each.value.name
+  description = "Imported from MikroTik (Terraform)"
+}

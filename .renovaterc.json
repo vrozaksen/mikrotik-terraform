@@ -1,10 +1,7 @@
 {
     "$schema": "https://docs.renovatebot.com/renovate-schema.json",
-    "dependencyDashboardTitle": "Renovate Dashboard 🤖",
     "extends": [
-        ":dependencyDashboard",
-        "config:best-practices",
-        ":disableRateLimiting",
+        "github>vrozaksen/renovate-config",
         ":semanticCommits"
     ],
     "customManagers": [
@@ -36,88 +33,6 @@
             "datasourceTemplate": "{{#if datasource}}{{{datasource}}}{{else}}github-releases{{/if}}",
             "versioningTemplate": "{{#if versioning}}{{{versioning}}}{{else}}semver{{/if}}",
             "extractVersionTemplate": "{{#if extractVersion}}{{{extractVersion}}}{{else}}^(?<version>.*)${{/if}}"
-        }
-    ],
-    "packageRules": [
-        {
-            "matchUpdateTypes": [
-                "major"
-            ],
-            "labels": [
-                "type/major"
-            ],
-            "semanticCommitType": "feat",
-            "commitMessagePrefix": "{{semanticCommitType}}({{semanticCommitScope}})!:",
-            "commitMessageExtra": "( {{currentVersion}} → {{newVersion}} )"
-        },
-        {
-            "matchUpdateTypes": [
-                "minor"
-            ],
-            "labels": [
-                "type/minor"
-            ],
-            "semanticCommitType": "feat",
-            "commitMessageExtra": "( {{currentVersion}} → {{newVersion}} )"
-        },
-        {
-            "matchUpdateTypes": [
-                "patch"
-            ],
-            "labels": [
-                "type/patch"
-            ],
-            "semanticCommitType": "fix",
-            "commitMessageExtra": "( {{currentVersion}} → {{newVersion}} )"
-        },
-        {
-            "matchUpdateTypes": [
-                "digest"
-            ],
-            "labels": [
-                "type/digest"
-            ],
-            "semanticCommitType": "chore",
-            "commitMessageExtra": "( {{currentDigestShort}} → {{newDigestShort}} )"
-        },
-        {
-            "matchManagers": [
-                "github-actions"
-            ],
-            "addLabels": [
-                "renovate/github-action"
-            ],
-            "automerge": true,
-            "automergeType": "pr",
-            "matchUpdateTypes": [
-                "minor",
-                "patch",
-                "digest"
-            ],
-            "semanticCommitType": "ci",
-            "semanticCommitScope": "github-actions",
-            "commitMessageTopic": "action {{depName}}"
-        },
-        {
-            "matchDatasources": [
-                "github-releases",
-                "github-tags"
-            ],
-            "addLabels": [
-                "renovate/github-release"
-            ],
-            "semanticCommitScope": "github-release",
-            "commitMessageTopic": "release {{depName}}"
-        },
-        {
-            "matchDatasources": [
-                "terraform-provider"
-            ],
-            "addLabels": [
-                "renovate/terraform-provider"
-            ],
-            "semanticCommitType": "fix",
-            "semanticCommitScope": "terraform"
         }
     ]
 }
