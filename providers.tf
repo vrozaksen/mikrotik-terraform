@@ -12,22 +12,11 @@ terraform {
       source  = "cloudflare/cloudflare"
       version = "5.6.0"
     }
-    netbox = {
-      source  = "smutel/netbox"
-      version = "8.0.0"
-    }
   }
 }
 
 provider "cloudflare" {
   api_token = var.cloudflare_api_token
-}
-
-provider "netbox" {
-  url      = var.netbox_server_url
-  token    = var.netbox_api_token
-  scheme   = "https"
-  insecure = "false"
 }
 
 # =================================================================================================

@@ -25,7 +25,7 @@ module "crs326" {
   ethernet_interfaces = {
     # "ether1" = { comment = "MGMT", untagged = local.vlans.Servers.name }
     "sfp-sfpplus1"  = { comment = "Uplink", tagged = local.all_vlans, mtu = 9000 }
-    "sfp-sfpplus2"  = { comment = "Uplink", tagged = local.all_vlans, mtu = 9000 }
+    "sfp-sfpplus2"  = { comment = "HORRACO Downlink", tagged = local.all_vlans, mtu = 9000 }
     "sfp-sfpplus3"  = { comment = "K8S_1", mtu = 9000, bridge_port = false }
     "sfp-sfpplus4"  = { comment = "K8S_1", mtu = 9000, bridge_port = false }
     "sfp-sfpplus5"  = { comment = "K8S_2", mtu = 9000, bridge_port = false }

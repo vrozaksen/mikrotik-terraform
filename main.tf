@@ -34,9 +34,10 @@ locals {
   }
   static_dns = {
     # Core
-    "router.home.vzkn.eu" = { address = "10.10.0.1", type = "A", comment = "RB5009" },
-    "switch.home.vzkn.eu" = { address = "10.10.0.2", type = "A", comment = "CRS326" },
-    "pi.home.vzkn.eu"     = { address = "10.10.0.10", type = "A", comment = "PI" },
+    "router.home.vzkn.eu"  = { address = "10.10.0.1", type = "A", comment = "RB5009" },
+    "switch.home.vzkn.eu"  = { address = "10.10.0.2", type = "A", comment = "CRS326" },
+    "horraco.home.vzkn.eu" = { address = "10.10.0.8", type = "A", comment = "HORRACO" },
+    "pi.home.vzkn.eu"      = { address = "10.10.0.10", type = "A", comment = "PI" },
     # NAS
     "aincrad.home.vzkn.eu" = { address = "10.10.0.11", type = "A", comment = "Aincrad-NAS" },
     "caddy.home.vzkn.eu"   = { address = "10.10.0.11", type = "A", comment = "Aincrad-Caddy" },
@@ -135,12 +136,4 @@ locals {
       }
     }
   }
-}
-
-resource "netbox_ipam_vlan" "mikrotik_vlans" {
-  for_each = local.vlans
-
-  vlan_id     = each.value.vlan_id
-  name        = each.value.name
-  description = "Imported from MikroTik (Terraform)"
 }

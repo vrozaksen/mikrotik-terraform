@@ -51,17 +51,3 @@ variable "cloudflare_api_token" {
   description = "The API token for Cloudflare."
   sensitive   = true
 }
-
-## ================================================================================================
-## Netbox Variables
-## ================================================================================================
-variable "netbox_server_url" {
-  type        = string
-  default     = "localhost"
-  description = "NetBox server URL."
-}
-variable "netbox_api_token" {
-  type        = string
-  description = "The API token for NetBox."
-  sensitive   = true
-}
