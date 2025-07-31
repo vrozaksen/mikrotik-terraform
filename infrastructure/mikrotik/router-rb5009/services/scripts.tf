@@ -14,8 +14,8 @@ resource "routeros_system_script" "healthcheck_script" {
 # https://registry.terraform.io/providers/terraform-routeros/routeros/latest/docs/resources/system_scheduler
 # =================================================================================================
 resource "routeros_system_scheduler" "healthcheck_scheduler" {
-  name       = "healthcheck_scheduler"
-  interval   = "1m"
-  on_event   = routeros_system_script.healthcheck_script.name
-  policy = ["read", "write", "test"]
+  name     = "healthcheck_scheduler"
+  interval = "1m"
+  on_event = routeros_system_script.healthcheck_script.name
+  policy   = ["read", "write", "test"]
 }

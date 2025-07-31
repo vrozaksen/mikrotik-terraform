@@ -14,12 +14,12 @@ resource "routeros_wifi_capsman" "settings" {
 # https://registry.terraform.io/providers/terraform-routeros/routeros/latest/docs/resources/wifi_channel
 # =================================================================================================
 resource "routeros_wifi_channel" "slow" {
-  name     = "2.4ghz"
-  band     = "2ghz-ax"
+  name = "2.4ghz"
+  band = "2ghz-ax"
 }
 resource "routeros_wifi_channel" "fast" {
-  name     = "5ghz"
-  band     = "5ghz-ax"
+  name = "5ghz"
+  band = "5ghz-ax"
 }
 
 # =================================================================================================
@@ -68,9 +68,9 @@ resource "routeros_wifi_security" "iot_wifi_password" {
 # https://registry.terraform.io/providers/terraform-routeros/routeros/latest/docs/resources/wifi_datapath
 # =================================================================================================
 resource "routeros_wifi_datapath" "trusted_tagging" {
-  name     = "trusted-tagging"
-  comment  = "WiFi -> Trusted VLAN"
-  vlan_id  = local.vlans.Trusted.vlan_id
+  name    = "trusted-tagging"
+  comment = "WiFi -> Trusted VLAN"
+  vlan_id = local.vlans.Trusted.vlan_id
 }
 resource "routeros_wifi_datapath" "guest_tagging" {
   name             = "guest-tagging"
@@ -79,9 +79,9 @@ resource "routeros_wifi_datapath" "guest_tagging" {
   client_isolation = true
 }
 resource "routeros_wifi_datapath" "iot_tagging" {
-  name     = "iot-tagging"
-  comment  = "WiFi -> IoT VLAN"
-  vlan_id  = local.vlans.IoT.vlan_id
+  name    = "iot-tagging"
+  comment = "WiFi -> IoT VLAN"
+  vlan_id = local.vlans.IoT.vlan_id
 }
 
 # =================================================================================================
@@ -89,10 +89,10 @@ resource "routeros_wifi_datapath" "iot_tagging" {
 # https://registry.terraform.io/providers/terraform-routeros/routeros/latest/docs/resources/wifi_configuration
 # =================================================================================================
 resource "routeros_wifi_configuration" "guest" {
-  country  = "Poland"
-  name     = "VZKN_GUEST"
-  ssid     = "VZKN_GUEST"
-  comment  = ""
+  country = "Poland"
+  name    = "VZKN_GUEST"
+  ssid    = "VZKN_GUEST"
+  comment = ""
 
   channel = {
     config = routeros_wifi_channel.slow.name
@@ -105,10 +105,10 @@ resource "routeros_wifi_configuration" "guest" {
   }
 }
 resource "routeros_wifi_configuration" "iot" {
-  country  = "Poland"
-  name     = "VZKN_IOT"
-  ssid     = "VZKN_IOT"
-  comment  = ""
+  country = "Poland"
+  name    = "VZKN_IOT"
+  ssid    = "VZKN_IOT"
+  comment = ""
 
   channel = {
     config = routeros_wifi_channel.slow.name
@@ -121,10 +121,10 @@ resource "routeros_wifi_configuration" "iot" {
   }
 }
 resource "routeros_wifi_configuration" "trusted_slow" {
-  country  = "Poland"
-  name     = "VZKN_END_2.4G"
-  ssid     = "VZKN_END_2.4G"
-  comment  = ""
+  country = "Poland"
+  name    = "VZKN_END_2.4G"
+  ssid    = "VZKN_END_2.4G"
+  comment = ""
 
   channel = {
     config = routeros_wifi_channel.slow.name
@@ -137,10 +137,10 @@ resource "routeros_wifi_configuration" "trusted_slow" {
   }
 }
 resource "routeros_wifi_configuration" "trusted_fast" {
-  country  = "Poland"
-  name     = "VZKN_END_5G"
-  ssid     = "VZKN_END_5G"
-  comment  = ""
+  country = "Poland"
+  name    = "VZKN_END_5G"
+  ssid    = "VZKN_END_5G"
+  comment = ""
 
 
   channel = {

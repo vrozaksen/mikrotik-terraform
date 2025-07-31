@@ -25,13 +25,13 @@ resource "routeros_ip_firewall_filter" "allow_wireguard_to_trusted" {
   place_before  = routeros_ip_firewall_filter.allow_wireguard_to_servers.id
 }
 resource "routeros_ip_firewall_filter" "allow_wireguard_to_servers" {
-  comment          = "Allow Wireguard to Servers"
-  action           = "accept"
-  chain            = "forward"
-  in_interface     = routeros_interface_wireguard.wireguard.name
-  out_interface    = local.vlans.Servers.name
-  #dst_address_list = routeros_ip_firewall_addr_list.k8s_services.list
-  place_before     = routeros_ip_firewall_filter.drop_wireguard_forward.id
+  comment       = "Allow Wireguard to Servers"
+  action        = "accept"
+  chain         = "forward"
+  in_interface  = routeros_interface_wireguard.wireguard.name
+  out_interface = local.vlans.Servers.name
+  # dst_address_list = routeros_ip_firewall_addr_list.k8s_services.list
+  place_before = routeros_ip_firewall_filter.drop_wireguard_forward.id
 }
 resource "routeros_ip_firewall_filter" "drop_wireguard_forward" {
   comment      = "Drop all Wireguard forward"

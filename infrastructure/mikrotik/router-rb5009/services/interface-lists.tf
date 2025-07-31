@@ -1,32 +1,14 @@
-import {
-  to = routeros_interface_list.wan
-  id = "*2000010"
-}
-import {
-  to = routeros_interface_list.lan
-  id = "*2000011"
-}
-
-import {
-  to = routeros_interface_list_member.wan
-  id = "*2"
-}
-import {
-  to = routeros_interface_list_member.bridge_lan
-  id = "*1"
-}
-
 # ================================================================================================
 # Interface Lists
 # https://registry.terraform.io/providers/terraform-routeros/routeros/latest/docs/resources/interface_list
 # ================================================================================================
 resource "routeros_interface_list" "wan" {
-  name     = "WAN"
-  comment  = "All Public-Facing Interfaces"
+  name    = "WAN"
+  comment = "All Public-Facing Interfaces"
 }
 resource "routeros_interface_list" "lan" {
-  name     = "LAN"
-  comment  = "All Local Interfaces"
+  name    = "LAN"
+  comment = "All Local Interfaces"
 }
 
 # ================================================================================================
