@@ -7,7 +7,7 @@ include "shared_provider" {
 
 locals {
   mikrotik_hostname = "10.10.0.1"
-  shared_locals = read_terragrunt_config(find_in_parent_folders("locals.hcl")).locals
+  shared_locals     = read_terragrunt_config(find_in_parent_folders("locals.hcl")).locals
 }
 
 terraform {

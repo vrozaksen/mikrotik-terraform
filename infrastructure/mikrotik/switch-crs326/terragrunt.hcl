@@ -6,14 +6,14 @@ include "shared_provider" {
 }
 
 dependencies {
-    paths = [
-      find_in_parent_folders("mikrotik/router-rb5009")
-    ]
+  paths = [
+    find_in_parent_folders("mikrotik/router-rb5009")
+  ]
 }
 
 locals {
   mikrotik_hostname = "10.10.0.2"
-  shared_locals = read_terragrunt_config(find_in_parent_folders("locals.hcl")).locals
+  shared_locals     = read_terragrunt_config(find_in_parent_folders("locals.hcl")).locals
 }
 
 terraform {
@@ -60,7 +60,7 @@ inputs = {
       comment  = "Trusted",
       untagged = local.shared_locals.vlans.Trusted.name
       tagged   = [local.shared_locals.vlans.Servers.name, local.shared_locals.vlans.Guest.name, local.shared_locals.vlans.IoT.name]
-      mtu = 9000
+      mtu      = 9000
     }
     "sfp-sfpplus24" = {
       comment  = "Trusted",
@@ -78,22 +78,22 @@ inputs = {
   }
   bond_interfaces = {
     "K8S_1" = {
-      slaves  = ["sfp-sfpplus3", "sfp-sfpplus4"]
-      comment = "K8S_1"
+      slaves   = ["sfp-sfpplus3", "sfp-sfpplus4"]
+      comment  = "K8S_1"
       untagged = local.shared_locals.vlans.Servers.name
-      tagged  = [for name, vlan in local.shared_locals.vlans : vlan.name if name != "Servers"]
+      tagged   = [for name, vlan in local.shared_locals.vlans : vlan.name if name != "Servers"]
     }
     "K8S_2" = {
-      slaves  = ["sfp-sfpplus5", "sfp-sfpplus6"]
-      comment = "K8S_2"
+      slaves   = ["sfp-sfpplus5", "sfp-sfpplus6"]
+      comment  = "K8S_2"
       untagged = local.shared_locals.vlans.Servers.name
-      tagged  = [for name, vlan in local.shared_locals.vlans : vlan.name if name != "Servers"]
+      tagged   = [for name, vlan in local.shared_locals.vlans : vlan.name if name != "Servers"]
     }
     "K8S_3" = {
-      slaves  = ["sfp-sfpplus7", "sfp-sfpplus8"]
-      comment = "K8S_3"
+      slaves   = ["sfp-sfpplus7", "sfp-sfpplus8"]
+      comment  = "K8S_3"
       untagged = local.shared_locals.vlans.Servers.name
-      tagged  = [for name, vlan in local.shared_locals.vlans : vlan.name if name != "Servers"]
+      tagged   = [for name, vlan in local.shared_locals.vlans : vlan.name if name != "Servers"]
     }
   }
 }

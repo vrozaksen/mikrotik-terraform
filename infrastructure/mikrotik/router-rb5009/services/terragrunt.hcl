@@ -26,7 +26,7 @@ inputs = {
   mikrotik_username = get_env("MIKROTIK_USERNAME")
   mikrotik_password = get_env("MIKROTIK_PASSWORD")
   mikrotik_insecure = true
-  hc_uuid = get_env("HC_UUID")
+  hc_uuid           = get_env("HC_UUID")
 
   trusted_wifi_password = get_env("TRUSTED_WIFI_PASSWORD")
   guest_wifi_password   = get_env("GUEST_WIFI_PASSWORD")
