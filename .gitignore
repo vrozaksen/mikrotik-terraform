@@ -1,51 +1,55 @@
 # Local .terraform directories
 **/.terraform/*
 
-# .tfstate files
+
+# === Terraform & Terragrunt ===
+# Local .terraform directories and cache
+**/.terraform/*
+.terraform/
+.terragrunt-cache/
+
+# State files
 *.tfstate
 *.tfstate.*
+tfstate.json
+.terraform.tfstate.lock.info
 
-# Crash log files
-crash.log
-crash.*.log
+# Lock files
+.terraform.lock.hcl
 
-# Exclude all .tfvars files, which are likely to contain sensitive data, such as
-# password, private keys, and other secrets. These should not be part of version
-# control as they are data points which are potentially sensitive and subject
-# to change depending on the environment.
+# Plan files
+*tfplan*
+
+# Variable files (often sensitive)
 *.tfvars
 *.tfvars.json
+*.auto.tfvars
 
-# Ignore override files as they are usually used to override resources locally and so
-# are not checked in
+# Override files
 override.tf
 override.tf.json
 *_override.tf
 *_override.tf.json
+# !example_override.tf  # Uncomment to include specific override files
 
-# Ignore transient lock info files created by terraform apply
-.terraform.tfstate.lock.info
+# Crash logs
+crash.log
+crash.*.log
 
-# Include override files you do wish to add to version control using negated pattern
-# !example_override.tf
-
-# Include tfplan files to ignore the plan output of command: terraform plan -out=tfplan
-# example: *tfplan*
-
-# Ignore CLI configuration files
+# CLI config
 .terraformrc
 terraform.rc
 
-# Ignore terraform lock file
-.terraform.lock.hcl
-
-# Ignore age key file
+# Age key file
 age.key
 
-# Add sops-encrypted files
+# SOPS encrypted files (include them)
 !*.sops
 
+# Miscellaneous
+.DS_Store
+.backup
+.env
+backend.tf
 .task/checksum
-
-# Configs that i don't need rn
 *.tf-ar
