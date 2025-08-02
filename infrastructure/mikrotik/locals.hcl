@@ -3,26 +3,21 @@ locals {
   cloudflare_ntp = "time.cloudflare.com"
 
   upstream_dns = ["1.1.1.1", "1.0.0.1"]
+  # Firebog https://firebog.net/
   adlists = {
-    # Firebog https://firebog.net/
-    # Suspicious Lists
     "PolishFiltersTeam_KADhosts" = { url = "https://raw.githubusercontent.com/PolishFiltersTeam/KADhosts/master/KADhosts.txt" }
     "FadeMind_Spam"              = { url = "https://raw.githubusercontent.com/FadeMind/hosts.extras/master/add.Spam/hosts" }
-    # Advertising Lists
     "AdAway"       = { url = "https://adaway.org/hosts.txt" }
     "Anudeep"      = { url = "https://raw.githubusercontent.com/anudeepND/blacklist/master/adservers.txt" }
     "PeterLowe"    = { url = "https://pgl.yoyo.org/adservers/serverlist.php?hostformat=hosts&showintro=0&mimetype=plaintext" }
     "Fademind_ADs" = { url = "https://raw.githubusercontent.com/FadeMind/hosts.extras/master/UncheckyAds/hosts" }
     "hostsVN"      = { url = "https://raw.githubusercontent.com/bigdargon/hostsVN/master/hosts" }
-    # Tracking & Telemetry Lists
     "Fademind2o7"     = { url = "https://raw.githubusercontent.com/FadeMind/hosts.extras/master/add.2o7Net/hosts" }
     "CrazyMax"        = { url = "https://raw.githubusercontent.com/crazy-max/WindowsSpyBlocker/master/data/hosts/spy.txt" }
     "GeoffreyFrogeye" = { url = "https://hostfiles.frogeye.fr/firstparty-trackers-hosts.txt" }
-    # Malicious Lists
     "DandelionSprout" = { url = "https://raw.githubusercontent.com/DandelionSprout/adfilt/master/Alternate%20versions%20Anti-Malware%20List/AntiMalwareHosts.txt" }
     "FademindRisky"   = { url = "https://raw.githubusercontent.com/FadeMind/hosts.extras/master/add.Risk/hosts" }
-    "URLhaus"         = { url = "https://urlhaus.abuse.ch/downloads/hostfile/" }
-    # Other
+    "URLhaus"         = { url = "https://urlhaus.abuse.ch/downloads/hostfile" }
     "DanPollock"        = { url = "https://someonewhocares.org/hosts/hosts" }
     "Steven_Black"      = { url = "https://raw.githubusercontent.com/StevenBlack/hosts/master/hosts" }
     "POL_Cert"          = { url = "https://hole.cert.pl/domains/domains_hosts.txt" }

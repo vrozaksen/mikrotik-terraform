@@ -17,6 +17,7 @@ resource "routeros_ip_dns" "dns-server" {
 resource "routeros_ip_dns_adlist" "dns_blocker" {
   for_each = local.adlists
   url      = each.value.url
+  ssl_verify = false
 }
 
 # =================================================================================================
