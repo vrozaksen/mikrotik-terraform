@@ -10,14 +10,24 @@ locals {
 }
 
 # =================================================================================================
+# BGP Instance
+# https://registry.terraform.io/providers/terraform-routeros/routeros/latest/docs/resources/routing_bgp_instance
+# =================================================================================================
+resource "routeros_routing_bgp_instance" "main" {
+  name      = "bgp-instance-1"
+  as        = local.asn_crs326
+  router_id = "10.10.0.2"
+}
+
+# =================================================================================================
 # BGP Connection
 # https://registry.terraform.io/providers/terraform-routeros/routeros/latest/docs/resources/routing_bgp_connection
 # =================================================================================================
 
 resource "routeros_routing_bgp_connection" "crs326_to_rb5009" {
-  name      = "RB5009_UPLINK"
-  as        = local.asn_crs326
-  router_id = "10.10.0.2"
+  name     = "RB5009_UPLINK"
+  as       = local.asn_crs326
+  instance = routeros_routing_bgp_instance.main.name
   local {
     role    = "ebgp"
     address = "10.10.0.2"
@@ -36,7 +46,7 @@ resource "routeros_routing_bgp_connection" "k8s_peers_crs326" {
 
   name             = upper(replace(each.key, "-", "_"))
   as               = local.asn_crs326
-  router_id        = "10.10.0.2"
+  instance         = routeros_routing_bgp_instance.main.name
   address_families = "ip"
   nexthop_choice   = "force-self"
 

@@ -36,6 +36,10 @@ locals {
     "s3.vzkn.eu"           = { address = "10.10.0.11", type = "A", comment = "Aincrad-Minio" },
     "s3c.vzkn.eu"          = { address = "10.10.0.11", type = "A", comment = "Aincrad-Minio-Console" },
     "stash.vzkn.eu"        = { address = "10.10.0.11", type = "A", comment = "Aincrad-Stash" },
+    # K8s
+    "alfheim"              = { address = "10.10.0.21", type = "A", comment = "alfheim" },
+    "alne"                 = { address = "10.10.0.22", type = "A", comment = "alne" },
+    "ainias"               = { address = "10.10.0.23", type = "A", comment = "ainias" },
     # HASS ZigBee
     "slzb.home.vzkn.eu" = { address = "10.10.0.65", type = "A", comment = "SLZB" },
   }
@@ -80,8 +84,11 @@ locals {
         # Smart Plugs
         "10.20.0.230" = { name = "Shelly-1", mac = "BC:FF:4D:44:06:CB" }
         # Smart TV
-        "10.20.0.240" = { name = "Chromecast-Living-Room", mac = "DC:E5:5B:8B:E4:EB" }
-        "10.20.0.241" = { name = "Chromecast-Bedroom", mac = "BC:C7:DA:9E:0E:EC" }
+        "10.20.0.240" = { name = "Chromecast-Bedroom", mac = "DC:E5:5B:8B:E4:EB" }
+        "10.20.0.241" = { name = "Chromecast-Bedroom-Vectra", mac = "BC:C7:DA:9E:0E:EC" }
+        "10.20.0.242" = { name = "Chromecast-Living-Room", mac = "92:04:7C:5B:39:EA" }
+        "10.20.0.243" = { name = "Homatics-Living-Room-Wired", mac = "8C:98:06:7F:8A:09" }
+        "10.20.0.249" = { name = "Chromecast-Living-Room-Wired", mac = "E8:C6:E6:22:11:DD" }
       }
     },
     # "Security" = {
@@ -125,6 +132,19 @@ locals {
         "10.100.0.104" = { name = "vx-t480-wlan", mac = "8E:80:A3:1F:3D:3B" }
         # VX Mobile
         "10.100.0.110" = { name = "vx-s22-u", mac = "9A:B4:2C:DB:F0:A1" }
+      }
+    },
+    "External" = {
+      name        = "External"
+      vlan_id     = 110
+      network     = "10.110.0.0"
+      cidr_suffix = "24"
+      gateway     = "10.110.0.1"
+      dhcp_pool   = ["10.110.0.100-10.110.0.199"]
+      dns_servers = ["10.110.0.1"]
+      domain      = "ext.h.vzkn.eu"
+      static_leases = {
+        "10.110.0.100" = { name = "sunshine-cpb", mac = "52:54:00:5F:E4:88" }
       }
     }
   }

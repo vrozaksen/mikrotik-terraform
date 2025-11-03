@@ -15,7 +15,7 @@ resource "routeros_ip_firewall_addr_list" "iot_internet" {
 resource "routeros_ip_firewall_addr_list" "iot_servers" {
   list    = "st_iot_servers"
   comment = "Static: IoT IPs allowed to servers."
-  address = "10.20.0.240-10.20.0.250"
+  address = "10.20.0.230-10.20.0.250"
 }
 resource "routeros_ip_firewall_addr_list" "trusted_devices" {
   list    = "st_trusted_devices"
@@ -26,9 +26,9 @@ resource "routeros_ip_firewall_addr_list" "trusted_devices" {
 # Dynamic lists (auto-generated)
 locals {
   service_access = {
-    dns = ["Trusted", "IoT", "Servers"],
+    dns = ["Trusted", "IoT", "Servers", "External"],
     ntp = ["Trusted", "Servers"],
-    wan = ["Trusted", "IoT", "Servers", "Guest"],
+    wan = ["Trusted", "IoT", "Servers", "Guest", "External"],
   }
 }
 resource "routeros_ip_firewall_addr_list" "ag_service_lists" {

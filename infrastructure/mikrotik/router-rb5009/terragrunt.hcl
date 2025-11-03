@@ -29,9 +29,17 @@ inputs = {
   ethernet_interfaces = {
     "ether1" = { comment = "Vectra Uplink", bridge_port = false }
     "ether2" = { comment = "SLZB", untagged = local.shared_locals.vlans.Servers.name }
-    "ether3" = { comment = "Aincrad", untagged = local.shared_locals.vlans.Servers.name }
+    "ether3" = { 
+      comment = "Aincrad", 
+      untagged = local.shared_locals.vlans.Servers.name 
+      tagged = [local.shared_locals.vlans.External.name] 
+    }
     "ether4" = {}
-    "ether5" = {}
+    "ether5" = { 
+      comment = "TV-Living-Room", 
+      untagged = local.shared_locals.vlans.IoT.name 
+      tagged = [local.shared_locals.vlans.Servers.name, local.shared_locals.vlans.Trusted.name]
+      }
     "ether6" = { comment = "pi-nut", untagged = local.shared_locals.vlans.Servers.name }
     "ether7" = {
       comment  = "EMG",
