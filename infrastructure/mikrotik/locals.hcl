@@ -33,9 +33,16 @@ locals {
     # NAS
     "aincrad.home.vzkn.eu" = { address = "10.10.0.11", type = "A", comment = "Aincrad-NAS" },
     "caddy.home.vzkn.eu"   = { address = "10.10.0.11", type = "A", comment = "Aincrad-Caddy" },
-    "s3.vzkn.eu"           = { address = "10.10.0.11", type = "A", comment = "Aincrad-Minio" },
-    "s3c.vzkn.eu"          = { address = "10.10.0.11", type = "A", comment = "Aincrad-Minio-Console" },
     "stash.vzkn.eu"        = { address = "10.10.0.11", type = "A", comment = "Aincrad-Stash" },
+    "immich.vzkn.eu"       = { address = "10.10.0.11", type = "A", comment = "Aincrad-Immich" },
+    # NAS - Minio S3
+    "s3.vzkn.eu"           = { address = "10.10.0.11", type = "A", comment = "Minio-S3-API" },
+    "s3c.vzkn.eu"          = { address = "10.10.0.11", type = "A", comment = "Minio-Console" },
+    # NAS - Garage S3
+    "api.s3.vzkn.eu"       = { address = "10.10.0.11", type = "A", comment = "Garage-S3-API" },
+    "web.s3.vzkn.eu"       = { address = "10.10.0.11", type = "A", comment = "Garage-S3-Web" },
+    "garage.vzkn.eu"       = { address = "10.10.0.11", type = "A", comment = "Garage-WebUI" },
+    "admin.s3.vzkn.eu"     = { address = "10.10.0.11", type = "A", comment = "Garage-Admin-API" },
     # K8s
     "alfheim"              = { address = "10.10.0.21", type = "A", comment = "alfheim" },
     "alne"                 = { address = "10.10.0.22", type = "A", comment = "alne" },
@@ -62,7 +69,7 @@ locals {
         "10.10.0.9" = { name = "wAP-AX", mac = "F4:1E:57:80:43:C3" }
         # Rack - NAS & Kubernetes
         "10.10.0.10" = { name = "pi", mac = "00:E0:4C:36:2A:CD" }
-        "10.10.0.11" = { name = "aincrad", mac = "9C:6B:00:79:11:99" }
+        "10.10.0.11" = { name = "aincrad", mac = "9C:DC:71:46:0F:20" } # "10.10.0.11" = { name = "aincrad", mac = "9C:6B:00:79:11:99" }
         "10.10.0.21" = { name = "alfheim", mac = "F8:F2:1E:CD:7A:30" }
         "10.10.0.22" = { name = "alne", mac = "3C:FD:FE:02:06:80" }
         "10.10.0.23" = { name = "ainias", mac = "44:49:88:03:C7:CC" }
@@ -131,7 +138,7 @@ locals {
         # VX Notebook
         "10.100.0.104" = { name = "vx-t480-wlan", mac = "8E:80:A3:1F:3D:3B" }
         # VX Mobile
-        "10.100.0.110" = { name = "vx-s22-u", mac = "9A:B4:2C:DB:F0:A1" }
+        "10.100.0.110" = { name = "vx-s25-u", mac = "80:75:BF:AF:49:0D" }
       }
     },
     "External" = {
@@ -146,6 +153,17 @@ locals {
       static_leases = {
         "10.110.0.100" = { name = "sunshine-cpb", mac = "52:54:00:5F:E4:88" }
       }
+    },
+    "DMZ" = {
+      name          = "DMZ"
+      vlan_id       = 200
+      network       = "10.200.0.0"
+      cidr_suffix   = "24"
+      gateway       = "10.200.0.1"
+      dhcp_pool     = ["10.200.0.10-10.200.0.50"]
+      dns_servers   = ["1.1.1.1", "1.0.0.1"]
+      domain        = "dmz.h.vzkn.eu"
+      static_leases = {}
     }
   }
 }

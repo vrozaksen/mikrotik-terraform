@@ -29,11 +29,7 @@ inputs = {
   ethernet_interfaces = {
     "ether1" = { comment = "Vectra Uplink", bridge_port = false }
     "ether2" = { comment = "SLZB", untagged = local.shared_locals.vlans.Servers.name }
-    "ether3" = { 
-      comment = "Aincrad", 
-      untagged = local.shared_locals.vlans.Servers.name 
-      tagged = [local.shared_locals.vlans.External.name] 
-    }
+    "ether3" = { comment = "RIPE Atlas Probe", untagged = local.shared_locals.vlans.DMZ.name }
     "ether4" = {}
     "ether5" = { 
       comment = "TV-Living-Room", 
@@ -51,6 +47,6 @@ inputs = {
       untagged = local.shared_locals.vlans.Servers.name
       tagged   = [local.shared_locals.vlans.Trusted.name, local.shared_locals.vlans.Guest.name, local.shared_locals.vlans.IoT.name]
     }
-    "sfp-sfpplus1" = { comment = "CRS326 Downlink", tagged = local.shared_locals.all_vlans, mtu = 9000 } # mtu = 1514 
+    "sfp-sfpplus1" = { comment = "CRS326 Downlink", tagged = local.shared_locals.all_vlans } 
   }
 }

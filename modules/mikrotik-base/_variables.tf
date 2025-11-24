@@ -80,6 +80,12 @@ variable "bridge_comment" {
   description = "Comment for the bridge interface"
 }
 
+variable "bridge_mtu" {
+  type        = number
+  default     = 1514
+  description = "MTU for the bridge interface (1514 for standard, 9500-10000 for jumbo frames)"
+}
+
 # =================================================================================================
 # VLAN Configuration
 # =================================================================================================
@@ -124,6 +130,7 @@ variable "bond_interfaces" {
     slaves               = list(string)
     mode                 = optional(string, "802.3ad")       # 802.3ad, balance-rr, balance-xor, broadcast, active-backup, balance-tlb, balance-alb
     transmit_hash_policy = optional(string, "layer-2-and-3") # layer-2, layer-2-and-3, layer-3-and-4
+    mtu                  = optional(number, 1500)            # MTU size, default 1500, set to 9000 for jumbo frames
 
     # VLAN configurations
     tagged   = optional(list(string))

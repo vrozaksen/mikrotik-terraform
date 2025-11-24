@@ -34,24 +34,24 @@ inputs = {
   vlans = local.shared_locals.vlans
   ethernet_interfaces = {
     # "ether1" = { comment = "MGMT", untagged = local.shared_locals.vlans.Servers.name }
-    "sfp-sfpplus1"  = { comment = "Uplink", tagged = local.shared_locals.all_vlans, mtu = 9000 }
-    "sfp-sfpplus2"  = { comment = "HORRACO Downlink", tagged = local.shared_locals.all_vlans, mtu = 9000 }
-    "sfp-sfpplus3"  = { comment = "K8S_1", mtu = 9000, bridge_port = false }
-    "sfp-sfpplus4"  = { comment = "K8S_1", mtu = 9000, bridge_port = false }
-    "sfp-sfpplus5"  = { comment = "K8S_2", mtu = 9000, bridge_port = false }
-    "sfp-sfpplus6"  = { comment = "K8S_2", mtu = 9000, bridge_port = false }
-    "sfp-sfpplus7"  = { comment = "K8S_3", mtu = 9000, bridge_port = false }
-    "sfp-sfpplus8"  = { comment = "K8S_3", mtu = 9000, bridge_port = false }
-    "sfp-sfpplus9"  = { comment = "SRV", untagged = local.shared_locals.vlans.Servers.name, tagged = [local.shared_locals.vlans.IoT.name], mtu = 9000 }
-    "sfp-sfpplus10" = { comment = "SRV", untagged = local.shared_locals.vlans.Servers.name, tagged = [local.shared_locals.vlans.IoT.name], mtu = 9000 }
+    "sfp-sfpplus1"  = { comment = "Uplink", tagged = local.shared_locals.all_vlans }
+    "sfp-sfpplus2"  = { comment = "HORRACO Downlink", tagged = local.shared_locals.all_vlans }
+    "sfp-sfpplus3"  = { comment = "K8S_1", bridge_port = false }
+    "sfp-sfpplus4"  = { comment = "K8S_1", bridge_port = false }
+    "sfp-sfpplus5"  = { comment = "K8S_2", bridge_port = false }
+    "sfp-sfpplus6"  = { comment = "K8S_2", bridge_port = false }
+    "sfp-sfpplus7"  = { comment = "K8S_3", bridge_port = false }
+    "sfp-sfpplus8"  = { comment = "K8S_3", bridge_port = false }
+    "sfp-sfpplus9"  = { comment = "SRV", untagged = local.shared_locals.vlans.Servers.name, tagged = [local.shared_locals.vlans.IoT.name] }
+    "sfp-sfpplus10" = { comment = "SRV", untagged = local.shared_locals.vlans.Servers.name, tagged = [local.shared_locals.vlans.IoT.name] }
     "sfp-sfpplus11" = {}
     "sfp-sfpplus12" = {}
     "sfp-sfpplus13" = {}
     "sfp-sfpplus14" = {}
     "sfp-sfpplus15" = {}
     "sfp-sfpplus16" = {}
-    "sfp-sfpplus17" = {}
-    "sfp-sfpplus18" = {}
+    "sfp-sfpplus17" = { comment = "Aincrad", bridge_port = false }
+    "sfp-sfpplus18" = { comment = "Aincrad", bridge_port = false }
     "sfp-sfpplus19" = {}
     "sfp-sfpplus20" = {}
     "sfp-sfpplus21" = {}
@@ -60,7 +60,6 @@ inputs = {
       comment  = "Trusted",
       untagged = local.shared_locals.vlans.Trusted.name
       tagged   = [local.shared_locals.vlans.Servers.name, local.shared_locals.vlans.Guest.name, local.shared_locals.vlans.IoT.name]
-      mtu      = 9000
     }
     "sfp-sfpplus24" = {
       comment  = "Trusted",
@@ -94,6 +93,13 @@ inputs = {
       comment  = "K8S_3"
       untagged = local.shared_locals.vlans.Servers.name
       tagged   = [for name, vlan in local.shared_locals.vlans : vlan.name if name != "Servers"]
+    }
+    "Aincrad" = {
+      slaves               = ["sfp-sfpplus17", "sfp-sfpplus18"]
+      comment              = "Aincrad"
+      untagged             = local.shared_locals.vlans.Servers.name
+      transmit_hash_policy = "layer-3-and-4"
+      # tagged   = [for name, vlan in local.shared_locals.vlans : vlan.name if name != "Servers"]
     }
   }
 }

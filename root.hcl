@@ -8,7 +8,7 @@ remote_state {
 
   config = {
     endpoints = {
-      s3 = "https://s3.vzkn.eu"
+      s3 = "https://api.s3.vzkn.eu"
     }
     bucket                      = "tfstate-mikrotik-terraform"
     key                         = "${replace(path_relative_to_include(), "infrastructure/", "")}/tfstate.json"
