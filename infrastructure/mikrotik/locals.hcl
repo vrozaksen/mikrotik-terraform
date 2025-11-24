@@ -160,10 +160,12 @@ locals {
       network       = "10.200.0.0"
       cidr_suffix   = "24"
       gateway       = "10.200.0.1"
-      dhcp_pool     = ["10.200.0.10-10.200.0.50"]
+      dhcp_pool     = ["10.200.0.100-10.200.0.199"]
       dns_servers   = ["1.1.1.1", "1.0.0.1"]
       domain        = "dmz.h.vzkn.eu"
-      static_leases = {}
+      static_leases = {
+        "10.200.0.50" = { name = "ripe-atlas-probe", mac = "D8:58:D7:03:07:3C" }
+      }
     }
   }
 }
