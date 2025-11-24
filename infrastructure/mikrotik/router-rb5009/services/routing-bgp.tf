@@ -7,6 +7,7 @@ locals {
   }
   asn_rb5009 = 64513
   asn_crs326 = 64514
+  asn_k8s    = 64515
 }
 
 # =================================================================================================
@@ -58,7 +59,10 @@ resource "routeros_routing_bgp_connection" "k8s_peers_rb5009" {
     address = "10.10.0.1"
     ttl     = 2
   }
-  remote { address = each.value.ip }
+  remote {
+    address = each.value.ip
+    as      = local.asn_k8s
+  }
   output { default_originate = "always" }
 }
 
