@@ -26,9 +26,9 @@ resource "routeros_ip_firewall_addr_list" "trusted_devices" {
 # Dynamic lists (auto-generated)
 locals {
   service_access = {
-    dns = ["Trusted", "IoT", "Servers", "External", "DMZ"],
+    dns = ["Trusted", "IoT", "Servers", "DMZ"],
     ntp = ["Trusted", "Servers", "DMZ"],
-    wan = ["Trusted", "IoT", "Servers", "Guest", "External", "DMZ"],
+    wan = ["Trusted", "IoT", "Servers", "Guest", "DMZ"],
   }
 }
 resource "routeros_ip_firewall_addr_list" "ag_service_lists" {

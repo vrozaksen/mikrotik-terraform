@@ -141,19 +141,6 @@ locals {
         "10.100.0.110" = { name = "vx-s25-u", mac = "80:75:BF:AF:49:0D" }
       }
     },
-    "External" = {
-      name        = "External"
-      vlan_id     = 110
-      network     = "10.110.0.0"
-      cidr_suffix = "24"
-      gateway     = "10.110.0.1"
-      dhcp_pool   = ["10.110.0.100-10.110.0.199"]
-      dns_servers = ["10.110.0.1"]
-      domain      = "ext.h.vzkn.eu"
-      static_leases = {
-        "10.110.0.100" = { name = "sunshine-cpb", mac = "52:54:00:5F:E4:88" }
-      }
-    },
     "DMZ" = {
       name          = "DMZ"
       vlan_id       = 200
