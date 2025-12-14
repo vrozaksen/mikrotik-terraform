@@ -9,32 +9,33 @@ locals {
       udp = ["54535"],
       tcp = ["54535"]
     },
-    Minecraft = {
-      ip  = "10.10.0.60",
-      udp = ["25565"]
-    },
-    Factorio-Fun-Mode = {
-      ip  = "10.10.0.61",
-      udp = ["34197"]
-    },
     Mumble = {
       ip  = "10.10.0.50",
       tcp = ["64738"],
       udp = ["64738"]
     },
-    Gitea = {
+    Forgejo = {
       ip  = "10.10.0.51",
       tcp = ["2222"],
       udp = ["2222"]
     },
-    Mirotalk = {
+    TS6 = {
       ip  = "10.10.0.52",
       tcp = ["40000-40010"],
       udp = ["40000-40010"]
     },
-    Sunshine-Firend = {
-      ip  = "10.110.0.100",
-      udp = ["61337"]
+    Coturn = {
+      ip  = "10.10.0.53",
+      udp = ["3478-3479", "5349", "49152-49252"],  # TURN + TURNS (TLS) + media relay
+      tcp = ["3478-3479", "5349", "49152-49252"]   # TURN + TURNS (TLS) + media relay
+    },
+    Minecraft = {
+      ip  = "10.10.0.60",
+      udp = ["25565"]
+    },
+    Factorio = {
+      ip  = "10.10.0.61",
+      udp = ["34197"]
     },
     Local-Friend = {
       ip  = "10.100.0.103",
