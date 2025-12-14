@@ -19,6 +19,10 @@ resource "routeros_interface_list_member" "wan" {
   interface = "ether1"
   list      = routeros_interface_list.wan.name
 }
+resource "routeros_interface_list_member" "lte" {
+  interface = "ether2"
+  list      = routeros_interface_list.wan.name
+}
 resource "routeros_interface_list_member" "vlan_lan" {
   for_each  = local.vlans
   interface = each.value.name

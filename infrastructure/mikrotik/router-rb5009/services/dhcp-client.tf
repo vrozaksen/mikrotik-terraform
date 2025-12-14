@@ -12,3 +12,14 @@ resource "routeros_ip_dhcp_client" "vectra" {
   use_peer_dns           = false
   use_peer_ntp           = false
 }
+
+resource "routeros_ip_dhcp_client" "lte" {
+  interface              = "ether2"
+  add_default_route      = "yes"
+  comment                = "LTE DHCP Client"
+  default_route_distance = 2
+  disabled               = false
+  dhcp_options           = "hostname,clientid"
+  use_peer_dns           = false
+  use_peer_ntp           = false
+}

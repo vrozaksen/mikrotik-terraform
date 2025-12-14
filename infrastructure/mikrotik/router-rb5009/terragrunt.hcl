@@ -28,9 +28,9 @@ inputs = {
   vlans = local.shared_locals.vlans
   ethernet_interfaces = {
     "ether1" = { comment = "Vectra Uplink", bridge_port = false }
-    "ether2" = { comment = "SLZB", untagged = local.shared_locals.vlans.Servers.name }
-    "ether3" = { comment = "RIPE Atlas Probe", untagged = local.shared_locals.vlans.DMZ.name }
-    "ether4" = {}
+    "ether2" = { comment = "LTE Uplink", bridge_port = false }
+    "ether3" = { comment = "SLZB", untagged = local.shared_locals.vlans.Servers.name }
+    "ether4" = { comment = "RIPE Atlas Probe", untagged = local.shared_locals.vlans.DMZ.name }
     "ether5" = { 
       comment = "TV-Living-Room", 
       untagged = local.shared_locals.vlans.IoT.name 
