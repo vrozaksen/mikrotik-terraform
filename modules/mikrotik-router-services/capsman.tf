@@ -9,6 +9,7 @@ resource "routeros_wifi_capsman" "settings" {
   require_peer_certificate = false
 }
 
+
 # =================================================================================================
 # WiFi Channels
 # https://registry.terraform.io/providers/terraform-routeros/routeros/latest/docs/resources/wifi_channel
@@ -21,6 +22,7 @@ resource "routeros_wifi_channel" "fast" {
   name = "5ghz"
   band = "5ghz-ax"
 }
+
 
 # =================================================================================================
 # WiFi Security
@@ -63,6 +65,7 @@ resource "routeros_wifi_security" "iot_wifi_password" {
   passphrase           = var.iot_wifi_password
 }
 
+
 # =================================================================================================
 # WiFi Datapath
 # https://registry.terraform.io/providers/terraform-routeros/routeros/latest/docs/resources/wifi_datapath
@@ -70,19 +73,20 @@ resource "routeros_wifi_security" "iot_wifi_password" {
 resource "routeros_wifi_datapath" "trusted_tagging" {
   name    = "trusted-tagging"
   comment = "WiFi -> Trusted VLAN"
-  vlan_id = local.vlans.Trusted.vlan_id
+  vlan_id = var.vlans.Trusted.vlan_id
 }
 resource "routeros_wifi_datapath" "guest_tagging" {
   name             = "guest-tagging"
   comment          = "WiFi -> Guest VLAN"
-  vlan_id          = local.vlans.Guest.vlan_id
+  vlan_id          = var.vlans.Guest.vlan_id
   client_isolation = true
 }
 resource "routeros_wifi_datapath" "iot_tagging" {
   name    = "iot-tagging"
   comment = "WiFi -> IoT VLAN"
-  vlan_id = local.vlans.IoT.vlan_id
+  vlan_id = var.vlans.IoT.vlan_id
 }
+
 
 # =================================================================================================
 # WiFi Configurations
@@ -153,6 +157,7 @@ resource "routeros_wifi_configuration" "trusted_fast" {
     config = routeros_wifi_security.trusted_wifi_password.name
   }
 }
+
 
 # =================================================================================================
 # WiFi Provisioning

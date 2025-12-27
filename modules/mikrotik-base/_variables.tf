@@ -65,6 +65,7 @@ variable "certificate_unit" {
   description = "Organizational unit for the device certificate."
 }
 
+
 # =================================================================================================
 # Bridge settings
 # =================================================================================================
@@ -83,8 +84,9 @@ variable "bridge_comment" {
 variable "bridge_mtu" {
   type        = number
   default     = 1514
-  description = "MTU for the bridge interface (1514 for standard, 9500-10000 for jumbo frames)"
+  description = "MTU for the bridge interface. If null, defaults to 1514."
 }
+
 
 # =================================================================================================
 # VLAN Configuration
@@ -99,6 +101,7 @@ variable "vlans" {
     dhcp_pool   = list(string)
     dns_servers = list(string)
     domain      = string
+    mtu         = optional(number, 1500)
     static_leases = map(object({
       name = string
       mac  = string
@@ -108,6 +111,7 @@ variable "vlans" {
   description = "Map of VLANs to configure"
 }
 
+
 # =================================================================================================
 # Interface Configuration
 # =================================================================================================
@@ -115,6 +119,8 @@ variable "ethernet_interfaces" {
   type = map(object({
     comment     = optional(string, "")
     bridge_port = optional(bool, true)
+    l2mtu       = optional(number, 1514) # Layer 2 MTU
+    mtu         = optional(number, 1500) # Layer 3 MTU
 
     # VLAN configurations
     tagged   = optional(list(string)) # list of VLAN names
@@ -130,7 +136,7 @@ variable "bond_interfaces" {
     slaves               = list(string)
     mode                 = optional(string, "802.3ad")       # 802.3ad, balance-rr, balance-xor, broadcast, active-backup, balance-tlb, balance-alb
     transmit_hash_policy = optional(string, "layer-2-and-3") # layer-2, layer-2-and-3, layer-3-and-4
-    mtu                  = optional(number, 1500)            # MTU size, default 1500, set to 9000 for jumbo frames
+    mtu                  = optional(number, 1500)            # MTU for the bond interface
 
     # VLAN configurations
     tagged   = optional(list(string))
@@ -138,4 +144,70 @@ variable "bond_interfaces" {
   }))
   default     = {}
   description = "Map of bond interfaces to configure"
+}
+
+
+# =================================================================================================
+# BGP Configuration
+# =================================================================================================
+variable "bgp_enabled" {
+  type        = bool
+  default     = false
+  description = "Enable BGP routing"
+}
+
+variable "bgp_instance" {
+  type = object({
+    name      = string
+    as        = number
+    router_id = string
+  })
+  default     = null
+  description = "BGP instance configuration"
+}
+
+variable "bgp_peer_connections" {
+  type = map(object({
+    name             = string
+    remote_address   = string
+    remote_as        = number
+    local_address    = string
+    address_families = optional(string, "ip")
+    multihop         = optional(bool, false)
+  }))
+  default     = {}
+  description = "Map of BGP peer connections to other routers/switches"
+}
+
+variable "bgp_k8s_peers" {
+  type = map(object({
+    ip = string
+  }))
+  default     = {}
+  description = "Map of Kubernetes node BGP peers"
+}
+
+variable "bgp_k8s_asn" {
+  type        = number
+  default     = null
+  description = "ASN for Kubernetes nodes"
+}
+
+
+# =================================================================================================
+# DHCP Client Configuration
+# =================================================================================================
+variable "dhcp_clients" {
+  type = map(object({
+    interface              = string
+    comment                = optional(string, "")
+    add_default_route      = optional(string, "no")
+    default_route_distance = optional(number, 1)
+    disabled               = optional(bool, false)
+    dhcp_options           = optional(string, "hostname,clientid")
+    use_peer_dns           = optional(bool, false)
+    use_peer_ntp           = optional(bool, false)
+  }))
+  default     = {}
+  description = "Map of DHCP clients to configure"
 }

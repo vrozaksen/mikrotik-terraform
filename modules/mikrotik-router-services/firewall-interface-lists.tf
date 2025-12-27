@@ -11,24 +11,22 @@ resource "routeros_interface_list" "lan" {
   comment = "All Local Interfaces"
 }
 
+
 # ================================================================================================
 # Interface List Members
 # https://registry.terraform.io/providers/terraform-routeros/routeros/latest/docs/resources/interface_list_member
 # ================================================================================================
 resource "routeros_interface_list_member" "wan" {
-  interface = "ether1"
-  list      = routeros_interface_list.wan.name
-}
-resource "routeros_interface_list_member" "lte" {
-  interface = "ether2"
+  for_each  = toset(var.wan_interfaces)
+  interface = each.value
   list      = routeros_interface_list.wan.name
 }
 resource "routeros_interface_list_member" "vlan_lan" {
-  for_each  = local.vlans
+  for_each  = var.vlans
   interface = each.value.name
   list      = routeros_interface_list.lan.name
 }
 resource "routeros_interface_list_member" "bridge_lan" {
-  interface = "bridge" #?FIXME: should this be a base module output?
+  interface = "bridge"
   list      = routeros_interface_list.lan.name
 }

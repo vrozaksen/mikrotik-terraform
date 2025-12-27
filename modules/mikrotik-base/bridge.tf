@@ -9,6 +9,7 @@ resource "routeros_interface_bridge" "bridge" {
   mtu            = var.bridge_mtu
 }
 
+
 # =================================================================================================
 # Bridge Ports
 # https://registry.terraform.io/providers/terraform-routeros/routeros/latest/docs/resources/interface_bridge_port

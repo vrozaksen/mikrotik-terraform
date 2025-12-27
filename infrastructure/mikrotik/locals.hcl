@@ -2,6 +2,15 @@ locals {
   timezone       = "Europe/Warsaw"
   cloudflare_ntp = "time.cloudflare.com"
 
+  # BGP Configuration (shared)
+  bgp_asn_k8s = 64515
+  bgp_k8s_peers = {
+    "k8s-cp-1" = { ip = "10.10.0.21/32" },
+    "k8s-cp-2" = { ip = "10.10.0.22/32" },
+    "k8s-cp-3" = { ip = "10.10.0.23/32" },
+    "k8s-w-1"  = { ip = "10.10.0.31/32" }
+  }
+
   upstream_dns = ["1.1.1.1", "1.0.0.1"]
   # Firebog https://firebog.net/
   adlists = {

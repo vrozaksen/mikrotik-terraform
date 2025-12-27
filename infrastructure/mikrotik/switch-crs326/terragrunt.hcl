@@ -1,13 +1,11 @@
 include "root" {
   path = find_in_parent_folders("root.hcl")
 }
-include "shared_provider" {
-  path = find_in_parent_folders("provider.hcl")
-}
+
 
 dependencies {
   paths = [
-    find_in_parent_folders("mikrotik/router-rb5009")
+    find_in_parent_folders("mikrotik/router-services")
   ]
 }
 
@@ -100,6 +98,35 @@ inputs = {
       untagged             = local.shared_locals.vlans.Servers.name
       transmit_hash_policy = "layer-3-and-4"
       # tagged   = [for name, vlan in local.shared_locals.vlans : vlan.name if name != "Servers"]
+    }
+  }
+
+  # BGP Configuration
+  bgp_enabled = true
+  bgp_instance = {
+    name      = "bgp-instance-1"
+    as        = 64514
+    router_id = "10.10.0.2"
+  }
+  bgp_peer_connections = {
+    "rb5009" = {
+      name           = "RB5009_UPLINK"
+      local_address  = "10.10.0.2"
+      remote_address = "10.10.0.1"
+      remote_as      = 64513
+    }
+  }
+  bgp_k8s_peers = local.shared_locals.bgp_k8s_peers
+  bgp_k8s_asn   = local.shared_locals.bgp_asn_k8s
+
+  # DHCP Client Configuration
+  dhcp_clients = {
+    "uplink" = {
+      interface         = local.shared_locals.vlans.Servers.name
+      comment           = "Uplink DHCP"
+      add_default_route = "yes"
+      use_peer_dns      = true
+      use_peer_ntp      = true
     }
   }
 }
