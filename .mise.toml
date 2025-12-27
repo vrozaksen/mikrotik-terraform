@@ -1,16 +1,20 @@
 [tools]
+node = "latest"
+uv = "latest"
+
 # =================================================================================================
 # Project Tools
 # =================================================================================================
-"aqua:hashicorp/terraform" = "1.14.3"
-"aqua:gruntwork-io/terragrunt" = "0.96.1"
-"aqua:terraform-linters/tflint" = "0.60.0"
+opentofu = "latest"
+terragrunt = "latest"
+just = "latest"
 
-"ubi:go-task/task" = "3"
+pre-commit = "latest"
 
 # =================================================================================================
 # CI Tools
 # =================================================================================================
-"aqua:rhysd/actionlint" = "1"
-"npm:@commitlint/cli" = "20"
-"pipx:yamllint" = "1"
+gh = "latest"
+actionlint = "latest"
+yamllint = "latest"
+"npm:@commitlint/cli" = "latest"
