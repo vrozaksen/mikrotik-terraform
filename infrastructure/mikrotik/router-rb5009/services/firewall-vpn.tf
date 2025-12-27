@@ -46,6 +46,7 @@ resource "routeros_ip_firewall_filter" "allow_wireguard_dns_tcp" {
   chain        = "input"
   protocol     = "tcp"
   in_interface = routeros_interface_wireguard.wireguard.name
+  dst_port     = "53"
   place_before = routeros_ip_firewall_filter.allow_wireguard_dns_udp.id
 }
 resource "routeros_ip_firewall_filter" "allow_wireguard_dns_udp" {
@@ -54,6 +55,7 @@ resource "routeros_ip_firewall_filter" "allow_wireguard_dns_udp" {
   chain        = "input"
   protocol     = "udp"
   in_interface = routeros_interface_wireguard.wireguard.name
+  dst_port     = "53"
   place_before = routeros_ip_firewall_filter.drop_wireguard_input.id
 }
 resource "routeros_ip_firewall_filter" "drop_wireguard_input" {
