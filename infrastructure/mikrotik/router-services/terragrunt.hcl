@@ -31,6 +31,11 @@ inputs = {
   # Interface Lists - WAN interfaces for router-base
   wan_interfaces = ["ether1", "ether2"]
 
+  # WireGuard remote networks
+  wireguard_remote_networks = {
+    "offsite-servers" = "10.11.10.0/24"
+  }
+
   # WiFi Passwords
   hc_uuid               = get_env("HC_UUID")
   trusted_wifi_password = get_env("TRUSTED_WIFI_PASSWORD")
