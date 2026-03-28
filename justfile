@@ -2,6 +2,12 @@
 default:
     @just --list
 
+# Fetch secrets from Infisical and write to .env
+env:
+    infisical export --projectId=da94b011-9a7d-408b-92d9-55be47efe750 --env=prod --format=dotenv --path=/mikrotik > .env
+    @echo "✓ .env updated from Infisical (/mikrotik)"
+    direnv reload 2>/dev/null || true
+
 # Run terragrunt plan for all modules
 plan:
     terragrunt plan --all

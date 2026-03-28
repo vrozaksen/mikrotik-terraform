@@ -17,6 +17,7 @@ inputs = {
   mikrotik_password = get_env("MIKROTIK_PASSWORD")
   mikrotik_insecure = true
 
+  tls_certificate         = "router.crt_0"
   certificate_common_name = local.mikrotik_hostname
   hostname                = "Router"
   timezone                = local.shared_locals.timezone

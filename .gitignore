@@ -50,6 +50,7 @@ age.key
 .DS_Store
 .backup
 .env
+.archive
 backend.tf
 .task/checksum
 *.tf-ar

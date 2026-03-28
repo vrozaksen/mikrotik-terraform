@@ -29,6 +29,11 @@ locals {
       udp = ["3478-3479", "5349", "49152-49252"],  # TURN + TURNS (TLS) + media relay
       tcp = ["3478-3479", "5349", "49152-49252"]   # TURN + TURNS (TLS) + media relay
     },
+    LiveKit = {
+      ip  = "10.10.0.54",
+      udp = ["7881", "50100-50200"],
+      tcp = ["7881", "50100-50200"]
+    },
     Minecraft = {
       ip  = "10.10.0.60",
       udp = ["25565"]

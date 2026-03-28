@@ -50,6 +50,15 @@ resource "routeros_ip_firewall_addr_list" "private" {
   comment = "Private range"
 }
 
+# Allowed hosts in remote homelab (10.10.0.0/24)
+resource "routeros_ip_firewall_addr_list" "homelab_allowed" {
+  for_each = var.homelab_allowed_hosts
+
+  list    = "homelab-allowed"
+  address = each.value
+  comment = each.key
+}
+
 # =================================================================================================
 # Filter Rules
 # =================================================================================================
@@ -154,6 +163,26 @@ locals {
       order         = 1110
     }
 
+    # LAN -> Homelab (only allowed hosts via WireGuard)
+    "forward-lan-homelab-allowed" = {
+      chain            = "forward"
+      action           = "accept"
+      in_interface_list = routeros_interface_list.lan.name
+      out_interface    = routeros_interface_wireguard.wireguard.name
+      dst_address_list = "homelab-allowed"
+      order            = 1120
+    }
+
+    # LAN -> Homelab (block everything else in 10.10.0.0/24)
+    "forward-lan-homelab-drop" = {
+      chain            = "forward"
+      action           = "drop"
+      in_interface_list = routeros_interface_list.lan.name
+      out_interface    = routeros_interface_wireguard.wireguard.name
+      dst_address      = "10.10.0.0/24"
+      order            = 1130
+    }
+
     # All VLANs -> WAN (Internet)
     "forward-lan-wan" = {
       chain              = "forward"
@@ -252,6 +281,7 @@ resource "routeros_ip_firewall_filter" "rules" {
   protocol             = lookup(each.value, "protocol", null)
   dst_port             = lookup(each.value, "dst_port", null)
   src_address          = lookup(each.value, "src_address", null)
+  dst_address          = lookup(each.value, "dst_address", null)
   dst_address_list     = lookup(each.value, "dst_address_list", null)
   hw_offload           = lookup(each.value, "hw_offload", null)
 

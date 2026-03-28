@@ -36,6 +36,12 @@ variable "mac_server_interfaces" {
 # =================================================================================================
 # Certificate details
 # =================================================================================================
+variable "tls_certificate" {
+  type        = string
+  default     = null
+  description = "Certificate name used for TLS services (api-ssl, www-ssl). If null, uses the terraform-managed webfig certificate."
+}
+
 variable "certificate_common_name" {
   type        = string
   description = "CN for the device certificate."

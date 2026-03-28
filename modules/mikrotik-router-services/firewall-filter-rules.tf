@@ -143,6 +143,22 @@ locals {
       in_interface = routeros_interface_wireguard.wireguard.name
       order        = 1050
     }
+    "allow-wireguard-btest-tcp" = {
+      chain        = "input"
+      action       = "accept"
+      protocol     = "tcp"
+      dst_port     = "2000"
+      in_interface = routeros_interface_wireguard.wireguard.name
+      order        = 1060
+    }
+    "allow-wireguard-btest-udp" = {
+      chain        = "input"
+      action       = "accept"
+      protocol     = "udp"
+      dst_port     = "2000"
+      in_interface = routeros_interface_wireguard.wireguard.name
+      order        = 1061
+    }
 
     # =========================================================================
     # TRUSTED ZONE (with Trusted Devices special access via address list)

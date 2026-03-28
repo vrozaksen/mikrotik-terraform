@@ -5,13 +5,16 @@ locals {
   # BGP Configuration (shared)
   bgp_asn_k8s = 64515
   bgp_k8s_peers = {
-    "k8s-cp-1" = { ip = "10.10.0.21/32" },
-    "k8s-cp-2" = { ip = "10.10.0.22/32" },
-    "k8s-cp-3" = { ip = "10.10.0.23/32" },
-    "k8s-w-1"  = { ip = "10.10.0.31/32" }
+    "k8s-cp-1" = { ip = "10.10.0.15/32" },
+    "k8s-cp-2" = { ip = "10.10.0.16/32" },
+    "k8s-cp-3" = { ip = "10.10.0.17/32" },
+    "k8s-w-1" = { ip = "10.10.0.21/32" },
+    "k8s-w-2" = { ip = "10.10.0.22/32" },
+    "k8s-w-3" = { ip = "10.10.0.23/32" },
+    "k8s-w-4"  = { ip = "10.10.0.24/32" }
   }
 
-  upstream_dns = ["1.1.1.1", "1.0.0.1"]
+  upstream_dns = ["9.9.9.9", "149.112.112.112"]
   # Firebog https://firebog.net/
   adlists = {
     "PolishFiltersTeam_KADhosts" = { url = "https://raw.githubusercontent.com/PolishFiltersTeam/KADhosts/master/KADhosts.txt" }
@@ -72,17 +75,24 @@ locals {
       dns_servers = ["10.10.0.1"]
       domain      = "srv.h.vzkn.eu"
       static_leases = {
-        # Rack - Routing Switching WiFing
+        ### Rack - Routing Switching WiFing
         "10.10.0.2" = { name = "CRS326", mac = "F4:1E:57:9E:6D:A1" }
         "10.10.0.8" = { name = "HORRACO", mac = "1C:2A:A3:1E:5B:5A" }
         "10.10.0.9" = { name = "wAP-AX", mac = "F4:1E:57:80:43:C3" }
-        # Rack - NAS & Kubernetes
+        ### Rack - NAS & Servers
         "10.10.0.10" = { name = "pi", mac = "00:E0:4C:36:2A:CD" }
-        "10.10.0.11" = { name = "aincrad", mac = "9C:DC:71:46:0F:20" } # "10.10.0.11" = { name = "aincrad", mac = "9C:6B:00:79:11:99" }
+        "10.10.0.11" = { name = "aincrad", mac = "F8:F2:1E:47:00:70" } # "10.10.0.11" = { name = "aincrad", mac = "9C:6B:00:79:11:99" } # 9C:DC:71:46:0F:20
+        ### Rack - K8s Control Plane Nodes
+        "10.10.0.15" = { name = "saga", mac = "E0:51:D8:1F:43:3D" }
+        "10.10.0.16" = { name = "eir", mac = "E0:51:D8:1F:AC:84" }
+        "10.10.0.17" = { name = "skuld", mac = "E0:51:D8:1F:B6:95" }
+        ### Rack - K8s Worker Nodes
         "10.10.0.21" = { name = "alfheim", mac = "F8:F2:1E:CD:7A:30" }
         "10.10.0.22" = { name = "alne", mac = "3C:FD:FE:02:06:80" }
         "10.10.0.23" = { name = "ainias", mac = "44:49:88:03:C7:CC" }
-        "10.10.0.31" = { name = "granzam", mac = "00:E0:4C:68:07:2C" }
+        "10.10.0.24" = { name = "granzam", mac = "00:E0:4C:68:07:2C" }
+        ### Rack - Matchbox / PXE Booting
+        # "10.10.0.30" = { name = "matchbox", mac = "x" }
         # Rack - HASS ZigBee Coordinator
         "10.10.0.65" = { name = "slzb", mac = "F4:65:0B:44:F3:EB" }
       }
@@ -125,7 +135,7 @@ locals {
       cidr_suffix   = "24"
       gateway       = "10.99.0.1"
       dhcp_pool     = ["10.99.0.10-10.99.0.250"]
-      dns_servers   = ["1.1.1.1", "1.0.0.1", "8.8.8.8"]
+      dns_servers   = ["9.9.9.9", "149.112.112.112"]
       domain        = "gst.h.vzkn.eu"
       static_leases = {}
     },
@@ -157,7 +167,7 @@ locals {
       cidr_suffix   = "24"
       gateway       = "10.200.0.1"
       dhcp_pool     = ["10.200.0.100-10.200.0.199"]
-      dns_servers   = ["1.1.1.1", "1.0.0.1"]
+      dns_servers   = ["9.9.9.9", "149.112.112.112"]
       domain        = "dmz.h.vzkn.eu"
       static_leases = {
         "10.200.0.50" = { name = "ripe-atlas-probe", mac = "D8:58:D7:03:07:3C" }

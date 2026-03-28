@@ -21,5 +21,7 @@ resource "routeros_tool_mac_server" "mac_server" {
 # https://registry.terraform.io/providers/terraform-routeros/routeros/latest/docs/resources/tool_bandwidth_server
 # =================================================================================================
 resource "routeros_tool_bandwidth_server" "bandwidth_server" {
-  enabled = false
+  enabled            = true
+  authenticate       = true
+  allowed_addresses4 = ["10.0.0.0/8"]
 }

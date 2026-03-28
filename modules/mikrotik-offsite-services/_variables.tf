@@ -25,7 +25,7 @@ variable "vlans" {
 # =================================================================================================
 variable "upstream_dns" {
   type        = list(string)
-  default     = ["1.1.1.1", "1.0.0.1"]
+  default     = ["9.9.9.9", "149.112.112.112"]
   description = "Upstream DNS servers"
 }
 
@@ -35,6 +35,17 @@ variable "adlists" {
   }))
   default     = {}
   description = "Adblock lists"
+}
+
+variable "static_dns" {
+  type = map(object({
+    type    = string
+    comment = string
+    address = optional(string)
+    cname   = optional(string)
+  }))
+  default     = {}
+  description = "Static DNS records"
 }
 
 # =================================================================================================
@@ -49,6 +60,12 @@ variable "wireguard_remote_networks" {
   type        = map(string)
   default     = {}
   description = "Remote networks reachable via WireGuard (name => CIDR)"
+}
+
+variable "homelab_allowed_hosts" {
+  type        = map(string)
+  default     = {}
+  description = "Allowed hosts in remote homelab network (name => IP)"
 }
 
 # =================================================================================================
@@ -95,4 +112,12 @@ variable "qos_upload_mbps" {
   type        = number
   default     = 50
   description = "WAN upload speed in Mbps"
+}
+
+# =================================================================================================
+# Healthcheck Configuration
+# =================================================================================================
+variable "hc_uuid" {
+  type        = string
+  description = "Healthchecks.io UUID for ping"
 }

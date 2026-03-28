@@ -2,7 +2,7 @@ locals {
   timezone       = "Europe/Warsaw"
   cloudflare_ntp = "time.cloudflare.com"
 
-  upstream_dns = ["1.1.1.1", "1.0.0.1"]
+  upstream_dns = ["9.9.9.9", "149.112.112.112"]
   # Firebog https://firebog.net/
   adlists = {
     "PolishFiltersTeam_KADhosts" = { url = "https://raw.githubusercontent.com/PolishFiltersTeam/KADhosts/master/KADhosts.txt" }
@@ -45,7 +45,7 @@ locals {
       cidr_suffix   = "24"
       gateway       = "10.11.99.1"
       dhcp_pool     = ["10.11.99.100-10.11.99.200"]
-      dns_servers   = ["1.1.1.1", "1.0.0.1"]
+      dns_servers   = ["9.9.9.9", "149.112.112.112"]
       domain        = "guest.offsite.h.vzkn.eu"
       static_leases = {}
     }

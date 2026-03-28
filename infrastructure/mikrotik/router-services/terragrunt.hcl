@@ -33,7 +33,8 @@ inputs = {
 
   # WireGuard remote networks
   wireguard_remote_networks = {
-    "offsite-servers" = "10.11.10.0/24"
+    "offsite-servers"   = "10.11.10.0/24"
+    "offsite-wireguard" = "10.255.0.0/24"
   }
 
   # WiFi Passwords
