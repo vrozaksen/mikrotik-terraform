@@ -275,18 +275,21 @@ resource "routeros_ip_firewall_filter" "rules" {
   action  = each.value.action
 
   # Optional fields - only set if present in rule definition
-  connection_state   = lookup(each.value, "connection_state", null)
-  in_interface       = lookup(each.value, "in_interface", null)
-  out_interface      = lookup(each.value, "out_interface", null)
-  in_interface_list  = lookup(each.value, "in_interface_list", null)
-  out_interface_list = lookup(each.value, "out_interface_list", null)
-  protocol           = lookup(each.value, "protocol", null)
-  dst_port           = lookup(each.value, "dst_port", null)
-  src_port           = lookup(each.value, "src_port", null)
-  src_address        = lookup(each.value, "src_address", null)
-  dst_address        = lookup(each.value, "dst_address", null)
-  jump_target        = lookup(each.value, "jump_target", null)
-  hw_offload         = lookup(each.value, "hw_offload", null)
+  connection_state     = lookup(each.value, "connection_state", null)
+  connection_nat_state = lookup(each.value, "connection_nat_state", null)
+  in_interface         = lookup(each.value, "in_interface", null)
+  out_interface        = lookup(each.value, "out_interface", null)
+  in_interface_list    = lookup(each.value, "in_interface_list", null)
+  out_interface_list   = lookup(each.value, "out_interface_list", null)
+  src_address_list     = lookup(each.value, "src_address_list", null)
+  dst_address_list     = lookup(each.value, "dst_address_list", null)
+  protocol             = lookup(each.value, "protocol", null)
+  dst_port             = lookup(each.value, "dst_port", null)
+  src_port             = lookup(each.value, "src_port", null)
+  src_address          = lookup(each.value, "src_address", null)
+  dst_address          = lookup(each.value, "dst_address", null)
+  jump_target          = lookup(each.value, "jump_target", null)
+  hw_offload           = lookup(each.value, "hw_offload", null)
 
   lifecycle {
     create_before_destroy = true

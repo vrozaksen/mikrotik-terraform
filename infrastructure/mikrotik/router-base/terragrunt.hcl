@@ -71,22 +71,22 @@ inputs = {
   # DHCP Client Configuration
   dhcp_clients = {
     "vectra" = {
-      interface              = "ether1"
-      comment                = "Vectra DHCP Client"
-      add_default_route      = "yes"
-      default_route_distance = 1
-      dhcp_options           = "hostname,clientid"
-      use_peer_dns           = false
-      use_peer_ntp           = false
+      interface             = "ether1"
+      comment               = "Vectra DHCP Client"
+      dhcp_options          = "hostname,clientid"
+      use_peer_dns          = false
+      use_peer_ntp          = false
+      failover_probe_target = "1.1.1.1"
+      failover_distance     = 1
     }
     "lte" = {
-      interface              = "ether2"
-      comment                = "LTE DHCP Client"
-      add_default_route      = "yes"
-      default_route_distance = 2
-      dhcp_options           = "hostname,clientid"
-      use_peer_dns           = false
-      use_peer_ntp           = false
+      interface             = "ether2"
+      comment               = "LTE DHCP Client"
+      dhcp_options          = "hostname,clientid"
+      use_peer_dns          = false
+      use_peer_ntp          = false
+      failover_probe_target = "9.9.9.9"
+      failover_distance     = 2
     }
   }
 }

@@ -26,12 +26,13 @@ resource "routeros_ip_dhcp_server_network" "this" {
 # https://registry.terraform.io/providers/terraform-routeros/routeros/latest/docs/resources/ip_dhcp_server
 # ================================================================================================
 resource "routeros_ip_dhcp_server" "this" {
-  name               = var.interface_name
-  comment            = "${var.interface_name} DHCP Server"
-  address_pool       = routeros_ip_pool.this.name
-  interface          = var.interface_name
-  client_mac_limit   = 1
-  conflict_detection = false
+  name                       = var.interface_name
+  comment                    = "${var.interface_name} DHCP Server"
+  address_pool               = routeros_ip_pool.this.name
+  interface                  = var.interface_name
+  client_mac_limit           = 1
+  conflict_detection         = false
+  dynamic_lease_identifiers  = "client-mac,client-id"
 }
 
 # ================================================================================================

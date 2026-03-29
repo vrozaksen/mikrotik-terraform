@@ -213,7 +213,10 @@ variable "dhcp_clients" {
     dhcp_options           = optional(string, "hostname,clientid")
     use_peer_dns           = optional(bool, false)
     use_peer_ntp           = optional(bool, false)
+    script                 = optional(string)
+    failover_probe_target  = optional(string)
+    failover_distance      = optional(number)
   }))
   default     = {}
-  description = "Map of DHCP clients to configure"
+  description = "Map of DHCP clients to configure. Set failover_probe_target to enable recursive routing failover."
 }
