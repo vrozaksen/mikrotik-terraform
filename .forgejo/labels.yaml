@@ -1,4 +1,3 @@
----
 # Device Labels
 - name: device/rb5009
   color: "111111"
@@ -15,7 +14,6 @@
 - name: device/hex
   color: "999999"
   description: Changes to the config for the HEX.
-
 # Size Types
 - name: size/XS
   color: "0000ff"
