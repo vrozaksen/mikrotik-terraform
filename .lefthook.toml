@@ -1,0 +1,28 @@
+[pre-commit]
+parallel = true
+
+# Auto-fix HCL formatting. stage_fixed = true reflows the staged blob with
+# the fmt'd version, so commits land already-formatted (no CI drift).
+[pre-commit.commands.tofu-fmt]
+run = "tofu fmt {staged_files}"
+glob = ["*.tf"]
+stage_fixed = true
+
+[pre-commit.commands.terragrunt-fmt]
+run = "terragrunt hcl format {staged_files}"
+glob = ["*.hcl"]
+stage_fixed = true
+
+[pre-commit.commands.yamlfmt]
+run = "yamlfmt {staged_files}"
+glob = ["*.yaml", "*.yml"]
+stage_fixed = true
+
+# Lint-only: refuses the commit if violated, no autofix.
+[pre-commit.commands.yamllint]
+run = "yamllint -c .yamllint.yaml {staged_files}"
+glob = ["*.yaml", "*.yml"]
+
+[pre-commit.commands.actionlint]
+run = "actionlint {staged_files}"
+glob = [".github/workflows/*.yaml", ".forgejo/workflows/*.yaml"]

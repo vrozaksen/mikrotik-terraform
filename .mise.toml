@@ -9,7 +9,8 @@ opentofu = "latest"
 terragrunt = "latest"
 just = "latest"
 
-pre-commit = "latest"
+lefthook = "latest"
+yamlfmt = "latest"
 
 # =================================================================================================
 # CI Tools
