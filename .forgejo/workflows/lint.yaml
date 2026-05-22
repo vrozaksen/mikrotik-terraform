@@ -1,0 +1,59 @@
+---
+name: Lint
+permissions:
+  contents: read
+
+on:
+  workflow_dispatch:
+  push:
+  pull_request:
+
+jobs:
+  actionlint:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+
+      - name: Setup mise
+        uses: jdx/mise-action@5228313ee0372e111a38da051671ca30fc5a96db # v3.6.3
+
+      - name: Run actionlint
+        run: mise exec -- actionlint
+
+  yamllint:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+
+      - name: Setup mise
+        uses: jdx/mise-action@5228313ee0372e111a38da051671ca30fc5a96db # v3.6.3
+
+      - name: Run yamllint
+        run: mise exec -- yamllint . -c .yamllint.yaml
+
+  terraform-fmt:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+
+      - name: Setup mise
+        uses: jdx/mise-action@5228313ee0372e111a38da051671ca30fc5a96db # v3.6.3
+
+      - name: Run tofu fmt
+        run: mise exec -- tofu fmt -recursive -check
+
+  terragrunt-fmt:
+    runs-on: ubuntu-latest
+    needs: terraform-fmt
+    steps:
+      - name: Checkout
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+
+      - name: Setup mise
+        uses: jdx/mise-action@5228313ee0372e111a38da051671ca30fc5a96db # v3.6.3
+
+      - name: Run terragrunt fmt
+        run: mise exec -- terragrunt hcl format --check

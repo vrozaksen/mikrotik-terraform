@@ -1,0 +1,29 @@
+---
+name: Commitlint
+permissions:
+  contents: read
+  pull-requests: read
+
+on:
+  pull_request:
+  push:
+
+jobs:
+  commitlint:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+
+      - name: Setup mise
+        uses: jdx/mise-action@5228313ee0372e111a38da051671ca30fc5a96db # v3.6.3
+
+      - name: Validate PR Title
+        if: github.event_name == 'pull_request'
+        run: echo "$PR_TITLE" | mise exec -- commitlint --verbose
+        env:
+          PR_TITLE: ${{ github.event.pull_request.title }}
+
+      - name: Validate last commit
+        if: github.event_name == 'push'
+        run: mise exec -- commitlint --last --verbose

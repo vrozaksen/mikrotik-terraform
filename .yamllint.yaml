@@ -18,4 +18,6 @@ rules:
     max-spaces-inside: 1
 
   truthy:
-    ignore: [".github/workflows/*"]
+    ignore:
+      - ".github/workflows/*"
+      - ".forgejo/workflows/*"
