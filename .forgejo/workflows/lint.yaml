@@ -36,7 +36,7 @@ jobs:
         env:
           # renovate: datasource=pypi depName=yamllint
           YAMLLINT_VERSION: "1.38.0"
-        run: pip install --user "yamllint==${YAMLLINT_VERSION}"
+        run: pipx install "yamllint==${YAMLLINT_VERSION}"
 
       - name: Run yamllint
         run: yamllint . -c .yamllint.yaml
