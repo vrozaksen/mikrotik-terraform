@@ -1,28 +1,39 @@
 [pre-commit]
 parallel = true
 
-# Auto-fix HCL formatting. stage_fixed = true reflows the staged blob with
-# the fmt'd version, so commits land already-formatted (no CI drift).
+# `mise exec TOOL -- TOOL …` (not plain `mise exec --`): bare form ensures
+# every tool in .mise.toml is installed at resolved version before running,
+# which triggers cascading installs for unrelated tools (e.g. gh) and breaks
+# the commit when any of them fails. Targeting a single tool keeps mise's
+# install side-effects scoped to what we actually need.
+#
+# `files` (explicit git diff) defends against a lefthook quirk where
+# {staged_files}+glob occasionally fails to skip a command for empty match.
+
 [pre-commit.commands.tofu-fmt]
-run = "tofu fmt {staged_files}"
-glob = ["*.tf"]
+files = "git diff --name-only --cached --diff-filter=ACMR"
+glob = "*.tf"
+run = "mise exec opentofu -- tofu fmt {files}"
 stage_fixed = true
 
 [pre-commit.commands.terragrunt-fmt]
-run = "terragrunt hcl format {staged_files}"
-glob = ["*.hcl"]
+files = "git diff --name-only --cached --diff-filter=ACMR"
+glob = "*.hcl"
+run = "mise exec terragrunt -- terragrunt hcl format {files}"
 stage_fixed = true
 
 [pre-commit.commands.yamlfmt]
-run = "yamlfmt {staged_files}"
-glob = ["*.yaml", "*.yml"]
+files = "git diff --name-only --cached --diff-filter=ACMR"
+glob = "*.{yaml,yml}"
+run = "mise exec yamlfmt -- yamlfmt {files}"
 stage_fixed = true
 
-# Lint-only: refuses the commit if violated, no autofix.
 [pre-commit.commands.yamllint]
-run = "yamllint -c .yamllint.yaml {staged_files}"
-glob = ["*.yaml", "*.yml"]
+files = "git diff --name-only --cached --diff-filter=ACMR"
+glob = "*.{yaml,yml}"
+run = "mise exec yamllint -- yamllint -c .yamllint.yaml {files}"
 
 [pre-commit.commands.actionlint]
-run = "actionlint {staged_files}"
-glob = [".github/workflows/*.yaml", ".forgejo/workflows/*.yaml"]
+files = "git diff --name-only --cached --diff-filter=ACMR"
+glob = "{.github,.forgejo}/workflows/*.yaml"
+run = "mise exec actionlint -- actionlint {files}"

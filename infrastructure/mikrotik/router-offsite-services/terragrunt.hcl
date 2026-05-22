@@ -45,7 +45,7 @@ inputs = {
   wireguard_address = "10.255.0.100/24"
   wireguard_remote_networks = {
     "homelab-servers"  = "10.10.0.0/24"
-    "homelab-vx-prime" = "10.100.0.100/30"  # .100-.103 (cable, wlan, 10g-1, 10g-2)
+    "homelab-vx-prime" = "10.100.0.100/30" # .100-.103 (cable, wlan, 10g-1, 10g-2)
   }
 
   # Allowed hosts in remote homelab (firewall whitelist)

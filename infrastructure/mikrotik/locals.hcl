@@ -8,9 +8,9 @@ locals {
     "k8s-cp-1" = { ip = "10.10.0.15/32" },
     "k8s-cp-2" = { ip = "10.10.0.16/32" },
     "k8s-cp-3" = { ip = "10.10.0.17/32" },
-    "k8s-w-1" = { ip = "10.10.0.21/32" },
-    "k8s-w-2" = { ip = "10.10.0.22/32" },
-    "k8s-w-3" = { ip = "10.10.0.23/32" },
+    "k8s-w-1"  = { ip = "10.10.0.21/32" },
+    "k8s-w-2"  = { ip = "10.10.0.22/32" },
+    "k8s-w-3"  = { ip = "10.10.0.23/32" },
     "k8s-w-4"  = { ip = "10.10.0.24/32" }
   }
 
@@ -19,22 +19,22 @@ locals {
   adlists = {
     "PolishFiltersTeam_KADhosts" = { url = "https://raw.githubusercontent.com/PolishFiltersTeam/KADhosts/master/KADhosts.txt" }
     "FadeMind_Spam"              = { url = "https://raw.githubusercontent.com/FadeMind/hosts.extras/master/add.Spam/hosts" }
-    "AdAway"       = { url = "https://adaway.org/hosts.txt" }
-    "Anudeep"      = { url = "https://raw.githubusercontent.com/anudeepND/blacklist/master/adservers.txt" }
-    "PeterLowe"    = { url = "https://pgl.yoyo.org/adservers/serverlist.php?hostformat=hosts&showintro=0&mimetype=plaintext" }
-    "Fademind_ADs" = { url = "https://raw.githubusercontent.com/FadeMind/hosts.extras/master/UncheckyAds/hosts" }
-    "hostsVN"      = { url = "https://raw.githubusercontent.com/bigdargon/hostsVN/master/hosts" }
-    "Fademind2o7"     = { url = "https://raw.githubusercontent.com/FadeMind/hosts.extras/master/add.2o7Net/hosts" }
-    "CrazyMax"        = { url = "https://raw.githubusercontent.com/crazy-max/WindowsSpyBlocker/master/data/hosts/spy.txt" }
-    "GeoffreyFrogeye" = { url = "https://hostfiles.frogeye.fr/firstparty-trackers-hosts.txt" }
-    "DandelionSprout" = { url = "https://raw.githubusercontent.com/DandelionSprout/adfilt/master/Alternate%20versions%20Anti-Malware%20List/AntiMalwareHosts.txt" }
-    "FademindRisky"   = { url = "https://raw.githubusercontent.com/FadeMind/hosts.extras/master/add.Risk/hosts" }
-    "URLhaus"         = { url = "https://urlhaus.abuse.ch/downloads/hostfile" }
-    "DanPollock"        = { url = "https://someonewhocares.org/hosts/hosts" }
-    "Steven_Black"      = { url = "https://raw.githubusercontent.com/StevenBlack/hosts/master/hosts" }
-    "POL_Cert"          = { url = "https://hole.cert.pl/domains/domains_hosts.txt" }
-    "Lightswitch05_AT"  = { url = "https://www.github.developerdan.com/hosts/lists/ads-and-tracking-extended.txt" }
-    "Lightswitch05_AMP" = { url = "https://www.github.developerdan.com/hosts/lists/amp-hosts-extended.txt" }
+    "AdAway"                     = { url = "https://adaway.org/hosts.txt" }
+    "Anudeep"                    = { url = "https://raw.githubusercontent.com/anudeepND/blacklist/master/adservers.txt" }
+    "PeterLowe"                  = { url = "https://pgl.yoyo.org/adservers/serverlist.php?hostformat=hosts&showintro=0&mimetype=plaintext" }
+    "Fademind_ADs"               = { url = "https://raw.githubusercontent.com/FadeMind/hosts.extras/master/UncheckyAds/hosts" }
+    "hostsVN"                    = { url = "https://raw.githubusercontent.com/bigdargon/hostsVN/master/hosts" }
+    "Fademind2o7"                = { url = "https://raw.githubusercontent.com/FadeMind/hosts.extras/master/add.2o7Net/hosts" }
+    "CrazyMax"                   = { url = "https://raw.githubusercontent.com/crazy-max/WindowsSpyBlocker/master/data/hosts/spy.txt" }
+    "GeoffreyFrogeye"            = { url = "https://hostfiles.frogeye.fr/firstparty-trackers-hosts.txt" }
+    "DandelionSprout"            = { url = "https://raw.githubusercontent.com/DandelionSprout/adfilt/master/Alternate%20versions%20Anti-Malware%20List/AntiMalwareHosts.txt" }
+    "FademindRisky"              = { url = "https://raw.githubusercontent.com/FadeMind/hosts.extras/master/add.Risk/hosts" }
+    "URLhaus"                    = { url = "https://urlhaus.abuse.ch/downloads/hostfile" }
+    "DanPollock"                 = { url = "https://someonewhocares.org/hosts/hosts" }
+    "Steven_Black"               = { url = "https://raw.githubusercontent.com/StevenBlack/hosts/master/hosts" }
+    "POL_Cert"                   = { url = "https://hole.cert.pl/domains/domains_hosts.txt" }
+    "Lightswitch05_AT"           = { url = "https://www.github.developerdan.com/hosts/lists/ads-and-tracking-extended.txt" }
+    "Lightswitch05_AMP"          = { url = "https://www.github.developerdan.com/hosts/lists/amp-hosts-extended.txt" }
   }
   static_dns = {
     # Core
@@ -48,17 +48,17 @@ locals {
     "stash.vzkn.eu"        = { address = "10.10.0.11", type = "A", comment = "Aincrad-Stash" },
     "immich.vzkn.eu"       = { address = "10.10.0.11", type = "A", comment = "Aincrad-Immich" },
     # NAS - Minio S3
-    "s3.vzkn.eu"           = { address = "10.10.0.11", type = "A", comment = "Minio-S3-API" },
-    "s3c.vzkn.eu"          = { address = "10.10.0.11", type = "A", comment = "Minio-Console" },
+    "s3.vzkn.eu"  = { address = "10.10.0.11", type = "A", comment = "Minio-S3-API" },
+    "s3c.vzkn.eu" = { address = "10.10.0.11", type = "A", comment = "Minio-Console" },
     # NAS - Garage S3
-    "api.s3.vzkn.eu"       = { address = "10.10.0.11", type = "A", comment = "Garage-S3-API" },
-    "web.s3.vzkn.eu"       = { address = "10.10.0.11", type = "A", comment = "Garage-S3-Web" },
-    "garage.vzkn.eu"       = { address = "10.10.0.11", type = "A", comment = "Garage-WebUI" },
-    "admin.s3.vzkn.eu"     = { address = "10.10.0.11", type = "A", comment = "Garage-Admin-API" },
+    "api.s3.vzkn.eu"   = { address = "10.10.0.11", type = "A", comment = "Garage-S3-API" },
+    "web.s3.vzkn.eu"   = { address = "10.10.0.11", type = "A", comment = "Garage-S3-Web" },
+    "garage.vzkn.eu"   = { address = "10.10.0.11", type = "A", comment = "Garage-WebUI" },
+    "admin.s3.vzkn.eu" = { address = "10.10.0.11", type = "A", comment = "Garage-Admin-API" },
     # K8s
-    "alfheim"              = { address = "10.10.0.21", type = "A", comment = "alfheim" },
-    "alne"                 = { address = "10.10.0.22", type = "A", comment = "alne" },
-    "ainias"               = { address = "10.10.0.23", type = "A", comment = "ainias" },
+    "alfheim" = { address = "10.10.0.21", type = "A", comment = "alfheim" },
+    "alne"    = { address = "10.10.0.22", type = "A", comment = "alne" },
+    "ainias"  = { address = "10.10.0.23", type = "A", comment = "ainias" },
     # HASS ZigBee
     "slzb.home.vzkn.eu" = { address = "10.10.0.65", type = "A", comment = "SLZB" },
   }
@@ -163,14 +163,14 @@ locals {
       }
     },
     "DMZ" = {
-      name          = "DMZ"
-      vlan_id       = 200
-      network       = "10.200.0.0"
-      cidr_suffix   = "24"
-      gateway       = "10.200.0.1"
-      dhcp_pool     = ["10.200.0.100-10.200.0.199"]
-      dns_servers   = ["9.9.9.9", "149.112.112.112"]
-      domain        = "dmz.h.vzkn.eu"
+      name        = "DMZ"
+      vlan_id     = 200
+      network     = "10.200.0.0"
+      cidr_suffix = "24"
+      gateway     = "10.200.0.1"
+      dhcp_pool   = ["10.200.0.100-10.200.0.199"]
+      dns_servers = ["9.9.9.9", "149.112.112.112"]
+      domain      = "dmz.h.vzkn.eu"
       static_leases = {
         "10.200.0.50" = { name = "ripe-atlas-probe", mac = "D8:58:D7:03:07:3C" }
       }
