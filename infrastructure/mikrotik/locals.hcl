@@ -107,6 +107,8 @@ locals {
       dns_servers = ["10.20.0.1"]
       domain      = "iot.h.vzkn.eu"
       static_leases = {
+        # 3D Printer
+        "10.20.0.220" = { name = "Bambu-Lab", mac = "48:CA:43:95:9F:D8" }
         # Smart Plugs
         "10.20.0.230" = { name = "Shelly-1", mac = "BC:FF:4D:44:06:CB" }
         # Smart TV

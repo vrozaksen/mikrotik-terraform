@@ -30,13 +30,13 @@ inputs = {
       comment = "Homelab envoy external"
     }
     "requests.vzkn.eu" = {
-      type    = "CNAME"
-      cname   = "external.vzkn.eu"
+      type    = "A"
+      address = "10.10.0.91"
       comment = "Requests via envoy"
     }
     "emby.vzkn.eu" = {
-      type    = "CNAME"
-      cname   = "external.vzkn.eu"
+      type    = "A"
+      address = "10.10.0.91"
       comment = "Emby via envoy"
     }
   }

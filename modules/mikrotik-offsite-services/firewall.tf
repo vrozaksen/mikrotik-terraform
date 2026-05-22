@@ -41,6 +41,27 @@ resource "routeros_ip_firewall_nat" "masquerade" {
   comment            = "Masquerade outgoing traffic"
 }
 
+# Force all LAN DNS queries through router (prevent smart devices bypassing local DNS)
+resource "routeros_ip_firewall_nat" "dns_redirect_udp" {
+  chain             = "dstnat"
+  action            = "redirect"
+  protocol          = "udp"
+  dst_port          = "53"
+  in_interface_list = routeros_interface_list.lan.name
+  to_ports          = "53"
+  comment           = "Force DNS through router (UDP)"
+}
+
+resource "routeros_ip_firewall_nat" "dns_redirect_tcp" {
+  chain             = "dstnat"
+  action            = "redirect"
+  protocol          = "tcp"
+  dst_port          = "53"
+  in_interface_list = routeros_interface_list.lan.name
+  to_ports          = "53"
+  comment           = "Force DNS through router (TCP)"
+}
+
 # =================================================================================================
 # Address Lists
 # =================================================================================================

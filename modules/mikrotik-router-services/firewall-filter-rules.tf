@@ -80,6 +80,14 @@ locals {
       src_address_list = "ag_dns_access"
       order            = 300
     }
+    "allow-dns-tcp-global" = {
+      chain            = "input"
+      action           = "accept"
+      protocol         = "tcp"
+      dst_port         = "53"
+      src_address_list = "ag_dns_access"
+      order            = 301
+    }
     "allow-ntp-global" = {
       chain            = "input"
       action           = "accept"
@@ -225,6 +233,14 @@ locals {
       in_interface     = var.vlans.Servers.name
       src_address_list = "st_k8s_services"
       order            = 2010
+    }
+    "allow-k8s-to-iot" = {
+      chain            = "forward"
+      action           = "accept"
+      in_interface     = var.vlans.Servers.name
+      out_interface    = var.vlans.IoT.name
+      src_address_list = "st_k8s_services"
+      order            = 2020
     }
 
     # =========================================================================

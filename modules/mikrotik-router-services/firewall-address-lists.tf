@@ -10,7 +10,7 @@ resource "routeros_ip_firewall_addr_list" "infrastructure" {
 resource "routeros_ip_firewall_addr_list" "k8s_services" {
   list    = "st_k8s_services"
   comment = "Static: IPs allocated to K8S Services."
-  address = "10.10.0.20-10.10.0.29"
+  address = "10.10.0.15-10.10.0.29"
 }
 resource "routeros_ip_firewall_addr_list" "iot_internet" {
   list    = "st_iot_internet"
@@ -20,7 +20,7 @@ resource "routeros_ip_firewall_addr_list" "iot_internet" {
 resource "routeros_ip_firewall_addr_list" "iot_servers" {
   list    = "st_iot_servers"
   comment = "Static: IoT IPs allowed to servers."
-  address = "10.20.0.230-10.20.0.250"
+  address = "10.20.0.201-10.20.0.250"
 }
 resource "routeros_ip_firewall_addr_list" "trusted_devices" {
   list    = "st_trusted_devices"
