@@ -6,21 +6,21 @@
 resource "routeros_queue_type" "cake_upload" {
   count = var.qos_enabled ? 1 : 0
 
-  name            = "cake-upload"
-  kind            = "cake"
-  cake_diffserv   = "diffserv3"
-  cake_flowmode   = "dual-srchost"
-  cake_nat        = true
+  name          = "cake-upload"
+  kind          = "cake"
+  cake_diffserv = "diffserv3"
+  cake_flowmode = "dual-srchost"
+  cake_nat      = true
 }
 
 resource "routeros_queue_type" "cake_download" {
   count = var.qos_enabled ? 1 : 0
 
-  name            = "cake-download"
-  kind            = "cake"
-  cake_diffserv   = "besteffort"
-  cake_flowmode   = "dual-dsthost"
-  cake_nat        = true
+  name          = "cake-download"
+  kind          = "cake"
+  cake_diffserv = "besteffort"
+  cake_flowmode = "dual-dsthost"
+  cake_nat      = true
 }
 
 # Build list of all VLAN networks for QoS target

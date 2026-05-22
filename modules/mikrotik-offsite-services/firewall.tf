@@ -150,7 +150,7 @@ locals {
       chain            = "forward"
       action           = "fasttrack-connection"
       connection_state = "established,related"
-      disabled         = var.qos_enabled  # Disable FastTrack when QoS is enabled
+      disabled         = var.qos_enabled # Disable FastTrack when QoS is enabled
       order            = 1000
     }
     "forward-established" = {
@@ -186,22 +186,22 @@ locals {
 
     # LAN -> Homelab (only allowed hosts via WireGuard)
     "forward-lan-homelab-allowed" = {
-      chain            = "forward"
-      action           = "accept"
+      chain             = "forward"
+      action            = "accept"
       in_interface_list = routeros_interface_list.lan.name
-      out_interface    = routeros_interface_wireguard.wireguard.name
-      dst_address_list = "homelab-allowed"
-      order            = 1120
+      out_interface     = routeros_interface_wireguard.wireguard.name
+      dst_address_list  = "homelab-allowed"
+      order             = 1120
     }
 
     # LAN -> Homelab (block everything else in 10.10.0.0/24)
     "forward-lan-homelab-drop" = {
-      chain            = "forward"
-      action           = "drop"
+      chain             = "forward"
+      action            = "drop"
       in_interface_list = routeros_interface_list.lan.name
-      out_interface    = routeros_interface_wireguard.wireguard.name
-      dst_address      = "10.10.0.0/24"
-      order            = 1130
+      out_interface     = routeros_interface_wireguard.wireguard.name
+      dst_address       = "10.10.0.0/24"
+      order             = 1130
     }
 
     # All VLANs -> WAN (Internet)

@@ -19,9 +19,9 @@ resource "routeros_wifi_channel" "slow" {
   band = "2ghz-ax"
 }
 resource "routeros_wifi_channel" "fast" {
-  name               = "5ghz"
-  band               = "5ghz-ax"
-  skip_dfs_channels  = "all"
+  name              = "5ghz"
+  band              = "5ghz-ax"
+  skip_dfs_channels = "all"
 }
 
 
