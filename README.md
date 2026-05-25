@@ -15,6 +15,7 @@ Fundamentally speaking, there is nothing that sets this approach apart from, say
 3. **Because I can**: Not everything in life has to have a good reason. Sometimes reinventing the wheel just to learn or doing things for the heck of it are valid reasons.
 
 ## Network Overview
+
 *Diagram coming soon!*
 
 This project provides automated deployment and management for the following devices in my infrastructure:
@@ -69,6 +70,7 @@ All that being said, I ultimately decided to open-source this code and publish i
 2. I truly believe this was an interesting project. I hope that seeing this will inspire others to attempt similar projects and in turn also share their experiences.
 
 ## License
+
 MIT License - Derived from [mirceanton/mikrotik-terraform](https://github.com/mirceanton/mikrotik-terraform).
 
 See [LICENSE](LICENSE) for full terms.
