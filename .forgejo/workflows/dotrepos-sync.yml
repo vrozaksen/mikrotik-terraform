@@ -3,9 +3,8 @@ name: dotrepos sync
 on:
   pull_request:
     types:
-      - opened
+      - labeled
       - synchronize
-      - reopened
 jobs:
   sync:
     if: contains(github.event.pull_request.labels.*.name, 'dotrepos-sync')
