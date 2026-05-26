@@ -24,4 +24,8 @@ MD040: true
 
 # Don't enforce a single H1 per doc (template fragments may stack).
 MD025: false
+
+# Don't enforce pixel-perfect table-column alignment — manual repadding
+# on every column edit is too fragile, prose stays readable either way.
+MD060: false
 # dotrepos:end

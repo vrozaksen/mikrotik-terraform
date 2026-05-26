@@ -10,6 +10,7 @@ ignore: |
   target/
   .direnv/
   .terragrunt-cache/
+  # dotrepos:slot extra-ignore
 rules:
   indentation:
     spaces: 2
@@ -29,4 +30,4 @@ rules:
     check-keys: false
   octal-values:
     forbid-implicit-octal: true
-    # dotrepos:end
+# dotrepos:end
