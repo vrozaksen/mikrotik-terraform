@@ -1,39 +1,16 @@
-[pre-commit]
-parallel = true
+[[remotes]]
+git_url = "https://git.vzkn.eu/vrozaksen/dotrepos.git"
+ref     = "main"
+configs = ["lefthook.toml"]
 
-# `mise exec TOOL -- TOOL …` (not plain `mise exec --`): bare form ensures
-# every tool in .mise.toml is installed at resolved version before running,
-# which triggers cascading installs for unrelated tools (e.g. gh) and breaks
-# the commit when any of them fails. Targeting a single tool keeps mise's
-# install side-effects scoped to what we actually need.
-#
-# `files` (explicit git diff) defends against a lefthook quirk where
-# {staged_files}+glob occasionally fails to skip a command for empty match.
+# ── via mise (opentofu, terragrunt declared in .mise.toml) ────────────────
 
-[pre-commit.commands.tofu-fmt]
-files = "git diff --name-only --cached --diff-filter=ACMR"
-glob = "*.tf"
-run = "mise exec opentofu -- tofu fmt {files}"
+[pre-commit.commands.format-tofu]
+run = "mise exec -- tofu fmt {staged_files}"
+glob = ["*.tf"]
 stage_fixed = true
 
-[pre-commit.commands.terragrunt-fmt]
-files = "git diff --name-only --cached --diff-filter=ACMR"
-glob = "*.hcl"
-run = "mise exec terragrunt -- terragrunt hcl format {files}"
+[pre-commit.commands.format-terragrunt]
+run = "mise exec -- terragrunt hcl format {staged_files}"
+glob = ["*.hcl"]
 stage_fixed = true
-
-[pre-commit.commands.yamlfmt]
-files = "git diff --name-only --cached --diff-filter=ACMR"
-glob = "*.{yaml,yml}"
-run = "mise exec yamlfmt -- yamlfmt {files}"
-stage_fixed = true
-
-[pre-commit.commands.yamllint]
-files = "git diff --name-only --cached --diff-filter=ACMR"
-glob = "*.{yaml,yml}"
-run = "mise exec yamllint -- yamllint -c .yamllint.yaml {files}"
-
-[pre-commit.commands.actionlint]
-files = "git diff --name-only --cached --diff-filter=ACMR"
-glob = "{.github,.forgejo}/workflows/*.yaml"
-run = "mise exec actionlint -- actionlint {files}"

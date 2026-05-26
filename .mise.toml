@@ -1,20 +1,19 @@
 [tools]
+# Runtime
 node = "latest"
 uv = "latest"
 
-# =================================================================================================
-# Project Tools
-# =================================================================================================
+# Project
 opentofu = "latest"
 terragrunt = "latest"
 just = "latest"
-
 lefthook = "latest"
-yamlfmt = "latest"
 
-# =================================================================================================
-# CI Tools
-# =================================================================================================
+# Lint / format
 actionlint = "latest"
+editorconfig-checker = "latest"
+shellcheck = "latest"
+yamlfmt = "latest"
 yamllint = "latest"
 "npm:@commitlint/cli" = "latest"
+"npm:markdownlint-cli" = "latest"

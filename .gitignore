@@ -1,9 +1,4 @@
-# Local .terraform directories
-**/.terraform/*
-
-
 # === Terraform & Terragrunt ===
-# Local .terraform directories and cache
 **/.terraform/*
 .terraform/
 .terragrunt-cache/
@@ -13,9 +8,6 @@
 *.tfstate.*
 tfstate.json
 .terraform.tfstate.lock.info
-
-# Lock files
-.terraform.lock.hcl
 
 # Plan files
 *tfplan*
@@ -30,7 +22,6 @@ override.tf
 override.tf.json
 *_override.tf
 *_override.tf.json
-# !example_override.tf  # Uncomment to include specific override files
 
 # Crash logs
 crash.log
@@ -40,17 +31,19 @@ crash.*.log
 .terraformrc
 terraform.rc
 
-# Age key file
-age.key
+# Generated backend (root.hcl produces it via terragrunt)
+backend.tf
 
-# SOPS encrypted files (include them)
+# === SOPS / secrets ===
+age.key
 !*.sops
 
-# Miscellaneous
+# === Local environment ===
+.env
+.envrc.local
+
+# === Misc ===
 .DS_Store
 .backup
-.env
 .archive
-backend.tf
-.task/checksum
 *.tf-ar

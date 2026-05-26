@@ -1,0 +1,27 @@
+# dotrepos:begin .markdownlint.yaml@2208c1024c61defa6e01b4fb5a70687ebc4e215a
+---
+# Defaults that match modern markdown style and don't fight prose.
+
+# Inherit all defaults, then relax the few that are pathological.
+default: true
+
+# Line length: prose-wrap discipline isn't worth the diff churn.
+# Code blocks and tables already disable this; we kill it everywhere.
+MD013: false
+
+# Allow bare URLs (common in changelogs).
+MD034: false
+
+# Allow inline HTML (badges, alignment shims, details/summary).
+MD033: false
+
+# First line need not be H1 — AGENTS.md and README do, but doc fragments
+# (PRESET.md style) often start with a paragraph.
+MD041: false
+
+# Fenced code blocks must declare a language. Catches the lazy ``` blocks.
+MD040: true
+
+# Don't enforce a single H1 per doc (template fragments may stack).
+MD025: false
+# dotrepos:end

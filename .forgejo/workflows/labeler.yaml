@@ -1,3 +1,4 @@
+---
 name: Labeler
 permissions:
   contents: read
@@ -9,16 +10,16 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Size Label
-        uses: pascalgn/size-label-action@56b489b027932ec0cf60438a1a5f1a19c8fc71ff # v0.5.7
+        uses: pascalgn/size-label-action@56b489b027932ec0cf60438a1a5f1a19c8fc71ff  # v0.5.7
         env:
           GITHUB_TOKEN: ${{ github.token }}
   labeler:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd  # v6.0.2
       - name: Labeler
-        uses: actions/labeler@f27b608878404679385c85cfa523b85ccb86e213 # v6.1.0
+        uses: actions/labeler@f27b608878404679385c85cfa523b85ccb86e213  # v6.1.0
         with:
           sync-labels: true
           repo-token: ${{ github.token }}

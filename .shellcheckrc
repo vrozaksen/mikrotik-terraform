@@ -1,0 +1,10 @@
+# dotrepos:begin .shellcheckrc@2208c1024c61defa6e01b4fb5a70687ebc4e215a
+# Sourced files not available at analysis time (CI, dynamic paths).
+# SC1090 pairs with SC1091 — both fire when source paths are dynamic.
+disable=SC1090
+disable=SC1091
+
+# SC2155 is intentionally NOT disabled.
+# `local x=$(cmd)` masks return values from `set -e`.
+# Fix by splitting: local x; x=$(cmd)
+# dotrepos:end

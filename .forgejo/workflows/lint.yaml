@@ -1,21 +1,24 @@
+---
 name: Lint
 on:
   push:
-    branches: [main]
+    branches:
+      - main
   pull_request:
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
-# Calling leaf sub-workflows directly. The meta `lint.yml` in dotrepos uses
-# relative paths (`uses: ./.forgejo/workflows/lint/...`) which resolve against
-# the *consumer* repo, not dotrepos — so it breaks cross-repo. Per-leaf is
-# also nice because we only run linters relevant to this repo (skip rust/go/
-# python/js/docker — none of those files here).
 jobs:
   commitlint:
     uses: vrozaksen/dotrepos/.forgejo/workflows/lint/commitlint.yml@main
-  general:
-    uses: vrozaksen/dotrepos/.forgejo/workflows/lint/general.yml@main
+  actionlint:
+    uses: vrozaksen/dotrepos/.forgejo/workflows/lint/actionlint.yml@main
+  shellcheck:
+    uses: vrozaksen/dotrepos/.forgejo/workflows/lint/shellcheck.yml@main
+  editorconfig:
+    uses: vrozaksen/dotrepos/.forgejo/workflows/lint/editorconfig.yml@main
+  markdownlint:
+    uses: vrozaksen/dotrepos/.forgejo/workflows/lint/markdownlint.yml@main
   yaml:
     uses: vrozaksen/dotrepos/.forgejo/workflows/lint/yaml.yml@main
   just:

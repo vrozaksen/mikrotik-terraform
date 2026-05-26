@@ -2,80 +2,119 @@
 
 ![Thumbnail](./docs/img/thumbnail.png)
 
-This repository contains Terraform automation for my entire Mikrotik-powered home network. The purpose of this repository is to provide a structured and repeatable way to manage and automate the setup of my MikroTik devices using Infrastructure as Code (IaC) principles.
+Terragrunt-managed [OpenTofu](https://opentofu.org/) automation for my entire MikroTik-powered home network. Devices, DNS records, and supporting OVH glue are all defined as code, planned and applied via local terragrunt with an S3-compatible remote state.
 
 ## Why Terraform for Network Infrastructure?
 
-Fundamentally speaking, there is nothing that sets this approach apart from, say, a configuration script or just backing up and importing the configuration on the device. Yet, I still decided to use Terraform for this. Why?
-
-1. **I'm weird like that**: As someone who works in DevOps as my main gig, manual configurations (or ClickOps, as we also call it 😉), makes me cringe and I avoid it like the plague. I like defining configuration as code whenever possible since it makes it easy to reproduce and tweak this system.
-
-2. **Skill ~~Issue~~Development**: Working on this project provides a practical, hands-on opportunity to explore advanced Terraform features and patterns. Not to mention that breaking something takes my entire internet away until I fix it, and fixing it without internet may be tricker than you think. This forces me to think more carefully about the configuration before applying.
-
-3. **Because I can**: Not everything in life has to have a good reason. Sometimes reinventing the wheel just to learn or doing things for the heck of it are valid reasons.
+1. **I'm weird like that** — DevOps as day job; ClickOps makes me cringe. Config as code is reproducible and tweakable.
+2. **Skill ~~Issue~~Development** — terraform/terragrunt patterns get real exercise here. Breaking it cuts my internet, so I think before I apply.
+3. **Because I can** — sometimes reinventing the wheel to learn is reason enough.
 
 ## Network Overview
 
-*Diagram coming soon!*
+Devices currently managed:
 
-This project provides automated deployment and management for the following devices in my infrastructure:
+- **RB5009 router** — main router + firewall + CAPSMAN server (local site)
+- **CRS326 switch** — main rack switch
+- **wAP AX AP** — provisioned via CAPSMAN
+- **HEX router** — offsite site router
 
-- **RB5009 router** -> Main router + firewall + CAPSMAN server
-- **CRS326 switch** -> Main Rack Switch
-- **wAP AX Access Point** -> Provisioned via CAPSMAN
+DNS / supporting:
+
+- **OVH** — CNAME records for IPv4 and VPN endpoints
 
 ## Project Structure
 
-```bash
-├── .github/                     # GitHub workflow configurations and automation
-├── modules
-│   ├── base                     # Base configuration for all devices
-│   └── dhcp-server              # DHCP server configuration
-├── .mise.toml                   # tool configuration + dev tasks
-├── .sops.yaml                   # SOPS configuration
-├── credentials.auto.tfvars.sops # SOPS encrypted tfvars file
-├── main.tf                      # Local variables
-├── providers.tf                 # Provider configuration 
-├── router-*.tf                  # RB5009 router configurations
-├── switch-*.tf                  # Switch device configuration
-├── terraform.tfstate.sops       # SOPS-encrypted TF state file
-└── variables.tf                 # Terraform input variables
+```text
+.
+├── .forgejo/workflows/      # CI: lint + terraform fan-out to dotrepos leaves
+├── docs/img/                # README image assets
+├── infrastructure/          # Terragrunt root configs (per device / per record)
+│   ├── mikrotik/
+│   │   ├── locals.hcl              # shared locals for local-site routers
+│   │   ├── offsite-locals.hcl      # shared locals for offsite-site routers
+│   │   ├── router-base/            # RB5009 local base config
+│   │   ├── router-services/        # RB5009 local services (DHCP, DNS, etc.)
+│   │   ├── router-offsite/         # RB5009 offsite base
+│   │   ├── router-offsite-services/# RB5009 offsite services
+│   │   └── switch-crs326/          # CRS326 switch config
+│   └── ovh/
+│       ├── dependency.hcl          # shared OVH provider/auth
+│       ├── ipv4-cname/             # public IPv4 CNAME
+│       └── vpn-cname/              # VPN endpoint CNAME
+├── modules/                 # Reusable OpenTofu modules
+│   ├── mikrotik-base/              # bonding, bridge, VLANs, BGP, NTP, certs, …
+│   ├── mikrotik-router-services/   # local-site router services
+│   ├── mikrotik-offsite-services/  # offsite-site router services
+│   └── ovh-cname/                  # OVH CNAME wrapper
+├── scripts/plan-filter.sh   # filters noisy terragrunt plan output
+├── .env                     # local secrets (gitignored, populated by `just env`)
+├── .mise.toml               # tool pinning (opentofu, terragrunt, just, linters)
+├── .lefthook.toml           # pre-commit hooks (dotrepos remote + tofu/terragrunt fmt)
+├── commitlint.config.js     # conventional-commit rules
+├── justfile                 # task runner: env / plan / apply / clean
+├── root.hcl                 # terragrunt remote_state config (S3-compatible)
+└── .terraform.lock.hcl      # provider version pinning
 ```
 
-### Applying Terraform Configuration
+## Workflow
 
-1. **Initialize Terraform**: `terraform init`
-2. **Decrypt secrets**: `task sops:decrypt`
-3. **Plan** (and review) **changes**: `task terraform:plan`
-4. **Apply changes**: `terraform apply`
-5. **Re-encrypt secrets** (state file, mainly): `task sops:encrypt`
+### 1. Bootstrap secrets
+
+Secrets live in [Infisical](https://infisical.com) under `/mikrotik`. Populate local `.env`:
+
+```bash
+just env
+```
+
+This pulls the live secret set and writes `.env` (gitignored). `direnv` auto-loads it on `cd`.
+
+### 2. Plan
+
+```bash
+just plan         # all modules, summarised output via scripts/plan-filter.sh
+just plan-full    # all modules, full terragrunt output
+just plan-local   # only router-base, router-services, switch-crs326
+just plan-path infrastructure/mikrotik/router-base   # specific module
+```
+
+### 3. Apply
+
+```bash
+just apply        # all modules
+just apply-local  # only local-site bundle
+just apply-path infrastructure/mikrotik/router-base
+```
+
+### 4. Maintenance
+
+```bash
+just init         # terragrunt init --all
+just clean        # nuke .terragrunt-cache directories
+```
+
+## Remote State
+
+`root.hcl` configures the terragrunt `remote_state` to an S3-compatible endpoint (`api.s3.vzkn.eu`, bucket `tfstate-mikrotik-terraform`). State keys mirror the path under `infrastructure/`. Credentials come from `.env` (`AWS_ACCESS_KEY_ID`, `AWS_SECRET_ACCESS_KEY`).
 
 ## Limitations
 
-While this project aims to provide comprehensive automation for Mikrotik devices, there are some limitations:
-
-- Initial setup still requires manual configuration before Terraform can be applied
-- Complex configurations sometimes require a multi-step approach rather than a single `apply`
-- The risk of cutting yourself off of the internet may be low... but it's never zero. Ask me how I know! 😉
-- Prepare to get close and intimate with `terraform state mv` if you plan to rename or move objects around. Very few things are stateless, so they can't be deleted and recreated generally.
+- Initial device setup (admin user, terraform user, SSH access) is still manual — terraform takes over from the point provider auth works.
+- Some changes need a multi-step apply (e.g. interface rename → bridge re-add).
+- Cutting yourself off the internet with a bad plan is *unlikely* but *not zero*. Ask me how I know.
+- `terraform state mv` is your friend when you reorganize — almost nothing here is stateless.
 
 ## Sharing & Risks
 
-By publishing this repository, I accept the risk of exposing aspects of my home network topology. Storing the state and tfvars in git, albeit encrypted, doesn't help much in this regard either! 😅  
-While I've taken **some** steps to ensure sensitive information is managed securely, sharing this code inherently comes with certain risks.
+Publishing this exposes parts of my home network topology. Tfstate is in a private S3 bucket, secrets in Infisical, `.tfvars` gitignored. The code itself is open because:
 
-All that being said, I ultimately decided to open-source this code and publish it for 2 main reasons:
-
-1. I believe that sharing knowledge is valuable to the community. As I have learned from others, so shall others be able to learn from me. Such is the cycle.
-2. I truly believe this was an interesting project. I hope that seeing this will inspire others to attempt similar projects and in turn also share their experiences.
+1. Sharing what I learned is the same loop I learned from.
+2. It's an interesting project and I hope someone reading it builds their own.
 
 ## License
 
-MIT License - Derived from [mirceanton/mikrotik-terraform](https://github.com/mirceanton/mikrotik-terraform).
-
-See [LICENSE](LICENSE) for full terms.
+MIT — derived from [mirceanton/mikrotik-terraform](https://github.com/mirceanton/mikrotik-terraform). See [LICENSE](LICENSE).
 
 ## Inspiration & Credits
 
-This project was originally inspired by [mirceanton/mikrotik-terraform](https://github.com/mirceanton/mikrotik-terraform).  
-While I've significantly adapted and extended the codebase for my specific needs, the core idea and initial structure owe credit to the original author.
+Originally inspired by [mirceanton/mikrotik-terraform](https://github.com/mirceanton/mikrotik-terraform). The codebase has diverged significantly to fit my own infra, but the initial layout and module split are owed to that work.

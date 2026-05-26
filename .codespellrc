@@ -1,3 +1,0 @@
-[codespell]
-# hass = Home Assistant (used in DNS/DHCP comments for ZigBee coordinator etc.)
-ignore-words-list = hass

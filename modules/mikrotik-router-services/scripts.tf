@@ -1,5 +1,5 @@
 # =================================================================================================
-# Script 
+# Script
 # https://registry.terraform.io/providers/terraform-routeros/routeros/latest/docs/resources/system_script
 # =================================================================================================
 resource "routeros_system_script" "healthcheck_script" {

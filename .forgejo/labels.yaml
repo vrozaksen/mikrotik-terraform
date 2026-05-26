@@ -1,20 +1,33 @@
-# Device Labels
+---
+# ── Area ──────────────────────────────────────────────────────────────────
+- name: area/ci
+  color: "1f6feb"
+  description: Forgejo workflows, lint configs, lefthook hooks.
+- name: area/docs
+  color: "0e8a16"
+  description: README, CODE_OF_CONDUCT, in-repo docs.
+- name: area/terraform
+  color: "5319e7"
+  description: Terraform / OpenTofu / Terragrunt code.
+
+# ── Device ────────────────────────────────────────────────────────────────
 - name: device/rb5009
   color: "111111"
-  description: Changes to the config for the RB5009.
+  description: Changes to the RB5009 (local site) config.
+- name: device/hex
+  color: "222222"
+  description: Changes to the HEX (offsite site) config.
 - name: device/cap-ax
   color: "333333"
-  description: Changes to the config for the cAP AX.
+  description: Changes to the cAP AX config.
 - name: device/crs326
   color: "555555"
-  description: Changes to the config for the CRS326.
-- name: device/crs317
-  color: "777777"
-  description: Changes to the config for the CRS317.
-- name: device/hex
-  color: "999999"
-  description: Changes to the config for the HEX.
-# Size Types
+  description: Changes to the CRS326 switch config.
+- name: device/ovh
+  color: "ff7000"
+  description: Changes to OVH DNS records.
+
+# ── PR size (assigned by pascalgn/size-label-action in labeler.yaml) ─────
 - name: size/XS
   color: "0000ff"
 - name: size/S

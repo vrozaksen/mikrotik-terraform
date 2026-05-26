@@ -1,15 +1,24 @@
-# yaml-language-server: $schema=https://json.schemastore.org/yamllint.json
+# dotrepos:begin .yamllint.yaml@2208c1024c61defa6e01b4fb5a70687ebc4e215a
+---
 extends: default
-# .github/workflows/ is on its way out (Forgejo Actions ports live in
-# .forgejo/workflows/); skip its legacy formatting drift until deletion.
 ignore: |
+  .git/
   .github/workflows/
-  **/.terragrunt-cache/
+  .forgejo/workflows/
+  node_modules/
+  venv/
+  target/
+  .direnv/
+  .terragrunt-cache/
 rules:
-  comments:
-    min-spaces-from-content: 1
+  indentation:
+    spaces: 2
+    indent-sequences: whatever
   line-length:
-    max: 200
+    max: 120
+    level: warning
+    allow-non-breakable-words: true
+    allow-non-breakable-inline-mappings: true
   braces:
     level: warning
     max-spaces-inside: 1
@@ -17,6 +26,7 @@ rules:
     level: warning
     max-spaces-inside: 1
   truthy:
-    ignore:
-      - ".github/workflows/*"
-      - ".forgejo/workflows/*"
+    check-keys: false
+  octal-values:
+    forbid-implicit-octal: true
+# dotrepos:end

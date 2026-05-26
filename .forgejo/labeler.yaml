@@ -1,28 +1,58 @@
+---
 # yaml-language-server: $schema=https://json.schemastore.org/label-commenter-config.json
-# =================================================================================================
-# Area Labels
-# =================================================================================================
-area/github:
+# ── Area ──────────────────────────────────────────────────────────────────
+area/ci:
   - changed-files:
-      - any-glob-to-any-file: ".github/**/*"
+      - any-glob-to-any-file:
+          - ".forgejo/**/*"
+          - ".github/**/*"
+          - ".lefthook.toml"
+          - ".mise.toml"
+          - ".editorconfig"
+          - ".shellcheckrc"
+          - ".yamllint.yaml"
+          - ".yamlfmt.yaml"
+          - ".markdownlint.yaml"
+          - "commitlint.config.js"
+area/docs:
+  - changed-files:
+      - any-glob-to-any-file:
+          - "README.md"
+          - "CODE_OF_CONDUCT.md"
+          - "docs/**/*"
 area/terraform:
   - changed-files:
-      - any-glob-to-any-file: "*.tf"
-# =================================================================================================
-# Device Labels
-# =================================================================================================
+      - any-glob-to-any-file:
+          - "**/*.tf"
+          - "**/*.hcl"
+          - "root.hcl"
+          - ".terraform.lock.hcl"
+          - "**/.terraform.lock.hcl"
+
+# ── Device ────────────────────────────────────────────────────────────────
 device/rb5009:
   - changed-files:
-      - any-glob-to-any-file: "router-*.tf"
-device/cap-ax:
-  - changed-files:
-      - any-glob-to-any-file: "router-capsman.tf"
-device/crs326:
-  - changed-files:
-      - any-glob-to-any-file: "switch-crs326.tf"
-device/crs-317:
-  - changed-files:
-      - any-glob-to-any-file: "switch-crs317.tf"
+      - any-glob-to-any-file:
+          - "infrastructure/mikrotik/router-base/**"
+          - "infrastructure/mikrotik/router-services/**"
+          - "modules/mikrotik-base/**"
+          - "modules/mikrotik-router-services/**"
 device/hex:
   - changed-files:
-      - any-glob-to-any-file: "switch-hex.tf"
+      - any-glob-to-any-file:
+          - "infrastructure/mikrotik/router-offsite/**"
+          - "infrastructure/mikrotik/router-offsite-services/**"
+          - "modules/mikrotik-offsite-services/**"
+device/cap-ax:
+  - changed-files:
+      - any-glob-to-any-file:
+          - "infrastructure/mikrotik/**/capsman*"
+          - "infrastructure/mikrotik/**/wifi*"
+device/crs326:
+  - changed-files:
+      - any-glob-to-any-file: "infrastructure/mikrotik/switch-crs326/**"
+device/ovh:
+  - changed-files:
+      - any-glob-to-any-file:
+          - "infrastructure/ovh/**"
+          - "modules/ovh-cname/**"

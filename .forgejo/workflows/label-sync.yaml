@@ -1,8 +1,11 @@
+---
 name: Label sync
 on:
   push:
-    branches: [main]
-    paths: [.forgejo/labels.yaml]
+    branches:
+      - main
+    paths:
+      - .forgejo/labels.yaml
 jobs:
   sync:
     uses: vrozaksen/dotrepos/.forgejo/workflows/label-sync.yml@main

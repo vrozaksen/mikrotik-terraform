@@ -1,7 +1,8 @@
 {
     "$schema": "https://docs.renovatebot.com/renovate-schema.json",
     "extends": [
-        "github>vrozaksen/renovate-config",
+        "local>vrozaksen/renovate-config",
+        "local>vrozaksen/dotrepos//.renovate-dotrepos.json5",
         ":semanticCommits"
     ],
     "customManagers": [

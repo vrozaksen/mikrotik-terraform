@@ -1,24 +1,23 @@
+---
 name: Terraform
 on:
   push:
-    branches: [main]
+    branches:
+      - main
     paths:
       - infrastructure/**
       - modules/**
       - root.hcl
-      - .terraform.lock.hcl
+      - "**/.terraform.lock.hcl"
   pull_request:
     paths:
       - infrastructure/**
       - modules/**
       - root.hcl
-      - .terraform.lock.hcl
+      - "**/.terraform.lock.hcl"
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
-# Calling leaves directly — dotrepos `terraform/ci.yml` is a meta that uses
-# `./.forgejo/workflows/terraform/{fmt,trivy}.yml` (relative paths break
-# cross-repo, same gotcha as lint.yml).
 jobs:
   fmt:
     uses: vrozaksen/dotrepos/.forgejo/workflows/terraform/fmt.yml@main
