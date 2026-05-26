@@ -1,4 +1,4 @@
-# dotrepos:begin .yamllint.yaml@2208c1024c61defa6e01b4fb5a70687ebc4e215a
+# dotrepos:begin .yamllint.yaml@a21477f76706d320c4822194a116f8f2189a9251
 ---
 extends: default
 ignore: |
@@ -10,6 +10,7 @@ ignore: |
   target/
   .direnv/
   .terragrunt-cache/
+  # dotrepos:slot extra-ignore
 rules:
   indentation:
     spaces: 2
@@ -29,4 +30,4 @@ rules:
     check-keys: false
   octal-values:
     forbid-implicit-octal: true
-    # dotrepos:end
+# dotrepos:end
