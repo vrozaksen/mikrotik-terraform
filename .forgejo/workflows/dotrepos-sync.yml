@@ -1,12 +1,13 @@
 ---
 name: dotrepos sync
+
 on:
   pull_request:
     types:
       - labeled
-      - synchronize
+
 jobs:
   sync:
-    if: contains(github.event.pull_request.labels.*.name, 'dotrepos-sync')
+    if: github.event.label.name == 'dotrepos-sync'
     uses: vrozaksen/dotrepos/.forgejo/workflows/dotrepos-sync.yml@main
     secrets: inherit
