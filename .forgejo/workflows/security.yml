@@ -1,0 +1,30 @@
+---
+name: Security
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+  schedule:
+    - cron: "0 4 * * 1"  # weekly Monday 04:00 UTC
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+jobs:
+  gitleaks:
+    uses: vrozaksen/dotrepos/.forgejo/workflows/security/gitleaks.yml@main
+  gitleaks-issues:
+    needs: gitleaks
+    if: always()
+    uses: vrozaksen/dotrepos/.forgejo/workflows/forgejo-issues.yml@main
+    with:
+      artifact-name: gitleaks-sarif
+      sarif-path: gitleaks.sarif
+      scanner-name: gitleaks
+    secrets: inherit

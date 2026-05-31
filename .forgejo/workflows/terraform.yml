@@ -19,7 +19,5 @@ concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
 jobs:
-  fmt:
-    uses: vrozaksen/dotrepos/.forgejo/workflows/terraform/fmt.yml@main
-  trivy:
-    uses: vrozaksen/dotrepos/.forgejo/workflows/terraform/trivy.yml@main
+  terraform:
+    uses: vrozaksen/dotrepos/.forgejo/workflows/terraform/ci.yml@main

@@ -9,21 +9,40 @@ concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
 jobs:
+  changes:
+    uses: vrozaksen/dotrepos/.forgejo/workflows/changes.yml@main
+
   commitlint:
     uses: vrozaksen/dotrepos/.forgejo/workflows/lint/commitlint.yml@main
+
   actionlint:
+    needs: changes
+    if: needs.changes.outputs.actions == 'true' || needs.changes.outputs.shell == 'true'
     uses: vrozaksen/dotrepos/.forgejo/workflows/lint/actionlint.yml@main
+
   shellcheck:
+    needs: changes
+    if: needs.changes.outputs.shell == 'true'
     uses: vrozaksen/dotrepos/.forgejo/workflows/lint/shellcheck.yml@main
+
   editorconfig:
+    needs: changes
+    if: needs.changes.outputs.any == 'true'
     uses: vrozaksen/dotrepos/.forgejo/workflows/lint/editorconfig.yml@main
+
   markdownlint:
+    needs: changes
+    if: needs.changes.outputs.md == 'true'
     uses: vrozaksen/dotrepos/.forgejo/workflows/lint/markdownlint.yml@main
+
   yaml:
+    needs: changes
+    if: needs.changes.outputs.yaml == 'true'
     uses: vrozaksen/dotrepos/.forgejo/workflows/lint/yaml.yml@main
+
   just:
+    needs: changes
+    if: needs.changes.outputs.just == 'true'
     uses: vrozaksen/dotrepos/.forgejo/workflows/lint/just.yml@main
     with:
-      # No `just lint` recipe in this terragrunt repo; skip the recipe step.
-      # Parse-only check on justfile still runs.
       lint-recipe: ""
