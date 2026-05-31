@@ -1,4 +1,14 @@
 module.exports = {
+  // parserPreset adds `!` (breaking-change marker) support to the default
+  // header pattern: `release(scope)!: subject` would otherwise fail with
+  // empty type + empty subject because the default regex requires `:`
+  // immediately after the scope.
+  parserPreset: {
+    parserOpts: {
+      headerPattern: /^(\w+)(?:\(([\w$.\-* ]+)\))?(!)?: (.+)$/,
+      headerCorrespondence: ["type", "scope", "breaking", "subject"],
+    },
+  },
   rules: {
     "type-enum": [
       2,
