@@ -1,0 +1,8 @@
+{
+  "mcpServers": {
+    "vzkn": {
+      "type": "http",
+      "url": "https://mcp.vzkn.eu/mcp"
+    }
+  }
+}
