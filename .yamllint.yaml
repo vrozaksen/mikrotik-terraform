@@ -1,4 +1,4 @@
-# dotrepos:begin .yamllint.yaml@32298206b1abd7e317d334c1863d6fd62139bf9e
+# dotrepos:begin .yamllint.yaml@6dad6f3f42174d899d3c3624132cc3c569b0b509
 ---
 extends: default
 ignore: |
