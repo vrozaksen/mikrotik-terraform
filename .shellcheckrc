@@ -1,4 +1,4 @@
-# dotrepos:begin .shellcheckrc@6dad6f3f42174d899d3c3624132cc3c569b0b509
+# dotrepos:begin .shellcheckrc@8aa5913484d4487f27eb30f32c059a5e8d2dc797
 # Sourced files not available at analysis time (CI, dynamic paths).
 # SC1090 pairs with SC1091 — both fire when source paths are dynamic.
 disable=SC1090
