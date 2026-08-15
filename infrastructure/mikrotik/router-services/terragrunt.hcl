@@ -42,4 +42,5 @@ inputs = {
   trusted_wifi_password = get_env("TRUSTED_WIFI_PASSWORD")
   guest_wifi_password   = get_env("GUEST_WIFI_PASSWORD")
   iot_wifi_password     = get_env("IOT_WIFI_PASSWORD")
+  legacy_wifi_password  = get_env("LEGACY_WIFI_PASSWORD")
 }

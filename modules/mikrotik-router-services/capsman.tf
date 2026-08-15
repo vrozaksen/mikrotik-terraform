@@ -55,6 +55,14 @@ resource "routeros_wifi_security" "trusted_wifi_password" {
   authentication_types = ["wpa2-psk", "wpa3-psk"]
   passphrase           = var.trusted_wifi_password
 }
+# WPA2-only + PMF off: legacy 2.4GHz clients (3DS, ESP8266) can't parse
+# the WPA3 transition mode RSN IE and won't even see the SSID
+resource "routeros_wifi_security" "legacy_wifi_password" {
+  name                  = "legacy-wifi-password"
+  authentication_types  = ["wpa2-psk"]
+  management_protection = "disabled"
+  passphrase            = var.legacy_wifi_password
+}
 resource "routeros_wifi_security" "guest_wifi_password" {
   name                 = "guest-wifi-password"
   authentication_types = ["wpa2-psk", "wpa3-psk"]
@@ -158,6 +166,23 @@ resource "routeros_wifi_configuration" "trusted_fast" {
     config = routeros_wifi_security.trusted_wifi_password.name
   }
 }
+# Legacy 2.4GHz-only SSID (3DS, ESP8266 etc.) -> Trusted VLAN
+resource "routeros_wifi_configuration" "legacy" {
+  country = "Poland"
+  name    = "VZKN_LEGACY"
+  ssid    = "VZKN_LEGACY"
+  comment = ""
+
+  channel = {
+    config = routeros_wifi_channel.slow.name
+  }
+  datapath = {
+    config = routeros_wifi_datapath.trusted_tagging.name
+  }
+  security = {
+    config = routeros_wifi_security.legacy_wifi_password.name
+  }
+}
 
 
 # =================================================================================================
@@ -171,7 +196,8 @@ resource "routeros_wifi_provisioning" "slow" {
   master_configuration = routeros_wifi_configuration.trusted_slow.name
   slave_configurations = [
     routeros_wifi_configuration.guest.name,
-    routeros_wifi_configuration.iot.name
+    routeros_wifi_configuration.iot.name,
+    routeros_wifi_configuration.legacy.name
   ]
 }
 resource "routeros_wifi_provisioning" "fast" {

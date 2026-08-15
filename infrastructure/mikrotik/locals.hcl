@@ -113,12 +113,17 @@ locals {
         "10.20.0.220" = { name = "Bambu-Lab", mac = "48:CA:43:95:9F:D8" }
         # Smart Plugs
         "10.20.0.230" = { name = "Shelly-1", mac = "BC:FF:4D:44:06:CB" }
+        # ESPHome LoRa nodes
+        "10.20.0.210" = { name = "e290-rx-home", mac = "AC:A7:04:E1:40:70" }
+        "10.20.0.211" = { name = "v3-tx-test", mac = "AC:A7:04:39:73:4C" }
         # Smart TV
         "10.20.0.240" = { name = "Chromecast-Bedroom", mac = "DC:E5:5B:8B:E4:EB" }
         "10.20.0.241" = { name = "Chromecast-Bedroom-Vectra", mac = "BC:C7:DA:9E:0E:EC" }
         "10.20.0.242" = { name = "Chromecast-Living-Room", mac = "92:04:7C:5B:39:EA" }
         "10.20.0.243" = { name = "Homatics-Living-Room-Wired", mac = "8C:98:06:7F:8A:09" }
         "10.20.0.249" = { name = "Chromecast-Living-Room-Wired", mac = "E8:C6:E6:22:11:DD" }
+        # Home Appliances
+        "10.20.0.250" = { name = "Samsung-Fridge", mac = "34:55:E5:92:D0:77" }
       }
     },
     # "Security" = {

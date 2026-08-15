@@ -74,6 +74,13 @@ variable "iot_wifi_password" {
   sensitive   = true
 }
 
+variable "legacy_wifi_password" {
+  description = "Password for the legacy (WPA2-only, 2.4GHz) Wi-Fi network."
+  type        = string
+  default     = null
+  sensitive   = true
+}
+
 
 # =================================================================================================
 # WireGuard Configuration
