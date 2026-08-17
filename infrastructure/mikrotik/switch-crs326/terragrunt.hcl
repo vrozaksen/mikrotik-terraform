@@ -24,6 +24,9 @@ inputs = {
   mikrotik_password = get_env("MIKROTIK_PASSWORD")
   mikrotik_insecure = true
 
+  # Ships to the VictoriaLogs syslog receiver.
+  syslog_remote = "10.10.0.92"
+
   certificate_common_name = local.mikrotik_hostname
   hostname                = "Switch"
   timezone                = local.shared_locals.timezone
@@ -47,8 +50,8 @@ inputs = {
     "sfp-sfpplus9"  = { comment = "K8S_W2", bridge_port = false }
     "sfp-sfpplus11" = { comment = "K8S_W3", bridge_port = false }
     "sfp-sfpplus13" = { comment = "K8S_W3", bridge_port = false }
-    "sfp-sfpplus15" = { comment = "K8S_W4", bridge_port = false }
-    "sfp-sfpplus17" = { comment = "K8S_W4", bridge_port = false }
+    "sfp-sfpplus15" = { comment = "granzam MGMT", untagged = local.shared_locals.vlans.Servers.name }
+    "sfp-sfpplus17" = { comment = "FREE", bridge_port = false }
 
     # === K8S Control Plane - top row (4+6, 8+10, 12+14) - active-backup on node side ===
     "sfp-sfpplus4"  = { comment = "K8S_CP1", untagged = local.shared_locals.vlans.Servers.name }
@@ -107,12 +110,6 @@ inputs = {
     "K8S_W3" = {
       slaves   = ["sfp-sfpplus11", "sfp-sfpplus13"]
       comment  = "K8S_W3 ainias"
-      untagged = local.shared_locals.vlans.Servers.name
-      tagged   = [for name, vlan in local.shared_locals.vlans : vlan.name if name != "Servers"]
-    }
-    "K8S_W4" = {
-      slaves   = ["sfp-sfpplus15", "sfp-sfpplus17"]
-      comment  = "K8S_W4 granzam"
       untagged = local.shared_locals.vlans.Servers.name
       tagged   = [for name, vlan in local.shared_locals.vlans : vlan.name if name != "Servers"]
     }

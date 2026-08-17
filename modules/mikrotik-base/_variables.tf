@@ -220,3 +220,45 @@ variable "dhcp_clients" {
   default     = {}
   description = "Map of DHCP clients to configure. Set failover_probe_target to enable recursive routing failover."
 }
+
+# =================================================================================================
+# Remote syslog
+# =================================================================================================
+variable "syslog_remote" {
+  type        = string
+  default     = ""
+  description = "Syslog collector address. Empty disables remote logging."
+}
+
+variable "syslog_remote_port" {
+  type        = number
+  default     = 514
+  description = "Syslog collector UDP port."
+}
+
+variable "syslog_topics" {
+  type        = list(string)
+  default     = ["account", "critical", "error", "warning", "system"]
+  description = "Log topics shipped to the collector."
+}
+
+# =================================================================================================
+# Port mirroring
+# =================================================================================================
+variable "mirror_target" {
+  type        = string
+  default     = ""
+  description = "Port receiving mirrored traffic. Must be outside the bridge. Empty disables mirroring."
+}
+
+variable "mirror_sources" {
+  type        = list(string)
+  default     = []
+  description = "Ports whose ingress and egress traffic is copied to mirror_target."
+}
+
+variable "mirror_switch_name" {
+  type        = string
+  default     = "switch1"
+  description = "Switch chip name carrying the mirror configuration."
+}

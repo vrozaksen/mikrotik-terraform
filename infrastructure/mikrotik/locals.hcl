@@ -11,7 +11,6 @@ locals {
     "k8s-w-1"  = { ip = "10.10.0.21/32" },
     "k8s-w-2"  = { ip = "10.10.0.22/32" },
     "k8s-w-3"  = { ip = "10.10.0.23/32" },
-    "k8s-w-4"  = { ip = "10.10.0.24/32" }
   }
 
   upstream_dns = ["9.9.9.9", "149.112.112.112"]
@@ -92,7 +91,6 @@ locals {
         "10.10.0.21" = { name = "alfheim", mac = "F8:F2:1E:CD:7A:30" }
         "10.10.0.22" = { name = "alne", mac = "3C:FD:FE:02:06:80" }
         "10.10.0.23" = { name = "ainias", mac = "44:49:88:03:C7:CC" }
-        "10.10.0.24" = { name = "granzam", mac = "00:E0:4C:68:07:2C" }
         ### Rack - Matchbox / PXE Booting
         # "10.10.0.30" = { name = "matchbox", mac = "x" }
         # Rack - HASS ZigBee Coordinator

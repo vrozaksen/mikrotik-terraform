@@ -17,6 +17,14 @@ inputs = {
   mikrotik_password = get_env("MIKROTIK_PASSWORD")
   mikrotik_insecure = true
 
+  # Ships to the VictoriaLogs syslog receiver.
+  syslog_remote = "10.10.0.92"
+
+  # ether1 = WAN in, sfp-sfpplus1 = from the rack, ether8 = the AP, whose
+  # traffic is routed locally and never reaches the CRS326.
+  mirror_target  = "ether4"
+  mirror_sources = ["ether1", "sfp-sfpplus1", "ether8"]
+
   tls_certificate         = "router.crt_0"
   certificate_common_name = local.mikrotik_hostname
   hostname                = "Router"
@@ -28,7 +36,8 @@ inputs = {
     "ether1" = { comment = "Vectra Uplink", bridge_port = false }
     "ether2" = { comment = "LTE Uplink", bridge_port = false }
     "ether3" = { comment = "SLZB", untagged = local.shared_locals.vlans.Servers.name }
-    "ether4" = { comment = "RIPE Atlas Probe", untagged = local.shared_locals.vlans.DMZ.name }
+    # Mirror target: outside the bridge on purpose, feeds the granzam sensor.
+    "ether4" = { comment = "MIRROR to granzam", bridge_port = false }
     "ether5" = {
       comment  = "TV-Living-Room",
       untagged = local.shared_locals.vlans.IoT.name

@@ -23,6 +23,12 @@ resource "routeros_routing_bgp_connection" "peers" {
   address_families = each.value.address_families
   multihop         = each.value.multihop
 
+  # Without these RouterOS defaults keepalive to the same value as hold, so the
+  # hold timer expires exactly when the next keepalive is due and the session
+  # flaps every few minutes.
+  hold_time      = "3m"
+  keepalive_time = "1m"
+
   local {
     role    = "ebgp"
     address = each.value.local_address
