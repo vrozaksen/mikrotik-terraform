@@ -39,6 +39,10 @@ resource "routeros_routing_bgp_connection" "peers" {
     address = each.value.remote_address
     as      = each.value.remote_as
   }
+
+  output {
+    default_originate = each.value.default_originate
+  }
 }
 
 # =================================================================================================

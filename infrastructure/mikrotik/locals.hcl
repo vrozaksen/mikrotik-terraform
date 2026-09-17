@@ -40,14 +40,16 @@ locals {
     "router.home.vzkn.eu"  = { address = "10.10.0.1", type = "A", comment = "RB5009" },
     "switch.home.vzkn.eu"  = { address = "10.10.0.2", type = "A", comment = "CRS326" },
     "horraco.home.vzkn.eu" = { address = "10.10.0.8", type = "A", comment = "HORRACO" },
+    "pdu.home.vzkn.eu"     = { address = "10.10.0.7", type = "A", comment = "APC AP7920 PDU" },
     "pi.home.vzkn.eu"      = { address = "10.10.0.10", type = "A", comment = "PI" },
     # NAS
-    "aincrad.home.vzkn.eu" = { address = "10.10.0.11", type = "A", comment = "Aincrad-NAS" },
-    "caddy.home.vzkn.eu"   = { address = "10.10.0.11", type = "A", comment = "Aincrad-Caddy" },
-    "stash.vzkn.eu"        = { address = "10.10.0.11", type = "A", comment = "Aincrad-Stash" },
-    "immich.vzkn.eu"       = { address = "10.10.0.11", type = "A", comment = "Aincrad-Immich" },
-    "emby.vzkn.eu"         = { address = "10.10.0.11", type = "A", comment = "Aincrad-Emby" },
-    "music.vzkn.eu"        = { address = "10.10.0.11", type = "A", comment = "Aincrad-Navidrome" },
+    "aincrad.home.vzkn.eu"  = { address = "10.10.0.11", type = "A", comment = "Aincrad-NAS" },
+    "cardinal.home.vzkn.eu" = { address = "10.10.0.12", type = "A", comment = "Security Onion sensor" },
+    "caddy.home.vzkn.eu"    = { address = "10.10.0.11", type = "A", comment = "Aincrad-Caddy" },
+    "stash.vzkn.eu"         = { address = "10.10.0.11", type = "A", comment = "Aincrad-Stash" },
+    "immich.vzkn.eu"        = { address = "10.10.0.11", type = "A", comment = "Aincrad-Immich" },
+    "emby.vzkn.eu"          = { address = "10.10.0.11", type = "A", comment = "Aincrad-Emby" },
+    "music.vzkn.eu"         = { address = "10.10.0.11", type = "A", comment = "Aincrad-Navidrome" },
     # NAS - Minio S3
     "s3.vzkn.eu"  = { address = "10.10.0.11", type = "A", comment = "Minio-S3-API" },
     "s3c.vzkn.eu" = { address = "10.10.0.11", type = "A", comment = "Minio-Console" },
@@ -78,11 +80,15 @@ locals {
       static_leases = {
         ### Rack - Routing Switching WiFing
         "10.10.0.2" = { name = "CRS326", mac = "F4:1E:57:9E:6D:A1" }
+        # APC AP7920 PDU — static IP set on the device itself (old AOS DHCP
+        # needs the APC vendor cookie); lease kept here as documentation.
+        # "10.10.0.7" = { name = "APC-PDU", mac = "00:C0:B7:D8:AF:D6" }
         "10.10.0.8" = { name = "HORRACO", mac = "1C:2A:A3:1E:5B:5A" }
         "10.10.0.9" = { name = "wAP-AX", mac = "F4:1E:57:80:43:C3" }
         ### Rack - NAS & Servers
         "10.10.0.10" = { name = "pi", mac = "00:E0:4C:36:2A:CD" }
         "10.10.0.11" = { name = "aincrad", mac = "F8:F2:1E:47:00:70" } # "10.10.0.11" = { name = "aincrad", mac = "9C:6B:00:79:11:99" } # 9C:DC:71:46:0F:20
+        "10.10.0.12" = { name = "cardinal", mac = "00:E0:4C:68:07:2C" }
         ### Rack - K8s Control Plane Nodes
         "10.10.0.15" = { name = "saga", mac = "E0:51:D8:1F:43:3D" }
         "10.10.0.16" = { name = "eir", mac = "E0:51:D8:1F:AC:84" }
@@ -112,8 +118,10 @@ locals {
         # Smart Plugs
         "10.20.0.230" = { name = "Shelly-1", mac = "BC:FF:4D:44:06:CB" }
         # ESPHome LoRa nodes
-        "10.20.0.210" = { name = "e290-rx-home", mac = "AC:A7:04:E1:40:70" }
-        "10.20.0.211" = { name = "v3-tx-test", mac = "AC:A7:04:39:73:4C" }
+        "10.20.0.210" = { name = "e290-rx-home", mac = "AC:A7:04:E1:3E:04" } # unit #2 (working display); #1 broke its display, #3 = office TX
+        "10.20.0.211" = { name = "e290-tx-office", mac = "AC:A7:04:E1:48:24" }
+        # Meshtastic
+        "10.20.0.215" = { name = "e290-meshtastic", mac = "AC:A7:04:E1:40:70" } # dead-display unit, stationary; V3 = mobile (BT only, no lease)
         # Smart TV
         "10.20.0.240" = { name = "Chromecast-Bedroom", mac = "DC:E5:5B:8B:E4:EB" }
         "10.20.0.241" = { name = "Chromecast-Bedroom-Vectra", mac = "BC:C7:DA:9E:0E:EC" }

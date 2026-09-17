@@ -180,6 +180,8 @@ variable "bgp_peer_connections" {
     local_address    = string
     address_families = optional(string, "ip")
     multihop         = optional(bool, false)
+    # Only the device that actually holds the default route should originate it.
+    default_originate = optional(string, "never")
   }))
   default     = {}
   description = "Map of BGP peer connections to other routers/switches"

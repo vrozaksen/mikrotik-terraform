@@ -13,9 +13,6 @@ concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
 
-permissions:
-  contents: read
-
 jobs:
   gitleaks:
     uses: vrozaksen/dotrepos/.forgejo/workflows/security/gitleaks.yml@main

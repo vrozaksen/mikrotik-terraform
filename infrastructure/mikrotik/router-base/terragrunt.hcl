@@ -36,8 +36,8 @@ inputs = {
     "ether1" = { comment = "Vectra Uplink", bridge_port = false }
     "ether2" = { comment = "LTE Uplink", bridge_port = false }
     "ether3" = { comment = "SLZB", untagged = local.shared_locals.vlans.Servers.name }
-    # Mirror target: outside the bridge on purpose, feeds the granzam sensor.
-    "ether4" = { comment = "MIRROR to granzam", bridge_port = false }
+    # Mirror target: outside the bridge on purpose, feeds the cardinal sensor.
+    "ether4" = { comment = "MIRROR to cardinal", bridge_port = false }
     "ether5" = {
       comment  = "TV-Living-Room",
       untagged = local.shared_locals.vlans.IoT.name
@@ -45,9 +45,10 @@ inputs = {
     }
     "ether6" = { comment = "pi-nut", untagged = local.shared_locals.vlans.Servers.name }
     "ether7" = {
-      comment  = "EMG",
-      untagged = local.shared_locals.vlans.Trusted.name
-      tagged   = [local.shared_locals.vlans.Servers.name, local.shared_locals.vlans.Guest.name, local.shared_locals.vlans.IoT.name]
+      # APC AP7920 PDU (mgmt NIC is untagged-only, AOS v3)
+      comment  = "EMG / APC-PDU",
+      untagged = local.shared_locals.vlans.Servers.name
+      tagged   = [local.shared_locals.vlans.Trusted.name, local.shared_locals.vlans.Guest.name, local.shared_locals.vlans.IoT.name]
     }
     "ether8" = {
       comment  = "Access Point",
@@ -72,6 +73,9 @@ inputs = {
       remote_as        = 64514
       address_families = "ip"
       multihop         = true
+      # RB5009 holds both WAN uplinks, so it originates the default here.
+      # Without this the session carried no prefixes toward the switch at all.
+      default_originate = "always"
     }
   }
   bgp_k8s_peers = local.shared_locals.bgp_k8s_peers

@@ -50,7 +50,7 @@ inputs = {
     "sfp-sfpplus9"  = { comment = "K8S_W2", bridge_port = false }
     "sfp-sfpplus11" = { comment = "K8S_W3", bridge_port = false }
     "sfp-sfpplus13" = { comment = "K8S_W3", bridge_port = false }
-    "sfp-sfpplus15" = { comment = "granzam MGMT", untagged = local.shared_locals.vlans.Servers.name }
+    "sfp-sfpplus15" = { comment = "cardinal MGMT", untagged = local.shared_locals.vlans.Servers.name }
     "sfp-sfpplus17" = { comment = "FREE", bridge_port = false }
 
     # === K8S Control Plane - top row (4+6, 8+10, 12+14) - active-backup on node side ===
