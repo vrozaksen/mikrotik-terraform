@@ -61,9 +61,10 @@ inputs = {
   guest_wifi_password   = get_env("OFFSITE_GUEST_WIFI_PASSWORD", "changeme")
 
   # QoS - LTE bufferbloat mitigation
+  # Module shapes to 85% of these, i.e. 285M/45M
   qos_enabled       = true
-  qos_download_mbps = 71
-  qos_upload_mbps   = 24
+  qos_download_mbps = 336
+  qos_upload_mbps   = 53
 
   # Healthcheck
   hc_uuid = get_env("HC_OFFSITE")
