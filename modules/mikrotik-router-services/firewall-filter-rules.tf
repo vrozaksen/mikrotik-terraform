@@ -70,6 +70,46 @@ locals {
     }
 
     # =========================================================================
+    # THREAT INTELLIGENCE (address list imported from intel-hub)
+    # =========================================================================
+    # A jump rather than an accept/drop pair: an accept for the allowlist would
+    # wave those sources past every later rule, which is a hole, not an
+    # exemption. Inside the chain an allowlisted source returns and resumes
+    # normal filtering.
+    #
+    # Scoped to new connections arriving on WAN, so established traffic and
+    # anything originating on the LAN is untouched.
+    "ti-jump-input" = {
+      chain             = "input"
+      action            = "jump"
+      jump_target       = "ti-blacklist"
+      src_address_list  = "abuseipdb"
+      connection_state  = "new"
+      in_interface_list = "WAN"
+      order             = 240
+    }
+    "ti-jump-forward" = {
+      chain             = "forward"
+      action            = "jump"
+      jump_target       = "ti-blacklist"
+      src_address_list  = "abuseipdb"
+      connection_state  = "new"
+      in_interface_list = "WAN"
+      order             = 241
+    }
+    "ti-return-allowlisted" = {
+      chain            = "ti-blacklist"
+      action           = "return"
+      src_address_list = "st_ti_allowlist"
+      order            = 242
+    }
+    "ti-drop" = {
+      chain  = "ti-blacklist"
+      action = "drop"
+      order  = 243
+    }
+
+    # =========================================================================
     # GLOBAL SERVICE ACCESS (using auto-generated address lists)
     # =========================================================================
     "allow-dns-udp-global" = {

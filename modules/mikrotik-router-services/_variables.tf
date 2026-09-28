@@ -99,3 +99,15 @@ variable "wan_interfaces" {
   default     = []
   description = "List of WAN interface names to add to WAN interface list"
 }
+
+variable "threat_intel_url" {
+  description = "intel-hub endpoint serving the RouterOS address-list script"
+  type        = string
+  default     = "http://intel.vzkn.eu/abuseipdb.rsc"
+}
+
+variable "threat_intel_interval" {
+  description = "How often to re-import the blacklist. Entries expire after 2d, so this must stay well under that."
+  type        = string
+  default     = "12h"
+}
