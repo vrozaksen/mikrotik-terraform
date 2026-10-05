@@ -50,6 +50,7 @@ locals {
     "immich.vzkn.eu"        = { address = "10.10.0.11", type = "A", comment = "Aincrad-Immich" },
     "emby.vzkn.eu"          = { address = "10.10.0.11", type = "A", comment = "Aincrad-Emby" },
     "music.vzkn.eu"         = { address = "10.10.0.11", type = "A", comment = "Aincrad-Navidrome" },
+    "silo.vzkn.eu"          = { address = "10.10.0.11", type = "A", comment = "Aincrad-Silo" },
     # NAS - Minio S3
     "s3.vzkn.eu"  = { address = "10.10.0.11", type = "A", comment = "Minio-S3-API" },
     "s3c.vzkn.eu" = { address = "10.10.0.11", type = "A", comment = "Minio-Console" },
