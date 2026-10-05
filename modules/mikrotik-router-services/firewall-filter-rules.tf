@@ -282,6 +282,18 @@ locals {
       src_address_list = "st_k8s_services"
       order            = 2020
     }
+    # Reactive Resume (k8s) -> Ollama on ragnarok; pod egress is SNATed to node IPs.
+    "allow-k8s-to-ragnarok-ollama" = {
+      chain            = "forward"
+      action           = "accept"
+      in_interface     = var.vlans.Servers.name
+      out_interface    = var.vlans.Trusted.name
+      src_address_list = "st_k8s_services"
+      dst_address      = "10.100.0.102"
+      protocol         = "tcp"
+      dst_port         = "11434"
+      order            = 2030
+    }
 
     # =========================================================================
     # DMZ ZONE (RIPE Atlas probe, etc)
