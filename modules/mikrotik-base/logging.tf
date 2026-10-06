@@ -18,6 +18,9 @@ resource "routeros_system_logging_action" "remote" {
 # =================================================================================================
 # Which topics get shipped. Deliberately narrow: `account` carries login/logout,
 # the rest are faults. `info` is intentionally excluded — it is mostly chatter.
+# `interface` is in for the security case rather than the operational one: a link
+# coming up on a port that should be empty is someone plugging into the rack.
+# Measured ~7 events/day across both devices, so it costs nothing.
 # https://registry.terraform.io/providers/terraform-routeros/routeros/latest/docs/resources/system_logging
 # =================================================================================================
 resource "routeros_system_logging" "remote" {

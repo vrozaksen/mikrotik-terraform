@@ -240,7 +240,7 @@ variable "syslog_remote_port" {
 
 variable "syslog_topics" {
   type        = list(string)
-  default     = ["account", "critical", "error", "warning", "system"]
+  default     = ["account", "critical", "error", "warning", "system", "interface"]
   description = "Log topics shipped to the collector."
 }
 
