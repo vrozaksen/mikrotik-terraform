@@ -154,6 +154,15 @@ locals {
       dst_port = routeros_interface_wireguard.wireguard.listen_port
       order    = 1000
     }
+    # Separate listener for the untrusted tunnel. WireGuard does not answer
+    # unauthenticated packets, so an extra open UDP port costs nothing.
+    "allow-wireguard-untrusted-connections" = {
+      chain    = "input"
+      action   = "accept"
+      protocol = "udp"
+      dst_port = routeros_interface_wireguard.untrusted.listen_port
+      order    = 1001
+    }
     "allow-wireguard-to-internet" = {
       chain              = "forward"
       action             = "accept"
