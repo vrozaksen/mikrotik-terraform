@@ -54,3 +54,12 @@ resource "routeros_ip_firewall_addr_list" "ag_service_lists" {
   comment = "Auto-Generated: ${upper(each.value.service)} access for ${each.value.vlan}"
   address = "${var.vlans[each.value.vlan].network}/${var.vlans[each.value.vlan].cidr_suffix}"
 }
+
+# Guest devices that may reach the Wazuh manager, and nothing else. The one
+# machine most likely to be compromised is also the one worth watching -- this
+# keeps it isolated on Guest instead of promoting it to Trusted to be monitored.
+resource "routeros_ip_firewall_addr_list" "guest_monitored" {
+  list    = "st_guest_monitored"
+  comment = "Static: Guest devices allowed to reach the Wazuh manager"
+  address = "10.99.0.13"
+}

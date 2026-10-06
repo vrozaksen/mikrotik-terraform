@@ -145,15 +145,17 @@ locals {
     #   static_leases = {}
     # },
     "Guest" = {
-      name          = "Guest"
-      vlan_id       = 99
-      network       = "10.99.0.0"
-      cidr_suffix   = "24"
-      gateway       = "10.99.0.1"
-      dhcp_pool     = ["10.99.0.10-10.99.0.250"]
-      dns_servers   = ["9.9.9.9", "149.112.112.112"]
-      domain        = "gst.h.vzkn.eu"
-      static_leases = {}
+      name        = "Guest"
+      vlan_id     = 99
+      network     = "10.99.0.0"
+      cidr_suffix = "24"
+      gateway     = "10.99.0.1"
+      dhcp_pool   = ["10.99.0.10-10.99.0.250"]
+      dns_servers = ["9.9.9.9", "149.112.112.112"]
+      domain      = "gst.h.vzkn.eu"
+      static_leases = {
+        "10.99.0.13" = { name = "angelika-laptop", mac = "E0:D0:45:9E:7A:7D" }
+      }
     },
     "Trusted" = {
       name        = "Trusted"
