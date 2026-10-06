@@ -253,6 +253,23 @@ locals {
     }
 
     # =========================================================================
+    # UNTRUSTED WIREGUARD (honeypot)
+    # =========================================================================
+    # The honeypot ships logs in and must reach nothing else. Matching on the
+    # interface rather than an address means a leaked peer key still buys only
+    # this one destination. Everything else falls through to drop-all.
+    "allow-wg-untrusted-to-victorialogs" = {
+      chain            = "forward"
+      action           = "accept"
+      in_interface     = routeros_interface_wireguard.untrusted.name
+      dst_address      = "10.10.0.92"
+      protocol         = "tcp"
+      dst_port         = "9428"
+      connection_state = "new"
+      order            = 1750
+    }
+
+    # =========================================================================
     # IoT ZONE (restrictive - uses address lists for granular control)
     # =========================================================================
     "allow-iot-wan-restricted" = {
