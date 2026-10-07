@@ -278,6 +278,24 @@ locals {
       order            = 1750
     }
 
+    # Admin access the other way, so the honeypot can be worked on without
+    # exposing its management port to the internet it is bait for. Only the
+    # workstation, only 22222, only new connections the LAN starts -- the
+    # honeypot still cannot open anything inward. Its peer AllowedIPs must
+    # list this source too, or WireGuard drops the packets before the host.
+    "allow-workstation-to-honeypot-admin" = {
+      chain            = "forward"
+      action           = "accept"
+      in_interface     = var.vlans.Trusted.name
+      out_interface    = routeros_interface_wireguard.untrusted.name
+      src_address      = "10.100.0.102"
+      dst_address      = "10.255.9.2"
+      protocol         = "tcp"
+      dst_port         = "22222"
+      connection_state = "new"
+      order            = 1751
+    }
+
     # =========================================================================
     # IoT ZONE (restrictive - uses address lists for granular control)
     # =========================================================================
