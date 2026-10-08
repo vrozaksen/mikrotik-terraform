@@ -47,10 +47,10 @@ locals {
     "cardinal.home.vzkn.eu" = { address = "10.10.0.12", type = "A", comment = "Security Onion sensor" },
     "caddy.home.vzkn.eu"    = { address = "10.10.0.11", type = "A", comment = "Aincrad-Caddy" },
     "stash.vzkn.eu"         = { address = "10.10.0.11", type = "A", comment = "Aincrad-Stash" },
-    "immich.vzkn.eu"        = { address = "10.10.0.11", type = "A", comment = "Aincrad-Immich" },
     "emby.vzkn.eu"          = { address = "10.10.0.11", type = "A", comment = "Aincrad-Emby" },
     "music.vzkn.eu"         = { address = "10.10.0.11", type = "A", comment = "Aincrad-Navidrome" },
     "silo.vzkn.eu"          = { address = "10.10.0.11", type = "A", comment = "Aincrad-Silo" },
+    "dedupe.vzkn.eu"        = { address = "10.10.0.11", type = "A", comment = "Aincrad-Media-Dedupe" },
     # NAS - Minio S3
     "s3.vzkn.eu"  = { address = "10.10.0.11", type = "A", comment = "Minio-S3-API" },
     "s3c.vzkn.eu" = { address = "10.10.0.11", type = "A", comment = "Minio-Console" },
