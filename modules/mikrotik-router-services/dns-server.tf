@@ -5,7 +5,7 @@
 resource "routeros_ip_dns" "dns-server" {
   allow_remote_requests = true
   servers               = var.upstream_dns
-  cache_size            = 8192
+  cache_size            = 65536
   cache_max_ttl         = "1d"
 }
 
