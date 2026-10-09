@@ -51,6 +51,9 @@ locals {
     "music.vzkn.eu"         = { address = "10.10.0.11", type = "A", comment = "Aincrad-Navidrome" },
     "silo.vzkn.eu"          = { address = "10.10.0.11", type = "A", comment = "Aincrad-Silo" },
     "dedupe.vzkn.eu"        = { address = "10.10.0.11", type = "A", comment = "Aincrad-Media-Dedupe" },
+    "tdarr.vzkn.eu"         = { address = "10.10.0.11", type = "A", comment = "Aincrad-Tdarr" },
+    "code.vzkn.eu"          = { address = "10.10.0.11", type = "A", comment = "Aincrad-Code-Server" },
+    "syncthing.vzkn.eu"     = { address = "10.10.0.11", type = "A", comment = "Aincrad-Syncthing" },
     # NAS - Minio S3
     "s3.vzkn.eu"  = { address = "10.10.0.11", type = "A", comment = "Minio-S3-API" },
     "s3c.vzkn.eu" = { address = "10.10.0.11", type = "A", comment = "Minio-Console" },
