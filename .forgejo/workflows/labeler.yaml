@@ -4,14 +4,14 @@ on:
   pull_request:
 jobs:
   size-label:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-small
     steps:
       - name: Size Label
         uses: pascalgn/size-label-action@56b489b027932ec0cf60438a1a5f1a19c8fc71ff  # v0.5.7
         env:
           GITHUB_TOKEN: ${{ github.token }}
   labeler:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-small
     steps:
       - name: Checkout
         uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10  # v6.0.3
