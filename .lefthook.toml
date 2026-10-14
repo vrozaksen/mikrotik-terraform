@@ -1,6 +1,9 @@
 [[remotes]]
 git_url = "https://git.vzkn.eu/vrozaksen/dotrepos.git"
 ref     = "main"
+# Lefthook caches the remote in .git/info and never re-pulls on its own;
+# a stale copy rejected the new runner labels (2026-10-14).
+refetch_frequency = "24h"
 configs = ["lefthook.toml"]
 
 # ── via mise (opentofu, terragrunt declared in .mise.toml) ────────────────
