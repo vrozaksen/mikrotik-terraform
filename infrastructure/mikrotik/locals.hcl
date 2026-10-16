@@ -43,17 +43,16 @@ locals {
     "pdu.home.vzkn.eu"     = { address = "10.10.0.7", type = "A", comment = "APC AP7920 PDU" },
     "pi.home.vzkn.eu"      = { address = "10.10.0.10", type = "A", comment = "PI" },
     # NAS
-    "aincrad.home.vzkn.eu"  = { address = "10.10.0.11", type = "A", comment = "Aincrad-NAS" },
-    "cardinal.home.vzkn.eu" = { address = "10.10.0.12", type = "A", comment = "Security Onion sensor" },
-    "caddy.home.vzkn.eu"    = { address = "10.10.0.11", type = "A", comment = "Aincrad-Caddy" },
-    "stash.vzkn.eu"         = { address = "10.10.0.11", type = "A", comment = "Aincrad-Stash" },
-    "emby.vzkn.eu"          = { address = "10.10.0.11", type = "A", comment = "Aincrad-Emby" },
-    "music.vzkn.eu"         = { address = "10.10.0.11", type = "A", comment = "Aincrad-Navidrome" },
-    "silo.vzkn.eu"          = { address = "10.10.0.11", type = "A", comment = "Aincrad-Silo" },
-    "dedupe.vzkn.eu"        = { address = "10.10.0.11", type = "A", comment = "Aincrad-Media-Dedupe" },
-    "tdarr.vzkn.eu"         = { address = "10.10.0.11", type = "A", comment = "Aincrad-Tdarr" },
-    "code.vzkn.eu"          = { address = "10.10.0.11", type = "A", comment = "Aincrad-Code-Server" },
-    "syncthing.vzkn.eu"     = { address = "10.10.0.11", type = "A", comment = "Aincrad-Syncthing" },
+    "aincrad.home.vzkn.eu" = { address = "10.10.0.11", type = "A", comment = "Aincrad-NAS" },
+    "caddy.home.vzkn.eu"   = { address = "10.10.0.11", type = "A", comment = "Aincrad-Caddy" },
+    "stash.vzkn.eu"        = { address = "10.10.0.11", type = "A", comment = "Aincrad-Stash" },
+    "emby.vzkn.eu"         = { address = "10.10.0.11", type = "A", comment = "Aincrad-Emby" },
+    "music.vzkn.eu"        = { address = "10.10.0.11", type = "A", comment = "Aincrad-Navidrome" },
+    "silo.vzkn.eu"         = { address = "10.10.0.11", type = "A", comment = "Aincrad-Silo" },
+    "dedupe.vzkn.eu"       = { address = "10.10.0.11", type = "A", comment = "Aincrad-Media-Dedupe" },
+    "tdarr.vzkn.eu"        = { address = "10.10.0.11", type = "A", comment = "Aincrad-Tdarr" },
+    "code.vzkn.eu"         = { address = "10.10.0.11", type = "A", comment = "Aincrad-Code-Server" },
+    "syncthing.vzkn.eu"    = { address = "10.10.0.11", type = "A", comment = "Aincrad-Syncthing" },
     # NAS - Minio S3
     "s3.vzkn.eu"  = { address = "10.10.0.11", type = "A", comment = "Minio-S3-API" },
     "s3c.vzkn.eu" = { address = "10.10.0.11", type = "A", comment = "Minio-Console" },
@@ -66,6 +65,9 @@ locals {
     "alfheim" = { address = "10.10.0.21", type = "A", comment = "alfheim" },
     "alne"    = { address = "10.10.0.22", type = "A", comment = "alne" },
     "ainias"  = { address = "10.10.0.23", type = "A", comment = "ainias" },
+    # Netboot
+    "matchbox.home.vzkn.eu"          = { address = "10.10.0.30", type = "A", comment = "Matchbox" },
+    "omnichassis-bench.home.vzkn.eu" = { address = "10.10.0.12", type = "A", comment = "Omnichassis-HIL-Bench" },
     # HASS ZigBee
     "slzb.home.vzkn.eu" = { address = "10.10.0.65", type = "A", comment = "SLZB" },
   }
@@ -81,6 +83,10 @@ locals {
       dhcp_pool   = ["10.10.0.195-10.10.0.199"]
       dns_servers = ["10.10.0.1"]
       domain      = "srv.h.vzkn.eu"
+      pxe = {
+        server     = "10.10.0.30"
+        script_url = "http://10.10.0.30/boot.ipxe"
+      }
       static_leases = {
         ### Rack - Routing Switching WiFing
         "10.10.0.2" = { name = "CRS326", mac = "F4:1E:57:9E:6D:A1" }
@@ -92,7 +98,8 @@ locals {
         ### Rack - NAS & Servers
         "10.10.0.10" = { name = "pi", mac = "00:E0:4C:36:2A:CD" }
         "10.10.0.11" = { name = "aincrad", mac = "F8:F2:1E:47:00:70" } # "10.10.0.11" = { name = "aincrad", mac = "9C:6B:00:79:11:99" } # 9C:DC:71:46:0F:20
-        "10.10.0.12" = { name = "cardinal", mac = "00:E0:4C:68:07:2C" }
+        "10.10.0.12" = { name = "omnichassis-bench", mac = "F8:75:A4:09:50:FD" }
+        "10.10.0.13" = { name = "omnichassis-bench-usb", mac = "00:E0:4C:68:07:2C" }
         ### Rack - K8s Control Plane Nodes
         "10.10.0.15" = { name = "saga", mac = "E0:51:D8:1F:43:3D" }
         "10.10.0.16" = { name = "eir", mac = "E0:51:D8:1F:AC:84" }
@@ -101,8 +108,6 @@ locals {
         "10.10.0.21" = { name = "alfheim", mac = "F8:F2:1E:CD:7A:30" }
         "10.10.0.22" = { name = "alne", mac = "3C:FD:FE:02:06:80" }
         "10.10.0.23" = { name = "ainias", mac = "44:49:88:03:C7:CC" }
-        ### Rack - Matchbox / PXE Booting
-        # "10.10.0.30" = { name = "matchbox", mac = "x" }
         # Rack - HASS ZigBee Coordinator
         "10.10.0.65" = { name = "slzb", mac = "F4:65:0B:44:F3:EB" }
       }

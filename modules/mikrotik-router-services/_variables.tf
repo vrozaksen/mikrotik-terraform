@@ -16,6 +16,12 @@ variable "vlans" {
       name = string
       mac  = string
     }))
+    pxe = optional(object({
+      server     = string
+      script_url = string
+      uefi_file  = optional(string)
+      bios_file  = optional(string)
+    }))
   }))
   default     = {}
   description = "Map of VLANs to configure"

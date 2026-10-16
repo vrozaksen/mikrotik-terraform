@@ -9,6 +9,7 @@ module "dhcp-server" {
   dns_servers    = each.value.dns_servers
   domain         = each.value.domain
   static_leases  = each.value.static_leases
+  pxe            = each.value.pxe
 }
 
 # =================================================================================================

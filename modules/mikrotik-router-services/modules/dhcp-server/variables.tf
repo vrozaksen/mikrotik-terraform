@@ -36,3 +36,14 @@ variable "static_leases" {
   }))
   default = {}
 }
+
+variable "pxe" {
+  description = "iPXE chainload: PXE ROMs get an iPXE binary over TFTP, iPXE itself (user class 77) gets the HTTP boot script"
+  type = object({
+    server     = string
+    script_url = string
+    uefi_file  = optional(string, "ipxe.efi")
+    bios_file  = optional(string, "undionly.kpxe")
+  })
+  default = null
+}
