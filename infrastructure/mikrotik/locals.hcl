@@ -99,7 +99,6 @@ locals {
         "10.10.0.10" = { name = "pi", mac = "00:E0:4C:36:2A:CD" }
         "10.10.0.11" = { name = "aincrad", mac = "F8:F2:1E:47:00:70" } # "10.10.0.11" = { name = "aincrad", mac = "9C:6B:00:79:11:99" } # 9C:DC:71:46:0F:20
         "10.10.0.12" = { name = "omnichassis-bench", mac = "F8:75:A4:09:50:FD" }
-        "10.10.0.13" = { name = "omnichassis-bench-usb", mac = "00:E0:4C:68:07:2C" }
         ### Rack - K8s Control Plane Nodes
         "10.10.0.15" = { name = "saga", mac = "E0:51:D8:1F:43:3D" }
         "10.10.0.16" = { name = "eir", mac = "E0:51:D8:1F:AC:84" }

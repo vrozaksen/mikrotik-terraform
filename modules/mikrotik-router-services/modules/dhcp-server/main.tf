@@ -86,6 +86,7 @@ resource "routeros_ip_dhcp_server_option_matcher" "pxe_ipxe" {
   count         = var.pxe != null ? 1 : 0
   name          = "${var.interface_name}-pxe-user-class-ipxe"
   server        = routeros_ip_dhcp_server.this.name
+  address_pool  = routeros_ip_pool.this.name
   code          = 77
   value         = "0x69505845"
   matching_type = "exact"
@@ -96,6 +97,7 @@ resource "routeros_ip_dhcp_server_option_matcher" "pxe_bios" {
   count         = var.pxe != null ? 1 : 0
   name          = "${var.interface_name}-pxe-arch-bios"
   server        = routeros_ip_dhcp_server.this.name
+  address_pool  = routeros_ip_pool.this.name
   code          = 93
   value         = "0x0000"
   matching_type = "exact"
