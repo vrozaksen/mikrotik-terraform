@@ -31,6 +31,7 @@ inputs = {
     "ether1" = { comment = "Vectra Uplink", bridge_port = false }
     # LTE uplink retired; WAN failover may come back as a separate change.
     # "ether2" = { comment = "LTE Uplink", bridge_port = false }
+    "ether2" = { comment = "Qidi-Q2", untagged = local.shared_locals.vlans.IoT.name }
     "ether3" = { comment = "SLZB", untagged = local.shared_locals.vlans.Servers.name }
     "ether4" = { comment = "omnichassis-bench", untagged = local.shared_locals.vlans.Servers.name }
     "ether5" = {

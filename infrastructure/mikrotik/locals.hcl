@@ -70,6 +70,8 @@ locals {
     "omnichassis-bench.home.vzkn.eu" = { address = "10.10.0.12", type = "A", comment = "Omnichassis-HIL-Bench" },
     # HASS ZigBee
     "slzb.home.vzkn.eu" = { address = "10.10.0.65", type = "A", comment = "SLZB" },
+    # 3D Printing
+    "qidi-q2.home.vzkn.eu" = { address = "10.20.0.221", type = "A", comment = "Qidi-Q2" },
   }
 
   all_vlans = [for vlan in local.vlans : vlan.name]
@@ -123,6 +125,8 @@ locals {
       static_leases = {
         # 3D Printer
         "10.20.0.220" = { name = "Bambu-Lab", mac = "48:CA:43:95:9F:D8" }
+        # Wired on router ether2; isolated via st_iot_isolated. Wi-Fi must stay off.
+        "10.20.0.221" = { name = "Qidi-Q2", mac = "02:AA:B8:F8:95:7A" }
         # Smart Plugs
         "10.20.0.230" = { name = "Shelly-1", mac = "BC:FF:4D:44:06:CB" }
         # ESPHome LoRa nodes

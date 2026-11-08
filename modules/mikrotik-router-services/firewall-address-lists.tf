@@ -22,6 +22,13 @@ resource "routeros_ip_firewall_addr_list" "iot_servers" {
   comment = "Static: IoT IPs allowed to servers."
   address = "10.20.0.201-10.20.0.250"
 }
+# Reachable from Trusted/k8s, may open nothing themselves. Overrides the IoT
+# range lists above, so a device can keep an address inside .201-.250.
+resource "routeros_ip_firewall_addr_list" "iot_isolated" {
+  list    = "st_iot_isolated"
+  comment = "Static: IoT devices with no outbound access (Qidi-Q2)"
+  address = "10.20.0.221"
+}
 resource "routeros_ip_firewall_addr_list" "trusted_devices" {
   list    = "st_trusted_devices"
   comment = "Static: Devices with full trusted access"
@@ -32,7 +39,7 @@ resource "routeros_ip_firewall_addr_list" "trusted_devices" {
 locals {
   service_access = {
     dns = ["Trusted", "IoT", "Servers", "DMZ"],
-    ntp = ["Trusted", "Servers", "DMZ"],
+    ntp = ["Trusted", "IoT", "Servers", "DMZ"],
     wan = ["Trusted", "IoT", "Servers", "Guest", "DMZ"],
   }
 }

@@ -136,6 +136,28 @@ locals {
       src_address_list = "ag_ntp_access"
       order            = 310
     }
+    # The only outbound hole for isolated IoT: Moonraker -> Spoolman's own LB IP.
+    "allow-iot-isolated-to-spoolman" = {
+      chain            = "forward"
+      action           = "accept"
+      in_interface     = var.vlans.IoT.name
+      out_interface    = var.vlans.Servers.name
+      src_address_list = "st_iot_isolated"
+      dst_address      = "10.10.0.47"
+      protocol         = "tcp"
+      dst_port         = "8000"
+      connection_state = "new"
+      order            = 314
+    }
+    # Must sit before allow-wan-access-global: ag_wan_access holds all of IoT,
+    # and st_iot_servers covers .201-.250. Replies still pass via order 110.
+    "drop-iot-isolated-forward" = {
+      chain            = "forward"
+      action           = "drop"
+      in_interface     = var.vlans.IoT.name
+      src_address_list = "st_iot_isolated"
+      order            = 315
+    }
     "allow-wan-access-global" = {
       chain              = "forward"
       action             = "accept"
