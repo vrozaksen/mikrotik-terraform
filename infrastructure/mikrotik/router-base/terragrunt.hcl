@@ -29,7 +29,8 @@ inputs = {
   vlans = local.shared_locals.vlans
   ethernet_interfaces = {
     "ether1" = { comment = "Vectra Uplink", bridge_port = false }
-    "ether2" = { comment = "LTE Uplink", bridge_port = false }
+    # LTE uplink retired; WAN failover may come back as a separate change.
+    # "ether2" = { comment = "LTE Uplink", bridge_port = false }
     "ether3" = { comment = "SLZB", untagged = local.shared_locals.vlans.Servers.name }
     "ether4" = { comment = "omnichassis-bench", untagged = local.shared_locals.vlans.Servers.name }
     "ether5" = {
@@ -67,7 +68,7 @@ inputs = {
       remote_as        = 64514
       address_families = "ip"
       multihop         = true
-      # RB5009 holds both WAN uplinks, so it originates the default here.
+      # RB5009 holds the WAN uplink, so it originates the default here.
       # Without this the session carried no prefixes toward the switch at all.
       default_originate = "always"
     }
@@ -78,22 +79,21 @@ inputs = {
   # DHCP Client Configuration
   dhcp_clients = {
     "vectra" = {
-      interface             = "ether1"
-      comment               = "Vectra DHCP Client"
-      dhcp_options          = "hostname,clientid"
-      use_peer_dns          = false
-      use_peer_ntp          = false
-      failover_probe_target = "1.1.1.1"
-      failover_distance     = 1
+      interface         = "ether1"
+      comment           = "Vectra DHCP Client"
+      dhcp_options      = "hostname,clientid"
+      use_peer_dns      = false
+      use_peer_ntp      = false
+      add_default_route = "yes"
     }
-    "lte" = {
-      interface             = "ether2"
-      comment               = "LTE DHCP Client"
-      dhcp_options          = "hostname,clientid"
-      use_peer_dns          = false
-      use_peer_ntp          = false
-      failover_probe_target = "9.9.9.9"
-      failover_distance     = 2
-    }
+    # "lte" = {
+    #   interface             = "ether2"
+    #   comment               = "LTE DHCP Client"
+    #   dhcp_options          = "hostname,clientid"
+    #   use_peer_dns          = false
+    #   use_peer_ntp          = false
+    #   failover_probe_target = "9.9.9.9"
+    #   failover_distance     = 2
+    # }
   }
 }

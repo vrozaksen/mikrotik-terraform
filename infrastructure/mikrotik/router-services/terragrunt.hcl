@@ -29,7 +29,7 @@ inputs = {
   adlists      = local.network_config.locals.adlists
 
   # Interface Lists - WAN interfaces for router-base
-  wan_interfaces = ["ether1", "ether2"]
+  wan_interfaces = ["ether1"]
 
   # WireGuard remote networks
   wireguard_remote_networks = {
