@@ -131,6 +131,10 @@ variable "ethernet_interfaces" {
     # VLAN configurations
     tagged   = optional(list(string)) # list of VLAN names
     untagged = optional(string)       # VLAN name for untagged traffic
+
+    # PoE watchdog: power-cycles the port when this host stops answering pings
+    power_cycle_ping_address = optional(string)
+    power_cycle_ping_timeout = optional(string) # e.g. "5m"
   }))
   default     = {}
   description = "Map of ethernet interfaces to configure"

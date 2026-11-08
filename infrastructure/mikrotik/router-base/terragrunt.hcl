@@ -39,7 +39,14 @@ inputs = {
       untagged = local.shared_locals.vlans.IoT.name
       tagged   = [local.shared_locals.vlans.Servers.name, local.shared_locals.vlans.Trusted.name]
     }
-    "ether6" = { comment = "pi-nut", untagged = local.shared_locals.vlans.Servers.name }
+    "ether6" = {
+      # Pi wedged with link up for 2 days (RX dead, TX alive); only a PoE cycle
+      # recovered it. 5m gives it time to boot before the watchdog fires again.
+      comment                  = "pi-nut"
+      untagged                 = local.shared_locals.vlans.Servers.name
+      power_cycle_ping_address = "10.10.0.10"
+      power_cycle_ping_timeout = "5m"
+    }
     "ether7" = {
       # APC AP7920 PDU (mgmt NIC is untagged-only, AOS v3)
       comment  = "EMG / APC-PDU",
