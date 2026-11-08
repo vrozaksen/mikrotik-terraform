@@ -375,6 +375,18 @@ locals {
       dst_port         = "11434"
       order            = 2030
     }
+    # Multica agents (k8s) -> Omnichassis DK2 HIL box over SSH (no ragnarok hop).
+    "allow-k8s-to-dk2-hil-ssh" = {
+      chain            = "forward"
+      action           = "accept"
+      in_interface     = var.vlans.Servers.name
+      out_interface    = var.vlans.Trusted.name
+      src_address_list = "st_k8s_services"
+      dst_address      = "10.100.0.105"
+      protocol         = "tcp"
+      dst_port         = "22"
+      order            = 2032
+    }
 
     # =========================================================================
     # DMZ ZONE (RIPE Atlas probe, etc)

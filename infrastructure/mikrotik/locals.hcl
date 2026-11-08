@@ -185,6 +185,8 @@ locals {
         "10.100.0.103" = { name = "vx-prime-10g-2", mac = "9C:DC:71:46:0F:21" }
         # VX Notebook
         "10.100.0.104" = { name = "vx-t480-wlan", mac = "8E:80:A3:1F:3D:3B" }
+        # Omnichassis DK2 HIL box (Wi-Fi); outside st_trusted_devices on purpose
+        "10.100.0.105" = { name = "dk2-hil", mac = "10:98:C3:64:03:2A" }
         # VX Mobile
         "10.100.0.110" = { name = "vx-s25-u", mac = "80:75:BF:AF:49:0D" }
       }
