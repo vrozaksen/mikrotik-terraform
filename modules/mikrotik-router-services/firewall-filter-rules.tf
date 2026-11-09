@@ -264,26 +264,6 @@ locals {
     }
 
     # =========================================================================
-    # GUEST ZONE
-    # =========================================================================
-    # One destination, two ports, new connections only. Deliberately narrower
-    # than moving the device to Trusted: a machine suspected of being infected
-    # is worth monitoring precisely because it is suspect, but that is an
-    # argument for watching it where it sits, not for promoting it.
-    "allow-guest-to-wazuh" = {
-      chain            = "forward"
-      action           = "accept"
-      in_interface     = var.vlans.Guest.name
-      out_interface    = var.vlans.Servers.name
-      src_address_list = "st_guest_monitored"
-      dst_address      = "10.10.0.93"
-      protocol         = "tcp"
-      dst_port         = "1514,1515"
-      connection_state = "new"
-      order            = 1700
-    }
-
-    # =========================================================================
     # UNTRUSTED WIREGUARD (honeypot)
     # =========================================================================
     # The honeypot ships logs in and must reach nothing else. Matching on the
